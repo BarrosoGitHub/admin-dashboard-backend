@@ -1,0 +1,236 @@
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using FluentValidation;
+using OPTConfigurator.Models;
+using OPTConfigurator.Services.Interfaces;
+using Petrotec.Opt.Data.Models.Configuration.Opt;
+using Petrotec.Opt.Data.Types.Opt;
+using Petrotec.Opt.Data.Types.Ped;
+
+namespace OPTConfigurator.Services;
+
+public class OptConfigurationService : IOptConfigurationService
+{
+    private readonly IValidator<AddOptConfigurationDTO> _addOptConfigurationValidator;
+    private readonly IValidator<UpdateOptConfigurationDTO> _updateOptConfigurationValidator;
+
+    public OptConfigurationService(
+        IValidator<AddOptConfigurationDTO> addOptConfigurationValidator,
+        IValidator<UpdateOptConfigurationDTO> updateOptConfigurationValidator)
+    {
+        _addOptConfigurationValidator = addOptConfigurationValidator;
+        _updateOptConfigurationValidator = updateOptConfigurationValidator;
+    }
+
+    public async Task<OptConfiguration> GetCurrentOptConfiguration()
+    {
+        string filePath = Path.Combine(AppContext.BaseDirectory, "opt_configuration.json");
+
+        if (!File.Exists(filePath))
+            return null;
+
+        var options = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+        };
+
+        string configJson = await File.ReadAllTextAsync(filePath);
+        return JsonSerializer.Deserialize<OptConfiguration>(configJson, options);
+    }
+
+    public OptConfiguration AddOptConfiguration(AddOptConfigurationDTO addOptConfig)
+    {
+        var validationResult = _addOptConfigurationValidator.Validate(addOptConfig);
+        if (!validationResult.IsValid)
+        {
+            throw new ValidationException(validationResult.Errors);
+        }
+
+        string filePath = Path.Combine(AppContext.BaseDirectory, "opt_configuration.json");
+        OptConfiguration optConfig = ConvertJsonToOptConfiguration(CreateOptConfigurationTemplate(addOptConfig));
+
+        var options = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        };
+        options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)); // Ensure enums are strings
+
+        string optConfigJson = JsonSerializer.Serialize(optConfig, options);
+
+        File.WriteAllText(filePath, optConfigJson);
+
+        return optConfig;
+    }
+    public OptConfiguration UpdateOptConfiguration(UpdateOptConfigurationDTO updateOptConfig)
+    {
+        var validationResult = _updateOptConfigurationValidator.Validate(updateOptConfig);
+        if (!validationResult.IsValid)
+        {
+            throw new ValidationException(validationResult.Errors);
+        }
+
+        string filePath = Path.Combine(AppContext.BaseDirectory, "opt_configuration.json");
+
+        // Read existing configuration
+        OptConfiguration? existingConfig = null;
+        if (File.Exists(filePath))
+        {
+            var existingJson = File.ReadAllText(filePath);
+            existingConfig = ConvertJsonToOptConfiguration(existingJson);
+        }
+        else
+        {
+            existingConfig = new OptConfiguration();
+        }
+
+        // Use reflection to update only non-null properties
+        var dtoProps = typeof(UpdateOptConfigurationDTO).GetProperties();
+        var configProps = typeof(OptConfiguration).GetProperties();
+
+        foreach (var dtoProp in dtoProps)
+        {
+            var value = dtoProp.GetValue(updateOptConfig);
+            if (value != null)
+            {
+            var configProp = configProps.FirstOrDefault(p => p.Name == dtoProp.Name);
+            if (configProp != null && configProp.CanWrite)
+            {
+                if (configProp.PropertyType.IsClass && configProp.PropertyType != typeof(string))
+                {
+                var configSubValue = configProp.GetValue(existingConfig);
+                if (configSubValue == null)
+                {
+                    configSubValue = Activator.CreateInstance(configProp.PropertyType);
+                    configProp.SetValue(existingConfig, configSubValue);
+                }
+
+                var subProps = dtoProp.PropertyType.GetProperties();
+                foreach (var subProp in subProps)
+                {
+                    var subValue = subProp.GetValue(value);
+                    if (subValue != null)
+                    {
+                    var configSubProp = configProp.PropertyType.GetProperty(subProp.Name);
+                    if (configSubProp != null && configSubProp.CanWrite)
+                    {
+                        configSubProp.SetValue(configSubValue, subValue);
+                    }
+                    }
+                }
+                }
+                else
+                {
+                configProp.SetValue(existingConfig, value);
+                }
+            }
+            }
+        }
+
+        // Save updated configuration
+        string updatedJson = JsonSerializer.Serialize(existingConfig, new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        });
+
+        File.WriteAllText(filePath, updatedJson);
+
+        return existingConfig;
+    }
+
+    private OptConfiguration ConvertJsonToOptConfiguration(string json)
+    {
+        var options = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+        };
+
+        return JsonSerializer.Deserialize<OptConfiguration>(json, options)
+               ?? throw new InvalidOperationException("Failed to deserialize configuration.");
+    }
+
+    private string CreateOptConfigurationTemplate(AddOptConfigurationDTO addOptConfigurationDTO)
+    {
+        var options = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        };
+        options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)); // Add this line
+
+        var company = Enum.Parse<Company>(addOptConfigurationDTO.Company);
+
+        var optConfig = new OptConfiguration
+        {
+            OptMainConfiguration = new OptMainConfiguration
+            {
+                StationId = addOptConfigurationDTO.StationId!,
+                WorkstationId = addOptConfigurationDTO.WorkstationId,
+                Company = company,
+                CountryCode = Enum.Parse<Country>(addOptConfigurationDTO.Country)
+            },
+            PinpadConfiguration = new PinpadConfiguration
+            {
+                PedModel = Enum.Parse<Country>(addOptConfigurationDTO.Country) == Country.PT ? PedModel.Verifone : PedModel.Ingenico
+            },
+            FdcConfiguration = new ForecourtControllerConfiguration
+            {
+                EptId = addOptConfigurationDTO.WorkstationId
+            },
+            DisplayConfiguration = new DisplayConfiguration(),
+            PrinterConfiguration = new PrinterConfiguration(),
+            EpsClientConfiguration = new EpsClientConfiguration(),
+            ViaVerdeConfiguration = new ViaVerdeConfiguration(),
+            RemoteServicesConfiguration = new RemoteServicesConfiguration(),
+            RegionalSettings = new RegionalSettingsConfiguration(),
+            BnaConfiguration = new BnaConfiguration(),
+            HeadOfficeConfiguration = new HoIntegrationConfiguration(),
+            TimingsConfiguration = new TimingsConfiguration(),
+            LocalCreditConfiguration = new LocalCreditConfiguration(),
+            BankingCardPaymentConfiguration = new BankingCardPaymentConfiguration(),
+            DiscountsConfiguration = new DiscountsConfiguration(),
+            BarcodeReaderConfiguration = new BarcodeReaderConfiguration(),
+            IngenicoConfiguration = new IngenicoConfiguration()
+        };
+
+        // Set company-specific configuration, others to null
+        switch (company)
+        {
+            case Company.Prio:
+                optConfig.PrioConfiguration = new PrioConfiguration();
+                optConfig.GalpConfiguration = null;
+                optConfig.BongasConfiguration = null;
+                optConfig.IntermarcheConfiguration = null;
+                break;
+            case Company.Galp:
+                optConfig.GalpConfiguration = new GalpConfiguration();
+                optConfig.PrioConfiguration = null;
+                optConfig.BongasConfiguration = null;
+                optConfig.IntermarcheConfiguration = null;
+                break;
+            case Company.Intermarche:
+                optConfig.IntermarcheConfiguration = new IntermarcheConfiguration();
+                optConfig.PrioConfiguration = null;
+                optConfig.BongasConfiguration = null;
+                optConfig.GalpConfiguration = null;
+                break;
+            case Company.Bongas:
+                optConfig.BongasConfiguration = new BongasConfiguration();
+                optConfig.PrioConfiguration = null;
+                optConfig.IntermarcheConfiguration = null;
+                optConfig.GalpConfiguration = null;
+                break;
+            default:
+                optConfig.PrioConfiguration = null;
+                optConfig.GalpConfiguration = null;
+                optConfig.BongasConfiguration = null;
+                optConfig.IntermarcheConfiguration = null;
+                break;
+        }
+
+        return JsonSerializer.Serialize(optConfig, options);
+    }
+}

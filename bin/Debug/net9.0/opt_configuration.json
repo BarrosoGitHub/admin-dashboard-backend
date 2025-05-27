@@ -1,0 +1,174 @@
+{
+  "optMainConfiguration": {
+    "stationId": "234",
+    "workstationId": 123,
+    "applicationName": "OPT Petrotec",
+    "version": "0.0.0.0",
+    "optType": 0,
+    "preventFallback": false,
+    "stopOnPrinterError": false,
+    "activateInvoices": true,
+    "instanceActive": true,
+    "foreignClientInvoiceSimplified": true,
+    "gasoleoBGradeId": 0,
+    "primaryLanguage": 3,
+    "secondaryLanguage": 3,
+    "tertiaryLanguage": 1,
+    "languageN4": 5,
+    "idleActive": true,
+    "countryCode": 1,
+    "company": 0,
+    "maxDatabaseSize": 50,
+    "unmannedEnvironment": false
+  },
+  "pinpadConfiguration": {
+    "hostName": "0.0.0.0",
+    "hostPort": 10000,
+    "readIccBin": true,
+    "pedModel": 1
+  },
+  "fdcConfiguration": {
+    "hostName": "0.0.0.0",
+    "eptId": 123,
+    "countryCode": 351,
+    "reportPrinterErrors": false,
+    "maxSimultaneousLogins": 4,
+    "manageEpt": false,
+    "assignedPumps": "",
+    "controllerType": 0,
+    "maxAuthorizeVolume": 9999,
+    "maxAuthorizeAmount": 9999,
+    "allowDecimalPreset": false,
+    "minPresetAmount": 2,
+    "maxFuellingTime": 0,
+    "miIp04SpainActive": false,
+    "maxPreAuthorizationWaitTime": 60
+  },
+  "displayConfiguration": {
+    "displayWidth": 800,
+    "displayHeight": 600,
+    "video": "Video Petrotec.mpg",
+    "guiServerServicesUrl": "http://127.0.0.1:51600",
+    "guiServicesLocalPort": 51001
+  },
+  "printerConfiguration": {
+    "printerServerAddr": "127.0.0.1",
+    "printerServerPort": 10001,
+    "cols": 40
+  },
+  "epsClientConfiguration": {
+    "hostName": "0.0.0.0",
+    "localPort": 0,
+    "epsPort": 0
+  },
+  "viaVerdeConfiguration": {
+    "active": false,
+    "posCode": 1,
+    "side": "A",
+    "communicationType": 2,
+    "drcIpAddress": "0.0.0.0",
+    "drcPort": 10001,
+    "proxyIpAddress": "127.0.0.1",
+    "proxyPort": 10009
+  },
+  "remoteServicesConfiguration": {
+    "notificationServerUri": "http://10.199.216.70:50000",
+    "notificationServerEnabled": true,
+    "alarmServerUri": "http://10.199.216.70:50000",
+    "alarmServerEnabled": true,
+    "enableCompression": true
+  },
+  "galpConfiguration": null,
+  "regionalSettings": {
+    "fuelUnitOfMeasure": "L",
+    "currency": "EUR",
+    "currencySymbol": "\u20AC",
+    "fuelVolumeDecimalPlaces": 2,
+    "fuelAmountDecimalPlaces": 2,
+    "fuelUnitPricesDecimalPlaces": 3,
+    "saleTotalAmountDecimalPlaces": 2
+  },
+  "bnaConfiguration": {
+    "bnaActive": false,
+    "model": 0,
+    "serialPort": "COM1",
+    "baudRate": 9600,
+    "dataBits": 8,
+    "parity": 2,
+    "stopBits": 1,
+    "flowControl": 0,
+    "maxValue": 500,
+    "minValue": 5,
+    "operatingPeriod": "",
+    "prepayTicketMode": 0,
+    "cashOperationMode": 1
+  },
+  "headOfficeConfiguration": {
+    "active": false,
+    "connectionString": "http://0.0.0.0:8080/genesyspos/RpcServices",
+    "manageCashOperation": false,
+    "connectionStringLegal": "http://10.199.88.50:8080/manager/RpcServices"
+  },
+  "timingsConfiguration": {
+    "askUserIfHeWantsToInsertFiscalData": 60,
+    "askUserIfHeWantsToInsertLicensePlate": 20,
+    "genericYesNo": 20,
+    "displayPrinterNotAvailableError": 5,
+    "displayErrorViaVerdeInitFailure": 5,
+    "displayErrorInsufficientFunds": 5,
+    "genericError": 5,
+    "idleWaitForCard": 60,
+    "genericWaitForInput": 60,
+    "askUserDiscountCard": 60,
+    "askUserForReceipt": 60,
+    "genericInformation": 10,
+    "transactionComplete": 5,
+    "genericOk": 5,
+    "genericReadCard": 60,
+    "trxNotAuthorized": 30,
+    "getFiscalNumber": 60,
+    "getLicensePlate": 60,
+    "accountingPeriodPrintSelection": 120
+  },
+  "localCreditConfiguration": {
+    "active": false,
+    "id": 4,
+    "descriptionEn": "",
+    "descriptionEs": "",
+    "descriptionPt": "",
+    "pinTries": 3,
+    "requestOdometer": true,
+    "validateLuhn": true,
+    "printAmountInReceipt": true,
+    "extraReceiptData": "",
+    "descriptionFr": "",
+    "printReceiptType": 0
+  },
+  "bankingCardPaymentConfiguration": {
+    "authorizationTicketMode": 0,
+    "minAuthAmount": 0
+  },
+  "discountsConfiguration": {
+    "active": false,
+    "descriptionEn": "",
+    "descriptionEs": "",
+    "descriptionPt": "",
+    "extraReceiptData": "",
+    "descriptionFr": "",
+    "typeOfDiscountTaxFormula": 2
+  },
+  "prioConfiguration": null,
+  "barcodeReaderConfiguration": {
+    "enabled": false,
+    "model": 0,
+    "serialPort": ""
+  },
+  "ingenicoConfiguration": {
+    "productConversions": "",
+    "pollingAckTimeout": 30000,
+    "activateTeleloading": true,
+    "protocolVersion": "602"
+  },
+  "intermarcheConfiguration": null,
+  "bongasConfiguration": null
+}

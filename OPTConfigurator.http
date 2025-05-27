@@ -1,0 +1,6 @@
+@OPTConfigurator_HostAddress = http://localhost:5087
+
+GET {{OPTConfigurator_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
