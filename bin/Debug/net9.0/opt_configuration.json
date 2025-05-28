@@ -1,23 +1,23 @@
 {
   "optMainConfiguration": {
-    "stationId": "234",
+    "stationId": "asd",
     "workstationId": 123,
     "applicationName": "OPT Petrotec",
     "version": "0.0.0.0",
-    "optType": 0,
+    "optType": "dispenserIntegrated",
     "preventFallback": false,
     "stopOnPrinterError": false,
     "activateInvoices": true,
     "instanceActive": true,
     "foreignClientInvoiceSimplified": true,
     "gasoleoBGradeId": 0,
-    "primaryLanguage": 3,
-    "secondaryLanguage": 3,
-    "tertiaryLanguage": 1,
-    "languageN4": 5,
+    "primaryLanguage": "spanish",
+    "secondaryLanguage": "spanish",
+    "tertiaryLanguage": "portuguese",
+    "languageN4": "french",
     "idleActive": true,
-    "countryCode": 1,
-    "company": 0,
+    "countryCode": "pt",
+    "company": "generic",
     "maxDatabaseSize": 50,
     "unmannedEnvironment": false
   },
@@ -25,7 +25,7 @@
     "hostName": "0.0.0.0",
     "hostPort": 10000,
     "readIccBin": true,
-    "pedModel": 1
+    "pedModel": "verifone"
   },
   "fdcConfiguration": {
     "hostName": "0.0.0.0",
@@ -35,7 +35,7 @@
     "maxSimultaneousLogins": 4,
     "manageEpt": false,
     "assignedPumps": "",
-    "controllerType": 0,
+    "controllerType": "domsPssController",
     "maxAuthorizeVolume": 9999,
     "maxAuthorizeAmount": 9999,
     "allowDecimalPreset": false,
@@ -62,7 +62,7 @@
     "epsPort": 0
   },
   "viaVerdeConfiguration": {
-    "active": false,
+    "active": true,
     "posCode": 1,
     "side": "A",
     "communicationType": 2,
@@ -90,7 +90,7 @@
   },
   "bnaConfiguration": {
     "bnaActive": false,
-    "model": 0,
+    "model": "jcM_EBA_34_EUR5",
     "serialPort": "COM1",
     "baudRate": 9600,
     "dataBits": 8,
@@ -100,8 +100,8 @@
     "maxValue": 500,
     "minValue": 5,
     "operatingPeriod": "",
-    "prepayTicketMode": 0,
-    "cashOperationMode": 1
+    "prepayTicketMode": "auto",
+    "cashOperationMode": "postPay"
   },
   "headOfficeConfiguration": {
     "active": false,
@@ -142,10 +142,10 @@
     "printAmountInReceipt": true,
     "extraReceiptData": "",
     "descriptionFr": "",
-    "printReceiptType": 0
+    "printReceiptType": "paper"
   },
   "bankingCardPaymentConfiguration": {
-    "authorizationTicketMode": 0,
+    "authorizationTicketMode": "disabled",
     "minAuthAmount": 0
   },
   "discountsConfiguration": {
@@ -155,12 +155,12 @@
     "descriptionPt": "",
     "extraReceiptData": "",
     "descriptionFr": "",
-    "typeOfDiscountTaxFormula": 2
+    "typeOfDiscountTaxFormula": "type2"
   },
   "prioConfiguration": null,
   "barcodeReaderConfiguration": {
     "enabled": false,
-    "model": 0,
+    "model": "gryphon",
     "serialPort": ""
   },
   "ingenicoConfiguration": {

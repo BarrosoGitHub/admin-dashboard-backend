@@ -2,6 +2,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using OPTConfigurator.Models;
 using OPTConfigurator.Services.Interfaces;
+using Petrotec.Opt.Data.Models.Configuration.Opt;
 
 namespace OPTConfigurator.Controllers;
 
@@ -30,6 +31,27 @@ public class ConfigurationController : ControllerBase
         return new JsonResult(result, jsonSettings);
     }
 
+    [HttpGet("template")]
+    public IActionResult GetOptConfigurationTemplate([FromQuery] GetOptConfigurationTemplateDTO template)
+    {
+        try
+        {
+            var optConfiguration = _optConfigurationService.GetOptConfigurationFromTemplate(template);
+            var jsonSettings = new System.Text.Json.JsonSerializerOptions
+            {
+                DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
+            };
+            return new JsonResult(optConfiguration, jsonSettings);
+        }
+        catch (ValidationException ex)
+        {
+            return BadRequest(new
+            {
+                Errors = ex.Errors.Select(e => new { e.PropertyName, e.ErrorMessage })
+            });
+        }
+    }
+
     [HttpPost("new")]
     public IActionResult AddOptConfiguration([FromBody] AddOptConfigurationDTO config)
     {
@@ -47,6 +69,7 @@ public class ConfigurationController : ControllerBase
         }
     }
 
+
     [HttpPut]
     public IActionResult UpdateOptConfiguration([FromBody] UpdateOptConfigurationDTO config)
     {
@@ -54,10 +77,10 @@ public class ConfigurationController : ControllerBase
         {
             var updatedConfig = _optConfigurationService.UpdateOptConfiguration(config);
             var jsonSettings = new System.Text.Json.JsonSerializerOptions
-        {
-            DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
-        };
-        return new JsonResult(updatedConfig, jsonSettings);
+            {
+                DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
+            };
+            return new JsonResult(updatedConfig, jsonSettings);
         }
         catch (ValidationException ex)
         {

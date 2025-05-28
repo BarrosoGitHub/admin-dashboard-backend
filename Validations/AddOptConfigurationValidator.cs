@@ -4,7 +4,7 @@ using Petrotec.Opt.Data.Types.Opt;
 
 namespace OPTConfigurator.Validations;
 
-public class AddOptConfigurationValidator : AbstractValidator<AddOptConfigurationDTO>
+public class AddOptConfigurationValidator : AbstractValidator<GetOptConfigurationTemplateDTO>
 {
     public AddOptConfigurationValidator()
     {

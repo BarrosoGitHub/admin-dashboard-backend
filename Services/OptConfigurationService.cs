@@ -11,14 +11,14 @@ namespace OPTConfigurator.Services;
 
 public class OptConfigurationService : IOptConfigurationService
 {
-    private readonly IValidator<AddOptConfigurationDTO> _addOptConfigurationValidator;
+    private readonly IValidator<GetOptConfigurationTemplateDTO> _getOptConfigurationTemplateValidator;
     private readonly IValidator<UpdateOptConfigurationDTO> _updateOptConfigurationValidator;
 
     public OptConfigurationService(
-        IValidator<AddOptConfigurationDTO> addOptConfigurationValidator,
+        IValidator<GetOptConfigurationTemplateDTO> addOptConfigurationValidator,
         IValidator<UpdateOptConfigurationDTO> updateOptConfigurationValidator)
     {
-        _addOptConfigurationValidator = addOptConfigurationValidator;
+        _getOptConfigurationTemplateValidator = addOptConfigurationValidator;
         _updateOptConfigurationValidator = updateOptConfigurationValidator;
     }
 
@@ -39,23 +39,29 @@ public class OptConfigurationService : IOptConfigurationService
         return JsonSerializer.Deserialize<OptConfiguration>(configJson, options);
     }
 
-    public OptConfiguration AddOptConfiguration(AddOptConfigurationDTO addOptConfig)
+    public OptConfiguration GetOptConfigurationFromTemplate(GetOptConfigurationTemplateDTO optConfigTemplate)
     {
-        var validationResult = _addOptConfigurationValidator.Validate(addOptConfig);
+        var validationResult = _getOptConfigurationTemplateValidator.Validate(optConfigTemplate);
         if (!validationResult.IsValid)
         {
             throw new ValidationException(validationResult.Errors);
         }
 
+        OptConfiguration optConfig = ConvertJsonToOptConfiguration(CreateOptConfigurationTemplate(optConfigTemplate));
+
+        return optConfig;
+    }
+
+    public AddOptConfigurationDTO AddOptConfiguration(AddOptConfigurationDTO optConfig)
+    {
         string filePath = Path.Combine(AppContext.BaseDirectory, "opt_configuration.json");
-        OptConfiguration optConfig = ConvertJsonToOptConfiguration(CreateOptConfigurationTemplate(addOptConfig));
 
         var options = new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
             WriteIndented = true
         };
-        options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)); // Ensure enums are strings
+        options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
 
         string optConfigJson = JsonSerializer.Serialize(optConfig, options);
 
@@ -63,6 +69,7 @@ public class OptConfigurationService : IOptConfigurationService
 
         return optConfig;
     }
+    
     public OptConfiguration UpdateOptConfiguration(UpdateOptConfigurationDTO updateOptConfig)
     {
         var validationResult = _updateOptConfigurationValidator.Validate(updateOptConfig);
@@ -94,37 +101,37 @@ public class OptConfigurationService : IOptConfigurationService
             var value = dtoProp.GetValue(updateOptConfig);
             if (value != null)
             {
-            var configProp = configProps.FirstOrDefault(p => p.Name == dtoProp.Name);
-            if (configProp != null && configProp.CanWrite)
-            {
-                if (configProp.PropertyType.IsClass && configProp.PropertyType != typeof(string))
+                var configProp = configProps.FirstOrDefault(p => p.Name == dtoProp.Name);
+                if (configProp != null && configProp.CanWrite)
                 {
-                var configSubValue = configProp.GetValue(existingConfig);
-                if (configSubValue == null)
-                {
-                    configSubValue = Activator.CreateInstance(configProp.PropertyType);
-                    configProp.SetValue(existingConfig, configSubValue);
-                }
+                    if (configProp.PropertyType.IsClass && configProp.PropertyType != typeof(string))
+                    {
+                        var configSubValue = configProp.GetValue(existingConfig);
+                        if (configSubValue == null)
+                        {
+                            configSubValue = Activator.CreateInstance(configProp.PropertyType);
+                            configProp.SetValue(existingConfig, configSubValue);
+                        }
 
-                var subProps = dtoProp.PropertyType.GetProperties();
-                foreach (var subProp in subProps)
-                {
-                    var subValue = subProp.GetValue(value);
-                    if (subValue != null)
-                    {
-                    var configSubProp = configProp.PropertyType.GetProperty(subProp.Name);
-                    if (configSubProp != null && configSubProp.CanWrite)
-                    {
-                        configSubProp.SetValue(configSubValue, subValue);
+                        var subProps = dtoProp.PropertyType.GetProperties();
+                        foreach (var subProp in subProps)
+                        {
+                            var subValue = subProp.GetValue(value);
+                            if (subValue != null)
+                            {
+                                var configSubProp = configProp.PropertyType.GetProperty(subProp.Name);
+                                if (configSubProp != null && configSubProp.CanWrite)
+                                {
+                                    configSubProp.SetValue(configSubValue, subValue);
+                                }
+                            }
+                        }
                     }
+                    else
+                    {
+                        configProp.SetValue(existingConfig, value);
                     }
                 }
-                }
-                else
-                {
-                configProp.SetValue(existingConfig, value);
-                }
-            }
             }
         }
 
@@ -152,7 +159,7 @@ public class OptConfigurationService : IOptConfigurationService
                ?? throw new InvalidOperationException("Failed to deserialize configuration.");
     }
 
-    private string CreateOptConfigurationTemplate(AddOptConfigurationDTO addOptConfigurationDTO)
+    private string CreateOptConfigurationTemplate(GetOptConfigurationTemplateDTO addOptConfigurationDTO)
     {
         var options = new JsonSerializerOptions
         {

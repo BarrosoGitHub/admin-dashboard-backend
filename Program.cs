@@ -7,8 +7,9 @@ using OPTConfigurator.Validations;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IOptConfigurationService, OptConfigurationService>();
-builder.Services.AddScoped<IValidator<AddOptConfigurationDTO>, AddOptConfigurationValidator>();
+builder.Services.AddScoped<IValidator<GetOptConfigurationTemplateDTO>, AddOptConfigurationValidator>();
 builder.Services.AddScoped<IValidator<UpdateOptConfigurationDTO>, UpdateOptConfigurationRequestValidator>();
+builder.Services.AddScoped<IUserInterfaceConfigurationService, UserInterfaceConfigurationService>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
