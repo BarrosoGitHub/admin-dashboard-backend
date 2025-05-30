@@ -1,0 +1,21 @@
+{
+  "client": "galpGuima",
+  "websocketServerUrl": "ws://opt-emotion-core:8088/ws/opt",
+  "showDebugButton": true,
+  "loadLastOPTRequestOnStartup": true,
+  "reloadWhenGoingToIdleScreen": false,
+  "showVideo": true,
+  "axonMultimediaIframe": false,
+  "axonMultimediaUrl": "",
+  "gradeColors": [
+    {
+      "1": "Green"
+    },
+    {
+      "2": "Red"
+    },
+    {
+      "3": "Black"
+    }
+  ]
+}

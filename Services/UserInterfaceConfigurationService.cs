@@ -22,7 +22,11 @@ public class UserInterfaceConfigurationService : IUserInterfaceConfigurationServ
             return null!;
 
         var json = await File.ReadAllTextAsync(filePath);
-        return JsonSerializer.Deserialize<UserInterfaceConfigurationDTO>(json);
+        var options = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        };
+        return JsonSerializer.Deserialize<UserInterfaceConfigurationDTO>(json, options)!;
     }
 
     public UserInterfaceConfigurationDTO AddUserInterfaceConfiguration(UserInterfaceConfigurationDTO userInterfaceConfig)
@@ -36,8 +40,7 @@ public class UserInterfaceConfigurationService : IUserInterfaceConfigurationServ
         string filePath = Path.Combine(AppContext.BaseDirectory, "user_interface_configuration.json");
         var options = new JsonSerializerOptions
         {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            WriteIndented = true
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
 
         string userInterfaceConfigJson = JsonSerializer.Serialize(userInterfaceConfig, options);
@@ -57,8 +60,7 @@ public class UserInterfaceConfigurationService : IUserInterfaceConfigurationServ
         string filePath = Path.Combine(AppContext.BaseDirectory, "user_interface_configuration.json");
         var options = new JsonSerializerOptions
         {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            WriteIndented = true
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
 
         string userInterfaceConfigJson = JsonSerializer.Serialize(userInterfaceConfig, options);

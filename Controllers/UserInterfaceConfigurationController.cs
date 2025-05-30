@@ -30,13 +30,13 @@ public class UserInterfaceConfigurationController : ControllerBase
         return new JsonResult(result, jsonSettings);
     }
 
-    [HttpPost]
-    public IActionResult AddUserInterfaceConfiguration([FromBody] UserInterfaceConfigurationDTO config)
+    [HttpPut]
+    public IActionResult UpdateUserInterfaceConfiguration([FromBody] UserInterfaceConfigurationDTO config)
     {
         try
         {
-            var userInterfaceConfig = _userInterfaceConfigurationService.AddUserInterfaceConfiguration(config);
-            return CreatedAtAction(nameof(GetCurrentUserInterfaceConfiguration), userInterfaceConfig);
+            var userInterfaceConfig = _userInterfaceConfigurationService.UpdateUserInterfaceConfiguration(config);
+            return Ok(userInterfaceConfig);
         }
         catch (ValidationException ex)
         {
