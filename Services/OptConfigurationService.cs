@@ -27,7 +27,7 @@ public class OptConfigurationService : IOptConfigurationService
         string filePath = Path.Combine(AppContext.BaseDirectory, "opt_configuration.json");
 
         if (!File.Exists(filePath))
-            return null;
+            return null!;
 
         var options = new JsonSerializerOptions
         {
