@@ -1,0 +1,24 @@
+using Microsoft.AspNetCore.Mvc;
+using OPTConfigurator.Services.Interfaces;
+
+namespace OPTConfigurator.Controllers
+{
+    [ApiController]
+    [Route("info/services")]
+    public class ServicesInfoController : ControllerBase
+    {
+        private readonly IServicesInfoService _servicesInfoService;
+
+        public ServicesInfoController(IServicesInfoService servicesInfoService)
+        {
+            _servicesInfoService = servicesInfoService;
+        }
+
+        [HttpGet]
+        public ActionResult<List<AppInfo>> GetAllServicesInfo()
+        {
+            var result = _servicesInfoService.GetAllServicesInfo();
+            return Ok(result);
+        }
+    }
+}

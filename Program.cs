@@ -15,6 +15,7 @@ builder.Services.AddScoped<IUserInterfaceConfigurationService, UserInterfaceConf
 builder.Services.AddScoped<IValidator<GetOptConfigurationTemplateDTO>, AddOptConfigurationValidator>();
 builder.Services.AddScoped<IValidator<UpdateOptConfigurationDTO>, UpdateOptConfigurationRequestValidator>();
 builder.Services.AddScoped<IValidator<UserInterfaceConfigurationDTO>, AddUserInterfaceConfigurationValidator>();
+builder.Services.AddScoped<OPTConfigurator.Services.Interfaces.IServicesInfoService, OPTConfigurator.Services.ServicesInfoService>();
 
 string boardType = BoardHelper.GetBoardType();
 
