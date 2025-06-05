@@ -170,6 +170,34 @@ public class OptConfigurationService : IOptConfigurationService
 
         var company = Enum.Parse<Company>(addOptConfigurationDTO.Company);
 
+        string networkSegment;
+        string pinpadHostname = string.Empty;
+        string fdcHostname = string.Empty;
+        if (addOptConfigurationDTO.NetworkSegment.Contains("."))
+        {
+            var pinpadParts = addOptConfigurationDTO.NetworkSegment.Split('.');
+            var fdcParts = pinpadParts;
+            if (pinpadParts.Length == 4 && int.TryParse(pinpadParts[3], out int lastOctet))
+            {
+                pinpadParts[3] = (lastOctet + 20 + addOptConfigurationDTO.WorkstationId).ToString();
+                fdcParts[3] = (lastOctet + 5).ToString();
+
+                networkSegment = string.Join('.', pinpadParts);
+                pinpadHostname = string.Join('.', pinpadParts);
+                fdcHostname = string.Join('.', fdcParts);
+            }
+            else
+            {
+                throw new FormatException("NetworkSegment must be a valid IPv4 address or integer.");
+            }
+        }
+        else
+        {
+            networkSegment = (int.Parse(addOptConfigurationDTO.NetworkSegment) + 20).ToString();
+            pinpadHostname = networkSegment;
+        }
+
+
         var optConfig = new OptConfiguration
         {
             OptMainConfiguration = new OptMainConfiguration
@@ -181,11 +209,13 @@ public class OptConfigurationService : IOptConfigurationService
             },
             PinpadConfiguration = new PinpadConfiguration
             {
-                PedModel = Enum.Parse<Country>(addOptConfigurationDTO.Country) == Country.PT ? PedModel.Verifone : PedModel.Ingenico
+                PedModel = Enum.Parse<Country>(addOptConfigurationDTO.Country) == Country.PT ? PedModel.Verifone : PedModel.Ingenico,
+                HostName = pinpadHostname
             },
             FdcConfiguration = new ForecourtControllerConfiguration
             {
-                EptId = addOptConfigurationDTO.WorkstationId
+                EptId = addOptConfigurationDTO.WorkstationId,
+                HostName = fdcHostname,
             },
             DisplayConfiguration = new DisplayConfiguration(),
             PrinterConfiguration = new PrinterConfiguration(),

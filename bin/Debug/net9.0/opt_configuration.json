@@ -1,41 +1,41 @@
 {
   "optMainConfiguration": {
-    "stationId": "asd",
-    "workstationId": 123,
+    "stationId": "234",
+    "workstationId": 3,
     "applicationName": "OPT Petrotec",
     "version": "0.0.0.0",
-    "optType": 0,
+    "optType": "dispenserIntegrated",
     "preventFallback": false,
     "stopOnPrinterError": false,
     "activateInvoices": true,
     "instanceActive": true,
     "foreignClientInvoiceSimplified": true,
     "gasoleoBGradeId": 0,
-    "primaryLanguage": 3,
-    "secondaryLanguage": 3,
-    "tertiaryLanguage": 1,
-    "languageN4": 5,
+    "primaryLanguage": "spanish",
+    "secondaryLanguage": "spanish",
+    "tertiaryLanguage": "portuguese",
+    "languageN4": "french",
     "idleActive": true,
-    "countryCode": 0,
-    "company": 0,
+    "countryCode": "pt",
+    "company": "galp",
     "maxDatabaseSize": 50,
     "unmannedEnvironment": false
   },
   "pinpadConfiguration": {
-    "hostName": "0.0.0.0",
+    "hostName": "172.121.16.48",
     "hostPort": 10000,
     "readIccBin": true,
-    "pedModel": 0
+    "pedModel": "verifone"
   },
   "fdcConfiguration": {
     "hostName": "0.0.0.0",
-    "eptId": 123,
+    "eptId": 3,
     "countryCode": 351,
     "reportPrinterErrors": false,
     "maxSimultaneousLogins": 4,
     "manageEpt": false,
     "assignedPumps": "",
-    "controllerType": 0,
+    "controllerType": "domsPssController",
     "maxAuthorizeVolume": 9999,
     "maxAuthorizeAmount": 9999,
     "allowDecimalPreset": false,
@@ -78,7 +78,26 @@
     "alarmServerEnabled": true,
     "enableCompression": true
   },
-  "galpConfiguration": null,
+  "galpConfiguration": {
+    "activateB2B": false,
+    "activateFast": true,
+    "activateFastMagnetic": false,
+    "activateGalpFrota": true,
+    "activateCContinente": false,
+    "allowCContinenteMobileFallback": false,
+    "localServicesEndpointsList": "",
+    "activateLidlCard": false,
+    "convertLidlCardToGfb": true,
+    "allowLidlCardManualInput": true,
+    "continenteRetriesLimit": 3,
+    "enableBankingPaymentDisclaimer": false,
+    "servicesEndpoint": "https://192.168.66.218:8090/Storix/Rest/",
+    "servicesAuthToken": "9f3904c3-517b-4783-b3a9-ce57fb1baf7d",
+    "operatorExternalId": "VPOSUSERID1",
+    "touchPointExternalId": "PETROTEC_OPT_1",
+    "businessUnitExternalId": "VPOS1",
+    "enableViaT": false
+  },
   "regionalSettings": {
     "fuelUnitOfMeasure": "L",
     "currency": "EUR",
@@ -90,7 +109,7 @@
   },
   "bnaConfiguration": {
     "bnaActive": false,
-    "model": 0,
+    "model": "jcM_EBA_34_EUR5",
     "serialPort": "COM1",
     "baudRate": 9600,
     "dataBits": 8,
@@ -100,8 +119,8 @@
     "maxValue": 500,
     "minValue": 5,
     "operatingPeriod": "",
-    "prepayTicketMode": 0,
-    "cashOperationMode": 1
+    "prepayTicketMode": "auto",
+    "cashOperationMode": "postPay"
   },
   "headOfficeConfiguration": {
     "active": false,
@@ -142,10 +161,10 @@
     "printAmountInReceipt": true,
     "extraReceiptData": "",
     "descriptionFr": "",
-    "printReceiptType": 0
+    "printReceiptType": "paper"
   },
   "bankingCardPaymentConfiguration": {
-    "authorizationTicketMode": 0,
+    "authorizationTicketMode": "disabled",
     "minAuthAmount": 0
   },
   "discountsConfiguration": {
@@ -155,12 +174,12 @@
     "descriptionPt": "",
     "extraReceiptData": "",
     "descriptionFr": "",
-    "typeOfDiscountTaxFormula": 2
+    "typeOfDiscountTaxFormula": "type2"
   },
   "prioConfiguration": null,
   "barcodeReaderConfiguration": {
     "enabled": false,
-    "model": 0,
+    "model": "gryphon",
     "serialPort": ""
   },
   "ingenicoConfiguration": {
