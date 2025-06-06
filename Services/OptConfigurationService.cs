@@ -176,7 +176,7 @@ public class OptConfigurationService : IOptConfigurationService
         if (addOptConfigurationDTO.NetworkSegment.Contains("."))
         {
             var pinpadParts = addOptConfigurationDTO.NetworkSegment.Split('.');
-            var fdcParts = pinpadParts;
+            var fdcParts = addOptConfigurationDTO.NetworkSegment.Split('.');
             if (pinpadParts.Length == 4 && int.TryParse(pinpadParts[3], out int lastOctet))
             {
                 pinpadParts[3] = (lastOctet + 20 + addOptConfigurationDTO.WorkstationId).ToString();

@@ -16,8 +16,8 @@
     "tertiaryLanguage": "portuguese",
     "languageN4": "french",
     "idleActive": true,
-    "countryCode": "pt",
-    "company": "galp",
+    "countryCode": "es",
+    "company": "generic",
     "maxDatabaseSize": 50,
     "unmannedEnvironment": false
   },
@@ -25,10 +25,10 @@
     "hostName": "172.121.16.48",
     "hostPort": 10000,
     "readIccBin": true,
-    "pedModel": "verifone"
+    "pedModel": "ingenico"
   },
   "fdcConfiguration": {
-    "hostName": "0.0.0.0",
+    "hostName": "172.121.16.30",
     "eptId": 3,
     "countryCode": 351,
     "reportPrinterErrors": false,
@@ -78,26 +78,7 @@
     "alarmServerEnabled": true,
     "enableCompression": true
   },
-  "galpConfiguration": {
-    "activateB2B": false,
-    "activateFast": true,
-    "activateFastMagnetic": false,
-    "activateGalpFrota": true,
-    "activateCContinente": false,
-    "allowCContinenteMobileFallback": false,
-    "localServicesEndpointsList": "",
-    "activateLidlCard": false,
-    "convertLidlCardToGfb": true,
-    "allowLidlCardManualInput": true,
-    "continenteRetriesLimit": 3,
-    "enableBankingPaymentDisclaimer": false,
-    "servicesEndpoint": "https://192.168.66.218:8090/Storix/Rest/",
-    "servicesAuthToken": "9f3904c3-517b-4783-b3a9-ce57fb1baf7d",
-    "operatorExternalId": "VPOSUSERID1",
-    "touchPointExternalId": "PETROTEC_OPT_1",
-    "businessUnitExternalId": "VPOS1",
-    "enableViaT": false
-  },
+  "galpConfiguration": null,
   "regionalSettings": {
     "fuelUnitOfMeasure": "L",
     "currency": "EUR",

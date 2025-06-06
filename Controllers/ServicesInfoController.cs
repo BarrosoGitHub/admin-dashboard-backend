@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OPTConfigurator.Services.Interfaces;
 
@@ -5,6 +6,7 @@ namespace OPTConfigurator.Controllers
 {
     [ApiController]
     [Route("info/services")]
+    [Authorize]
     public class ServicesInfoController : ControllerBase
     {
         private readonly IServicesInfoService _servicesInfoService;
