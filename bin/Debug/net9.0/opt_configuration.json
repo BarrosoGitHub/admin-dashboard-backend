@@ -1,7 +1,7 @@
 {
   "optMainConfiguration": {
-    "stationId": "234",
-    "workstationId": 3,
+    "stationId": "asd",
+    "workstationId": 123,
     "applicationName": "OPT Petrotec",
     "version": "0.0.0.0",
     "optType": "dispenserIntegrated",
@@ -16,20 +16,20 @@
     "tertiaryLanguage": "portuguese",
     "languageN4": "french",
     "idleActive": true,
-    "countryCode": "es",
+    "countryCode": "pt",
     "company": "generic",
     "maxDatabaseSize": 50,
     "unmannedEnvironment": false
   },
   "pinpadConfiguration": {
-    "hostName": "172.121.16.48",
+    "hostName": "172.121.16.168",
     "hostPort": 10000,
     "readIccBin": true,
-    "pedModel": "ingenico"
+    "pedModel": "verifone"
   },
   "fdcConfiguration": {
     "hostName": "172.121.16.30",
-    "eptId": 3,
+    "eptId": 123,
     "countryCode": 351,
     "reportPrinterErrors": false,
     "maxSimultaneousLogins": 4,

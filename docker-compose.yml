@@ -1,0 +1,36 @@
+version: '3.9'
+services:
+
+  backend:
+    container_name: optconfig-backend
+    image: optconfig-backend:latest
+    platform: linux/arm64
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    privileged: true
+    volumes:
+      - /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket
+    networks:
+      optconfig-net:
+        ipv4_address: 172.20.0.18
+
+  frontend:
+    container_name: optconfig-frontend
+    image: optconfig-frontend:latest
+    platform: linux/arm64
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      optconfig-net:
+        ipv4_address: 172.20.0.19
+
+networks:
+  optconfig-net:
+    name: optconfig-net
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

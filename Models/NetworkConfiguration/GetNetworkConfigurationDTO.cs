@@ -11,4 +11,6 @@ public class GetNetworkConfigurationDTO
     public string? SubnetMask { get; set; }
     public string? DefaultGateway { get; set; }
     public bool? IsDhcpEnabled { get; set; }
+    public string? NtpAddress { get; set; } // Renamed from NtpAdress
+    public bool? NtpActive { get; set; } // Indicates if NTP is active
 }

@@ -113,6 +113,81 @@ public class ToradexNetworkConfigurationService : INetworkConfigurationService
                 }
             }
         }
+
+        // Get NTP address
+        try
+        {
+            string ntpConfPath = "/etc/ntp.conf";
+            if (System.IO.File.Exists(ntpConfPath))
+            {
+                var ntpLines = System.IO.File.ReadAllLines(ntpConfPath);
+                var ntpServerLine = ntpLines.FirstOrDefault(l => l.Trim().StartsWith("server "));
+                if (ntpServerLine != null)
+                {
+                    result.NtpAddress = ntpServerLine.Split(' ', StringSplitOptions.RemoveEmptyEntries).ElementAtOrDefault(1);
+                }
+            }
+            else
+            {
+                // Try systemd-timesyncd.conf as fallback
+                string timesyncdPath = "/etc/systemd/timesyncd.conf";
+                if (System.IO.File.Exists(timesyncdPath))
+                {
+                    var timesyncdLines = System.IO.File.ReadAllLines(timesyncdPath);
+                    var ntpLine = timesyncdLines.FirstOrDefault(l => l.Trim().StartsWith("NTP="));
+                    if (ntpLine != null)
+                    {
+                        result.NtpAddress = ntpLine.Split('=', StringSplitOptions.RemoveEmptyEntries).ElementAtOrDefault(1);
+                    }
+                }
+            }
+        }
+        catch { /* ignore errors */ }
+
+        // Get NTP active state
+        try
+        {
+            var ntpActiveProcess = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "/bin/bash",
+                    Arguments = "-c \"timedatectl show -p NTPSynchronized\"",
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                }
+            };
+            ntpActiveProcess.Start();
+            string ntpActiveOutput = await ntpActiveProcess.StandardOutput.ReadToEndAsync();
+            await ntpActiveProcess.WaitForExitAsync();
+            // Output: NTPSynchronized=yes or NTPSynchronized=no
+            result.NtpActive = ntpActiveOutput.Trim().EndsWith("yes");
+        }
+        catch { result.NtpActive = null; }
+
+        // Get active state
+        try
+        {
+            var activeProcess = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "/usr/bin/nmcli",
+                    Arguments = "-t -f GENERAL.STATE connection show network0",
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                }
+            };
+            activeProcess.Start();
+            string activeOutput = await activeProcess.StandardOutput.ReadToEndAsync();
+            await activeProcess.WaitForExitAsync();
+            // Output format: GENERAL.STATE:activated (or similar)
+            result.NtpActive = activeOutput.Contains("activated");
+        }
+        catch { result.NtpActive = false; }
+
         return result;
     }
 }

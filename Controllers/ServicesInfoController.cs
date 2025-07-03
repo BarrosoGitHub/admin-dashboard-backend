@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OPTConfigurator.Helpers;
 using OPTConfigurator.Services.Interfaces;
 
 namespace OPTConfigurator.Controllers
@@ -21,6 +22,13 @@ namespace OPTConfigurator.Controllers
         {
             var result = _servicesInfoService.GetAllServicesInfo();
             return Ok(result);
+        }
+
+        [HttpGet("boardtype")]
+        public ActionResult<string> GetBoardType()
+        {
+            var boardType = BoardHelper.GetBoardType();
+            return Ok(boardType);
         }
     }
 }

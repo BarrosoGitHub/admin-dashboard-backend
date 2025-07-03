@@ -42,3 +42,4 @@ C:\Dev\OPT eMOTION - Configurator\OPTConfigurator\bin\Debug\net9.0\Microsoft.Ide
 C:\Dev\OPT eMOTION - Configurator\OPTConfigurator\bin\Debug\net9.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Dev\OPT eMOTION - Configurator\OPTConfigurator\bin\Debug\net9.0\Microsoft.IdentityModel.Tokens.dll
 C:\Dev\OPT eMOTION - Configurator\OPTConfigurator\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
+c:\Dev\OPT eMOTION - Configurator\OPTConfigurator\bin\Debug\net9.0\user_interface_configuration.json

@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OPTConfigurator.Helpers;
 using OPTConfigurator.Models;
 using OPTConfigurator.Services.Interfaces;
 
@@ -6,6 +8,7 @@ namespace OPTConfiguration.API.Application.Controllers;
 
 [ApiController]
 [Route("configuration/network")]
+[Authorize]
 public class NetworkController : ControllerBase
 {
     private readonly INetworkConfigurationService _networkService;

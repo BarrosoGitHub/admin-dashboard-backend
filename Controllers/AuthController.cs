@@ -22,10 +22,19 @@ namespace OPTConfigurator.Controllers
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequest request)
         {
-            if (request.Username == "admin" && request.Password == "password")
+            var configUsername = _configuration["Username"];
+            var configPassword = _configuration["Password"];
+            var jwtKey = _configuration["Jwt:Key"];
+            
+            if (string.IsNullOrEmpty(configUsername) || string.IsNullOrEmpty(configPassword) || string.IsNullOrEmpty(jwtKey))
+            {
+                return StatusCode(500, "Authentication configuration is missing.");
+            }
+            
+            if (request.Username == configUsername && request.Password == configPassword)
             {
                 var tokenHandler = new JwtSecurityTokenHandler();
-                var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
+                var key = Encoding.ASCII.GetBytes(jwtKey);
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(new[]
@@ -57,6 +66,55 @@ namespace OPTConfigurator.Controllers
             // Add the token to the blacklist
             BlacklistedTokens.Add(token);
             return Ok(new { Message = "Logged out successfully. Token is now blacklisted." });
+        }
+
+        [HttpPost("change-password")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequest request)
+        {
+            if (request == null || string.IsNullOrEmpty(request.CurrentPassword) || string.IsNullOrEmpty(request.NewPassword))
+            {
+                return BadRequest(new { Message = "Current password and new password are required." });
+            }
+
+            var configUsername = _configuration["Username"];
+            var configPassword = _configuration["Password"];
+
+            if (string.IsNullOrEmpty(configUsername) || string.IsNullOrEmpty(configPassword))
+            {
+                return StatusCode(500, "Authentication configuration is missing.");
+            }
+
+            // Verify current password
+            if (request.CurrentPassword != configPassword)
+            {
+                return Unauthorized(new { Message = "Current password is incorrect." });
+            }
+
+            try
+            {
+                // Update the auth.json file
+                var authConfig = new
+                {
+                    Username = configUsername,
+                    Password = request.NewPassword
+                };
+
+                var json = System.Text.Json.JsonSerializer.Serialize(authConfig, new System.Text.Json.JsonSerializerOptions
+                {
+                    WriteIndented = true
+                });
+
+                await System.IO.File.WriteAllTextAsync("auth.json", json);
+
+                // Reload configuration
+                (_configuration as IConfigurationRoot)?.Reload();
+
+                return Ok(new { Message = "Password changed successfully." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Failed to update password.", Error = ex.Message });
+            }
         }
 
         [HttpGet("validate")]

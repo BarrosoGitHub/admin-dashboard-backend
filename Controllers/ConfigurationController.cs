@@ -1,13 +1,14 @@
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OPTConfigurator.Models;
 using OPTConfigurator.Services.Interfaces;
-using Petrotec.Opt.Data.Models.Configuration.Opt;
 
 namespace OPTConfigurator.Controllers;
 
 [ApiController]
 [Route("configuration/opt")]
+[Authorize]
 public class ConfigurationController : ControllerBase
 {
     private IOptConfigurationService _optConfigurationService;

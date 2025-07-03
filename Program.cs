@@ -10,22 +10,26 @@ using OPTConfigurator.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddJsonFile("auth.json", optional: false, reloadOnChange: true);
+
 builder.Services.AddScoped<IOptConfigurationService, OptConfigurationService>();
 builder.Services.AddScoped<IUserInterfaceConfigurationService, UserInterfaceConfigurationService>();
 builder.Services.AddScoped<IValidator<GetOptConfigurationTemplateDTO>, AddOptConfigurationValidator>();
 builder.Services.AddScoped<IValidator<UpdateOptConfigurationDTO>, UpdateOptConfigurationRequestValidator>();
 builder.Services.AddScoped<IValidator<UserInterfaceConfigurationDTO>, AddUserInterfaceConfigurationValidator>();
-builder.Services.AddScoped<OPTConfigurator.Services.Interfaces.IServicesInfoService, OPTConfigurator.Services.ServicesInfoService>();
+builder.Services.AddScoped<IServicesInfoService, ServicesInfoService>();
 
 string boardType = BoardHelper.GetBoardType();
 
 if (boardType == "Toradex")
 {
     builder.Services.AddScoped<INetworkConfigurationService, ToradexNetworkConfigurationService>();
+    Console.WriteLine("Using Toradex network configuration service.");
 }
 else if (boardType == "TS7970")
 {
     builder.Services.AddScoped<INetworkConfigurationService, TSNetworkConfigurationService>();
+    Console.WriteLine("Using TS7970 network configuration service.");
 }
 else
 {
@@ -41,16 +45,6 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
         options.JsonSerializerOptions.PropertyNamingPolicy = null;
     });
-
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(policy =>
-    {
-        policy.WithOrigins("http://localhost:5173")
-              .AllowAnyHeader()
-              .AllowAnyMethod();
-    });
-});
 
 builder.Services.AddOpenApi();
 
@@ -75,6 +69,24 @@ if (!string.IsNullOrEmpty(jwtKey))
     });
 }
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+
+    // options.AddDefaultPolicy(policy =>
+    // {
+    //     policy.WithOrigins("http://172.16.55.152:8081")
+    //           .AllowAnyHeader()
+    //           .AllowAnyMethod()
+    //           .AllowCredentials();
+    // });
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -82,6 +94,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+app.UseWebSockets();
 app.UseMiddleware<ModelBindingErrorHandlingMiddleware>();
 app.UseHttpsRedirection();
 app.UseCors();

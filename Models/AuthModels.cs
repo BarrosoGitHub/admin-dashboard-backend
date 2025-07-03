@@ -5,14 +5,22 @@ namespace OPTConfigurator.Models
     public class LoginRequest
     {
         [Required]
-        public string Username { get; set; }
+        public required string Username { get; set; }
         [Required]
-        public string Password { get; set; }
+        public required string Password { get; set; }
     }
 
     public class LoginResponse
     {
-        public string Token { get; set; }
+        public required string Token { get; set; }
         public DateTime ExpiresAt { get; set; }
+    }
+
+    public class ChangePasswordRequest
+    {
+        [Required]
+        public required string CurrentPassword { get; set; }
+        [Required]
+        public required string NewPassword { get; set; }
     }
 }
