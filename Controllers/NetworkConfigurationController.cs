@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using OPTConfigurator.Helpers;
 using OPTConfigurator.Models;
 using OPTConfigurator.Services.Interfaces;
 
@@ -28,7 +27,15 @@ public class NetworkController : ControllerBase
     [HttpPut]
     public async Task<IActionResult> UpdateNetworkConfiguration([FromBody] UpdateNetworkConfigurationDTO configuration)
     {
-        await _networkService.UpdateNetworkConfigurationAsync(configuration);
-        return NoContent();
+        var success = await _networkService.UpdateNetworkConfigurationAsync(configuration);
+        
+        if (success)
+        {
+            return Ok(new { success = true, message = "Network configuration updated successfully." });
+        }
+        else
+        {
+            return BadRequest(new { success = false, message = "Failed to update network configuration." });
+        }
     }
 }

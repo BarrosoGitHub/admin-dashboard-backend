@@ -1,6 +1,3 @@
-using System.Net;
-using System.Net.Sockets;
-using System.Text.RegularExpressions;
 using OPTConfigurator.Helpers;
 using OPTConfigurator.Services.Interfaces;
 using System.Diagnostics;
@@ -10,11 +7,11 @@ namespace OPTConfigurator.Services;
 
 public class ToradexNetworkConfigurationService : INetworkConfigurationService
 {
-    public async Task UpdateNetworkConfigurationAsync(UpdateNetworkConfigurationDTO configuration)
+    public async Task<bool> UpdateNetworkConfigurationAsync(UpdateNetworkConfigurationDTO configuration)
     {
         if (configuration == null || string.IsNullOrEmpty(configuration.IPAddress))
         {
-            throw new ArgumentNullException(nameof(configuration));
+            return false;
         }
 
         string nmcliSetCommand = $"/usr/bin/nmcli connection modify \"network0\"";
@@ -23,12 +20,24 @@ public class ToradexNetworkConfigurationService : INetworkConfigurationService
             nmcliSetCommand += $" ipv4.method manual";
             nmcliSetCommand += $" ipv4.addresses \"{Utils.GetIpAddressWithPrefix(configuration.IPAddress, configuration.SubnetMask!)}\"";
             nmcliSetCommand += $" ipv4.gateway \"{configuration.DefaultGateway}\"";
+            
+            if (!string.IsNullOrEmpty(configuration.PrimaryDns) || !string.IsNullOrEmpty(configuration.SecondaryDns))
+            {
+                var dnsServers = new List<string>();
+                if (!string.IsNullOrEmpty(configuration.PrimaryDns))
+                    dnsServers.Add(configuration.PrimaryDns);
+                if (!string.IsNullOrEmpty(configuration.SecondaryDns))
+                    dnsServers.Add(configuration.SecondaryDns);
+                
+                nmcliSetCommand += $" ipv4.dns \"{string.Join(",", dnsServers)}\"";
+            }
         }
         else
         {
             nmcliSetCommand += $" ipv4.method auto";
             nmcliSetCommand += $" ipv4.addresses \'\'";
             nmcliSetCommand += $" ipv4.gateway \'\'";
+            nmcliSetCommand += $" ipv4.dns \'\'";
         }
 
         var process1 = new Process
@@ -47,13 +56,37 @@ public class ToradexNetworkConfigurationService : INetworkConfigurationService
         {
             process1.Start();
             await process1.WaitForExitAsync();
+            
+            if (process1.ExitCode == 0)
+            {
+                Console.WriteLine("Network configuration updated successfully.");
+                
+                _ = Task.Run(async () =>
+                {
+                    try
+                    {
+                        await Utils.ScheduleNetworkRebootAsync();
+                        Console.WriteLine("Network reboot completed successfully.");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Network reboot failed: {ex.Message}");
+                    }
+                });
+                
+                return true;
+            }
+            else
+            {
+                Console.WriteLine($"Network configuration update failed with exit code: {process1.ExitCode}");
+                return false;
+            }
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Failed to update network configuration: {ex.Message}");
+            return false;
         }
-
-        Utils.ScheduleNetworkRebootAsync();
     }
 
     public async Task<GetNetworkConfigurationDTO> GetNetworkConfigurationAsync()
@@ -129,7 +162,6 @@ public class ToradexNetworkConfigurationService : INetworkConfigurationService
             }
             else
             {
-                // Try systemd-timesyncd.conf as fallback
                 string timesyncdPath = "/etc/systemd/timesyncd.conf";
                 if (System.IO.File.Exists(timesyncdPath))
                 {
@@ -144,7 +176,6 @@ public class ToradexNetworkConfigurationService : INetworkConfigurationService
         }
         catch { /* ignore errors */ }
 
-        // Get NTP active state
         try
         {
             var ntpActiveProcess = new Process
@@ -161,7 +192,6 @@ public class ToradexNetworkConfigurationService : INetworkConfigurationService
             ntpActiveProcess.Start();
             string ntpActiveOutput = await ntpActiveProcess.StandardOutput.ReadToEndAsync();
             await ntpActiveProcess.WaitForExitAsync();
-            // Output: NTPSynchronized=yes or NTPSynchronized=no
             result.NtpActive = ntpActiveOutput.Trim().EndsWith("yes");
         }
         catch { result.NtpActive = null; }
@@ -184,9 +214,49 @@ public class ToradexNetworkConfigurationService : INetworkConfigurationService
             string activeOutput = await activeProcess.StandardOutput.ReadToEndAsync();
             await activeProcess.WaitForExitAsync();
             // Output format: GENERAL.STATE:activated (or similar)
-            result.NtpActive = activeOutput.Contains("activated");
+            result.Active = activeOutput.Contains("activated");
         }
-        catch { result.NtpActive = false; }
+        catch { result.Active = false; }
+
+        try
+        {
+            var dnsProcess = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "/usr/bin/nmcli",
+                    Arguments = "-t -f ipv4.dns connection show network0",
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                }
+            };
+            dnsProcess.Start();
+            string dnsOutput = await dnsProcess.StandardOutput.ReadToEndAsync();
+            await dnsProcess.WaitForExitAsync();
+            
+            if (!string.IsNullOrEmpty(dnsOutput))
+            {
+                var dnsLine = dnsOutput.Trim();
+                if (dnsLine.Contains(":"))
+                {
+                    var dnsPart = dnsLine.Split(':')[1].Trim();
+                    if (!string.IsNullOrEmpty(dnsPart))
+                    {
+                        var dnsServers = dnsPart.Split(',');
+                        if (dnsServers.Length > 0 && !string.IsNullOrEmpty(dnsServers[0]))
+                        {
+                            result.PrimaryDns = dnsServers[0].Trim();
+                        }
+                        if (dnsServers.Length > 1 && !string.IsNullOrEmpty(dnsServers[1]))
+                        {
+                            result.SecondaryDns = dnsServers[1].Trim();
+                        }
+                    }
+                }
+            }
+        }
+        catch { /* ignore DNS errors */ }
 
         return result;
     }

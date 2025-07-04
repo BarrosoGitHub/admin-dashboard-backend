@@ -20,7 +20,7 @@ public static class BoardHelper
         catch (Exception ex)
         {
             Console.WriteLine($"Error determining board type: {ex.Message}");
-            return null;
+            return null!;
         }
     }
 }

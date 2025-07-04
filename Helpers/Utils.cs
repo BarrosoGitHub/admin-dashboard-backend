@@ -69,13 +69,10 @@ public class Utils
         }
     }
 
-    public static void ScheduleNetworkRebootAsync()
+    public static async Task ScheduleNetworkRebootAsync()
     {
-        _ = Task.Run(async () =>
-        {
-            await Task.Delay(TimeSpan.FromSeconds(5));
-            ReloadNetworkInterfaceConfigAsync("network0").ContinueWith(t => { });
-        });
+        await Task.Delay(TimeSpan.FromSeconds(5));
+        await ReloadNetworkInterfaceConfigAsync("network0");
     }
 
     private static async Task ReloadNetworkInterfaceConfigAsync(string interfaceName)
@@ -107,7 +104,6 @@ public class Utils
             }
             catch (Exception ex)
             {
-                // Log or handle the exception
                 Console.WriteLine($"Failed to reload network interface {interfaceName}: {ex.Message}");
             }
         }

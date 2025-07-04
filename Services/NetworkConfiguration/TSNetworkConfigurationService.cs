@@ -9,52 +9,61 @@ namespace OPTConfigurator.Services;
 
 public class TSNetworkConfigurationService : INetworkConfigurationService
 {
-    public async Task UpdateNetworkConfigurationAsync(UpdateNetworkConfigurationDTO configuration)
+    public async Task<bool> UpdateNetworkConfigurationAsync(UpdateNetworkConfigurationDTO configuration)
     {
-        string configFile = "/etc/systemd/network/80-wired.network";
-
-        List<string> lines = new List<string>();
-        if (File.Exists(configFile))
+        try
         {
-            lines = File.ReadAllLines(configFile).ToList();
-        }
+            string configFile = "/etc/systemd/network/80-wired.network";
 
-        for (int i = 0; i < lines.Count; i++)
+            List<string> lines = new List<string>();
+            if (File.Exists(configFile))
+            {
+                lines = File.ReadAllLines(configFile).ToList();
+            }
+
+            for (int i = 0; i < lines.Count; i++)
+            {
+                if (lines[i].StartsWith("[Match]") || lines[i].StartsWith("[Network]"))
+                {
+                    continue;
+                }
+                else if (!string.IsNullOrEmpty(lines[i]) && lines[i].Contains("="))
+                {
+                    var parts = lines[i].Split('=');
+                    var key = parts[0].Trim().ToLower();
+                    var value = parts[1].Trim();
+
+                    if (key == "address")
+                    {
+                        key = "Address";
+                        lines[i] = $"{key}={Utils.GetIpAddressWithPrefix(configuration.IPAddress!, configuration.SubnetMask!) ?? value}";
+                    }
+                    else if (key == "gateway")
+                    {
+                        key = "Gateway";
+                        lines[i] = $"{key}={configuration.DefaultGateway ?? value}";
+                    }
+                    else if (key == "subnetmask")
+                    {
+                        key = "SubnetMask";
+                        lines[i] = $"{key}={configuration.SubnetMask ?? value}";
+                    }
+                    else if (key == "dhcp")
+                    {
+                        key = "DHCP";
+                        lines[i] = $"{key}={Utils.StringToBool(configuration.IsDhcpEnabled.ToString())}";
+                    }
+                }
+            }
+
+            await File.WriteAllLinesAsync(configFile, lines);
+            return true;
+        }
+        catch (Exception ex)
         {
-            if (lines[i].StartsWith("[Match]") || lines[i].StartsWith("[Network]"))
-            {
-                continue;
-            }
-            else if (!string.IsNullOrEmpty(lines[i]) && lines[i].Contains("="))
-            {
-                var parts = lines[i].Split('=');
-                var key = parts[0].Trim().ToLower();
-                var value = parts[1].Trim();
-
-                if (key == "address")
-                {
-                    key = "Address";
-                    lines[i] = $"{key}={Utils.GetIpAddressWithPrefix(configuration.IPAddress!, configuration.SubnetMask!) ?? value}";
-                }
-                else if (key == "gateway")
-                {
-                    key = "Gateway";
-                    lines[i] = $"{key}={configuration.DefaultGateway ?? value}";
-                }
-                else if (key == "subnetmask")
-                {
-                    key = "SubnetMask";
-                    lines[i] = $"{key}={configuration.SubnetMask ?? value}";
-                }
-                else if (key == "dhcp")
-                {
-                    key = "DHCP";
-                    lines[i] = $"{key}={Utils.StringToBool(configuration.IsDhcpEnabled.ToString())}";
-                }
-            }
+            Console.WriteLine($"Failed to update network configuration: {ex.Message}");
+            return false;
         }
-
-        await File.WriteAllLinesAsync(configFile, lines);
     }
 
     public async Task<GetNetworkConfigurationDTO> GetNetworkConfigurationAsync()

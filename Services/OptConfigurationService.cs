@@ -80,7 +80,6 @@ public class OptConfigurationService : IOptConfigurationService
 
         string filePath = Path.Combine(AppContext.BaseDirectory, "opt_configuration.json");
 
-        // Read existing configuration
         OptConfiguration? existingConfig = null;
         if (File.Exists(filePath))
         {

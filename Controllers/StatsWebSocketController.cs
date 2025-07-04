@@ -41,34 +41,6 @@ public class StatsWebSocketController : ControllerBase
         }
     }
 
-    private double? GetCpuTemperature()
-    {
-        try
-        {
-            // Read both CPU temps
-            string cpu0Path = "/sys/class/thermal/thermal_zone1/temp";
-            string cpu1Path = "/sys/class/thermal/thermal_zone2/temp";
-
-            if (System.IO.File.Exists(cpu0Path) && System.IO.File.Exists(cpu1Path))
-            {
-                var temp0Str = System.IO.File.ReadAllText(cpu0Path).Trim();
-                var temp1Str = System.IO.File.ReadAllText(cpu1Path).Trim();
-
-                if (int.TryParse(temp0Str, out int temp0) && int.TryParse(temp1Str, out int temp1))
-                {
-                    double avg = (temp0 + temp1) / 2.0 / 1000.0; // Convert from millidegrees
-                    return Math.Round(avg, 1); // Round to 1 decimal place
-                }
-            }
-        }
-        catch
-        {
-            // You might want to log this
-        }
-
-        return null; // If anything fails
-    }
-
     private Dictionary<string, double?> GetCpuTemperatures()
     {
         var result = new Dictionary<string, double?>();
