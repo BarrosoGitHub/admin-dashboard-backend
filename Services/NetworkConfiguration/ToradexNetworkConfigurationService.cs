@@ -14,13 +14,24 @@ public class ToradexNetworkConfigurationService : INetworkConfigurationService
             return false;
         }
 
+        GetNetworkConfigurationDTO? originalConfig = null;
+        try
+        {
+            originalConfig = await GetNetworkConfigurationAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to get current network configuration for backup: {ex.Message}");
+            return false;
+        }
+
         string nmcliSetCommand = $"/usr/bin/nmcli connection modify \"network0\"";
         if (!configuration.IsDhcpEnabled)
         {
             nmcliSetCommand += $" ipv4.method manual";
             nmcliSetCommand += $" ipv4.addresses \"{Utils.GetIpAddressWithPrefix(configuration.IPAddress, configuration.SubnetMask!)}\"";
             nmcliSetCommand += $" ipv4.gateway \"{configuration.DefaultGateway}\"";
-            
+
             if (!string.IsNullOrEmpty(configuration.PrimaryDns) || !string.IsNullOrEmpty(configuration.SecondaryDns))
             {
                 var dnsServers = new List<string>();
@@ -28,7 +39,7 @@ public class ToradexNetworkConfigurationService : INetworkConfigurationService
                     dnsServers.Add(configuration.PrimaryDns);
                 if (!string.IsNullOrEmpty(configuration.SecondaryDns))
                     dnsServers.Add(configuration.SecondaryDns);
-                
+
                 nmcliSetCommand += $" ipv4.dns \"{string.Join(",", dnsServers)}\"";
             }
         }
@@ -56,25 +67,31 @@ public class ToradexNetworkConfigurationService : INetworkConfigurationService
         {
             process1.Start();
             await process1.WaitForExitAsync();
-            
+
             if (process1.ExitCode == 0)
             {
                 Console.WriteLine("Network configuration updated successfully.");
-                
-                _ = Task.Run(async () =>
+
+                try
                 {
-                    try
+                    bool rebootSuccess = await Utils.ScheduleNetworkRebootAsync();
+                    if (rebootSuccess)
                     {
-                        await Utils.ScheduleNetworkRebootAsync();
                         Console.WriteLine("Network reboot completed successfully.");
+                        return true;
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        Console.WriteLine($"Network reboot failed: {ex.Message}");
+                        Console.WriteLine("Network reboot failed.");
+                        RollbackNetworkConfigurationAsync(originalConfig).Wait();
+                        return false;
                     }
-                });
-                
-                return true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Network reboot failed: {ex.Message}");
+                    return false;
+                }
             }
             else
             {
@@ -234,7 +251,7 @@ public class ToradexNetworkConfigurationService : INetworkConfigurationService
             dnsProcess.Start();
             string dnsOutput = await dnsProcess.StandardOutput.ReadToEndAsync();
             await dnsProcess.WaitForExitAsync();
-            
+
             if (!string.IsNullOrEmpty(dnsOutput))
             {
                 var dnsLine = dnsOutput.Trim();
@@ -259,5 +276,78 @@ public class ToradexNetworkConfigurationService : INetworkConfigurationService
         catch { /* ignore DNS errors */ }
 
         return result;
+    }
+
+    private async Task<bool> RollbackNetworkConfigurationAsync(GetNetworkConfigurationDTO? originalConfig)
+    {
+        if (originalConfig == null)
+        {
+            Console.WriteLine("No original configuration available for rollback.");
+            return false;
+        }
+
+        try
+        {
+            Console.WriteLine("Starting network configuration rollback...");
+
+            string rollbackCommand = $"/usr/bin/nmcli connection modify \"network0\"";
+
+            if (originalConfig.IsDhcpEnabled == false)
+            {
+                rollbackCommand += $" ipv4.method manual";
+                rollbackCommand += $" ipv4.addresses \"{Utils.GetIpAddressWithPrefix(originalConfig.IPAddress!, originalConfig.SubnetMask!)}\"";
+                rollbackCommand += $" ipv4.gateway \"{originalConfig.DefaultGateway}\"";
+
+                if (!string.IsNullOrEmpty(originalConfig.PrimaryDns) || !string.IsNullOrEmpty(originalConfig.SecondaryDns))
+                {
+                    var dnsServers = new List<string>();
+                    if (!string.IsNullOrEmpty(originalConfig.PrimaryDns))
+                        dnsServers.Add(originalConfig.PrimaryDns);
+                    if (!string.IsNullOrEmpty(originalConfig.SecondaryDns))
+                        dnsServers.Add(originalConfig.SecondaryDns);
+
+                    rollbackCommand += $" ipv4.dns \"{string.Join(",", dnsServers)}\"";
+                }
+            }
+            else
+            {
+                rollbackCommand += $" ipv4.method auto";
+                rollbackCommand += $" ipv4.addresses \'\'";
+                rollbackCommand += $" ipv4.gateway \'\'";
+                rollbackCommand += $" ipv4.dns \'\'";
+            }
+
+            var rollbackProcess = new Process
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = "/bin/bash",
+                    Arguments = $"-c \"{rollbackCommand}\"",
+                    RedirectStandardOutput = true,
+                    UseShellExecute = false,
+                    CreateNoWindow = true,
+                }
+            };
+
+            rollbackProcess.Start();
+            await rollbackProcess.WaitForExitAsync();
+
+            if (rollbackProcess.ExitCode == 0)
+            {
+                await Utils.ScheduleNetworkRebootAsync();
+                Console.WriteLine("Network configuration rollback completed successfully.");
+                return true;
+            }
+            else
+            {
+                Console.WriteLine($"Network configuration rollback failed with exit code: {rollbackProcess.ExitCode}");
+                return false;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Exception during network configuration rollback: {ex.Message}");
+            return false;
+        }
     }
 }

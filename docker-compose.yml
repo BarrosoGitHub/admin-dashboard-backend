@@ -12,6 +12,7 @@ services:
     privileged: true
     volumes:
       - /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket
+      - ./files:/app/files
     networks:
       optconfig-net:
         ipv4_address: 172.20.0.18

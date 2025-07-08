@@ -69,13 +69,13 @@ public class Utils
         }
     }
 
-    public static async Task ScheduleNetworkRebootAsync()
+    public static async Task<bool> ScheduleNetworkRebootAsync()
     {
         await Task.Delay(TimeSpan.FromSeconds(5));
-        await ReloadNetworkInterfaceConfigAsync("network0");
+        return await ReloadNetworkInterfaceConfigAsync("network0");
     }
 
-    private static async Task ReloadNetworkInterfaceConfigAsync(string interfaceName)
+    private static async Task<bool> ReloadNetworkInterfaceConfigAsync(string interfaceName)
     {
         string[] commands = new string[]
         {
@@ -92,6 +92,7 @@ public class Utils
                     FileName = "/bin/bash",
                     Arguments = $"-c \"{command}\"",
                     RedirectStandardOutput = true,
+                    RedirectStandardError = true,
                     UseShellExecute = false,
                     CreateNoWindow = true
                 }
@@ -99,13 +100,35 @@ public class Utils
 
             try
             {
+                Console.WriteLine($"Executing command: {command}");
                 process.Start();
+                string output = await process.StandardOutput.ReadToEndAsync();
+                string error = await process.StandardError.ReadToEndAsync();
                 await process.WaitForExitAsync();
+                
+                if (process.ExitCode != 0)
+                {
+                    Console.WriteLine($"Command failed with exit code {process.ExitCode}: {command}");
+                    Console.WriteLine($"Error output: {error}");
+                    Console.WriteLine($"Standard output: {output}");
+                    return false;
+                }
+                else
+                {
+                    Console.WriteLine($"Command executed successfully: {command}");
+                    if (!string.IsNullOrEmpty(output))
+                    {
+                        Console.WriteLine($"Output: {output}");
+                    }
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed to reload network interface {interfaceName}: {ex.Message}");
+                return false;
             }
         }
+        
+        return true;
     }
 }

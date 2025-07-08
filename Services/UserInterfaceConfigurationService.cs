@@ -16,16 +16,31 @@ public class UserInterfaceConfigurationService : IUserInterfaceConfigurationServ
 
     public async Task<UserInterfaceConfigurationDTO> GetCurrentUserInterfaceConfiguration()
     {
-        var filePath = Path.Combine(AppContext.BaseDirectory, "user_interface_configuration.json");
+        var filePath = Path.Combine(AppContext.BaseDirectory, "files", "user_interface_configuration.json");
         if (!File.Exists(filePath))
-            return null!;
+        {
+            // Create and save default configuration
+            var defaultConfig = CreateDefaultUserInterfaceConfiguration();
+            
+            var options = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
+            string defaultConfigJson = JsonSerializer.Serialize(defaultConfig, options);
+            
+            // Ensure the files directory exists
+            Directory.CreateDirectory(Path.GetDirectoryName(filePath)!);
+            await File.WriteAllTextAsync(filePath, defaultConfigJson);
+            
+            return defaultConfig;
+        }
 
         var json = await File.ReadAllTextAsync(filePath);
-        var options = new JsonSerializerOptions
+        var deserializeOptions = new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
-        return JsonSerializer.Deserialize<UserInterfaceConfigurationDTO>(json, options)!;
+        return JsonSerializer.Deserialize<UserInterfaceConfigurationDTO>(json, deserializeOptions)!;
     }
 
     public UserInterfaceConfigurationDTO AddUserInterfaceConfiguration(UserInterfaceConfigurationDTO userInterfaceConfig)
@@ -36,7 +51,7 @@ public class UserInterfaceConfigurationService : IUserInterfaceConfigurationServ
             throw new ValidationException(validationResult.Errors);
         }
 
-        string filePath = Path.Combine(AppContext.BaseDirectory, "user_interface_configuration.json");
+        string filePath = Path.Combine(AppContext.BaseDirectory, "files", "user_interface_configuration.json");
         var options = new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -56,7 +71,7 @@ public class UserInterfaceConfigurationService : IUserInterfaceConfigurationServ
             throw new ValidationException(validationResult.Errors);
         }
 
-        string filePath = Path.Combine(AppContext.BaseDirectory, "user_interface_configuration.json");
+        string filePath = Path.Combine(AppContext.BaseDirectory, "files", "user_interface_configuration.json");
         var options = new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -66,5 +81,21 @@ public class UserInterfaceConfigurationService : IUserInterfaceConfigurationServ
         File.WriteAllText(filePath, userInterfaceConfigJson);
 
         return userInterfaceConfig;
+    }
+
+    private UserInterfaceConfigurationDTO CreateDefaultUserInterfaceConfiguration()
+    {
+        return new UserInterfaceConfigurationDTO
+        {
+            Client = "default",
+            WebsocketServerUrl = "ws://localhost:8088/ws/opt",
+            ShowDebugButton = false,
+            LoadLastOPTRequestOnStartup = false,
+            ReloadWhenGoingToIdleScreen = false,
+            ShowVideo = false,
+            AxonMultimediaIframe = false,
+            AxonMultimediaUrl = "",
+            GradeColors = new List<Dictionary<string, string>>()
+        };
     }
 }
