@@ -1,31 +1,25 @@
 {
   "optMainConfiguration": {
-    "stationId": "asd",
+    "stationId": "234",
     "workstationId": 123,
     "applicationName": "OPT Petrotec",
     "version": "0.0.0.0",
-    "optType": "dispenserIntegrated",
-    "preventFallback": false,
-    "stopOnPrinterError": false,
-    "activateInvoices": true,
+    "optType": 0,
     "instanceActive": true,
-    "foreignClientInvoiceSimplified": true,
     "gasoleoBGradeId": 0,
-    "primaryLanguage": "spanish",
-    "secondaryLanguage": "spanish",
-    "tertiaryLanguage": "portuguese",
-    "languageN4": "french",
-    "idleActive": true,
-    "countryCode": "pt",
-    "company": "generic",
+    "primaryLanguage": 3,
+    "secondaryLanguage": 3,
+    "tertiaryLanguage": 1,
+    "languageN4": 5,
+    "countryCode": 1,
+    "company": 10,
     "maxDatabaseSize": 50,
     "unmannedEnvironment": false
   },
   "pinpadConfiguration": {
     "hostName": "172.121.16.168",
     "hostPort": 10000,
-    "readIccBin": true,
-    "pedModel": "verifone"
+    "pedModel": 1
   },
   "fdcConfiguration": {
     "hostName": "172.121.16.30",
@@ -34,22 +28,20 @@
     "reportPrinterErrors": false,
     "maxSimultaneousLogins": 4,
     "manageEpt": false,
-    "assignedPumps": "",
-    "controllerType": "domsPssController",
+    "assignedPumps": [
+      1
+    ],
+    "controllerType": 0,
     "maxAuthorizeVolume": 9999,
     "maxAuthorizeAmount": 9999,
-    "allowDecimalPreset": false,
+    "allowDecimalPreset": true,
     "minPresetAmount": 2,
     "maxFuellingTime": 0,
     "miIp04SpainActive": false,
     "maxPreAuthorizationWaitTime": 60
   },
   "displayConfiguration": {
-    "displayWidth": 800,
-    "displayHeight": 600,
-    "video": "Video Petrotec.mpg",
-    "guiServerServicesUrl": "http://127.0.0.1:51600",
-    "guiServicesLocalPort": 51001
+    "guiServerServicesUrl": "http://*:8088"
   },
   "printerConfiguration": {
     "printerServerAddr": "127.0.0.1",
@@ -57,9 +49,9 @@
     "cols": 40
   },
   "epsClientConfiguration": {
-    "hostName": "0.0.0.0",
-    "localPort": 0,
-    "epsPort": 0
+    "hostName": "127.0.0.1",
+    "localPort": 20901,
+    "epsPort": 20101
   },
   "viaVerdeConfiguration": {
     "active": false,
@@ -78,19 +70,37 @@
     "alarmServerEnabled": true,
     "enableCompression": true
   },
-  "galpConfiguration": null,
+  "galpConfiguration": {
+    "activateB2B": false,
+    "activateFast": true,
+    "activateFastMagnetic": false,
+    "activateGalpFrota": true,
+    "activateCContinente": false,
+    "allowCContinenteMobileFallback": false,
+    "localServicesEndpointsList": "",
+    "activateLidlCard": false,
+    "convertLidlCardToGfb": true,
+    "allowLidlCardManualInput": true,
+    "continenteRetriesLimit": 3,
+    "enableBankingPaymentDisclaimer": true,
+    "servicesEndpoint": "https://192.168.66.218:8090/Storix/Rest/",
+    "servicesAuthToken": "9f3904c3-517b-4783-b3a9-ce57fb1baf7d",
+    "operatorExternalId": "VPOSUSERID1",
+    "touchPointExternalId": "PETROTEC_OPT_1",
+    "businessUnitExternalId": "VPOS1",
+    "enableViaT": false
+  },
   "regionalSettings": {
     "fuelUnitOfMeasure": "L",
     "currency": "EUR",
     "currencySymbol": "\u20AC",
     "fuelVolumeDecimalPlaces": 2,
     "fuelAmountDecimalPlaces": 2,
-    "fuelUnitPricesDecimalPlaces": 3,
-    "saleTotalAmountDecimalPlaces": 2
+    "fuelUnitPricesDecimalPlaces": 3
   },
   "bnaConfiguration": {
     "bnaActive": false,
-    "model": "jcM_EBA_34_EUR5",
+    "model": 0,
     "serialPort": "COM1",
     "baudRate": 9600,
     "dataBits": 8,
@@ -100,8 +110,8 @@
     "maxValue": 500,
     "minValue": 5,
     "operatingPeriod": "",
-    "prepayTicketMode": "auto",
-    "cashOperationMode": "postPay"
+    "prepayTicketMode": 0,
+    "cashOperationMode": 1
   },
   "headOfficeConfiguration": {
     "active": false,
@@ -142,10 +152,10 @@
     "printAmountInReceipt": true,
     "extraReceiptData": "",
     "descriptionFr": "",
-    "printReceiptType": "paper"
+    "printReceiptType": 0
   },
   "bankingCardPaymentConfiguration": {
-    "authorizationTicketMode": "disabled",
+    "authorizationTicketMode": 0,
     "minAuthAmount": 0
   },
   "discountsConfiguration": {
@@ -153,14 +163,13 @@
     "descriptionEn": "",
     "descriptionEs": "",
     "descriptionPt": "",
-    "extraReceiptData": "",
     "descriptionFr": "",
-    "typeOfDiscountTaxFormula": "type2"
+    "typeOfDiscountTaxFormula": 2
   },
   "prioConfiguration": null,
   "barcodeReaderConfiguration": {
     "enabled": false,
-    "model": "gryphon",
+    "model": 1,
     "serialPort": ""
   },
   "ingenicoConfiguration": {

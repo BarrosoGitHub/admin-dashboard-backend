@@ -16,7 +16,7 @@ public class UpdateForecourtControllerConfigurationDTO
 
     public bool? ManageEpt { get; set; }
 
-    public string? AssignedPumps { get; set; }
+    public List<int>? AssignedPumps { get; set; }
 
     public FccInterfaceTypes? ControllerType { get; set; }
 

@@ -215,6 +215,7 @@ public class OptConfigurationService : IOptConfigurationService
             {
                 EptId = addOptConfigurationDTO.WorkstationId,
                 HostName = fdcHostname,
+                AssignedPumps = new List<int>()
             },
             DisplayConfiguration = new DisplayConfiguration(),
             PrinterConfiguration = new PrinterConfiguration(),

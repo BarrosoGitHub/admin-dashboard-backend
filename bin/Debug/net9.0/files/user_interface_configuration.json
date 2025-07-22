@@ -1,1 +1,1 @@
-{"client":"galpGuima","websocketServerUrl":"ws://opt-emotion-core:8088/ws/opt","showDebugButton":true,"loadLastOPTRequestOnStartup":true,"reloadWhenGoingToIdleScreen":false,"showVideo":true,"axonMultimediaIframe":false,"axonMultimediaUrl":"","gradeColors":[{"New6":""}]}
+{"client":"default","websocketServerUrl":"ws://localhost:8088/ws/opt","showDebugButton":false,"loadLastOPTRequestOnStartup":false,"reloadWhenGoingToIdleScreen":false,"showVideo":false,"axonMultimediaIframe":true,"axonMultimediaUrl":"","gradeColors":[]}

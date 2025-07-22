@@ -7,7 +7,7 @@ using OPTConfigurator.Services.Interfaces;
 namespace OPTConfigurator.Controllers;
 
 [ApiController]
-[Route("configuration/opt")]
+[Route("configuration")]
 [Authorize]
 public class ConfigurationController : ControllerBase
 {
