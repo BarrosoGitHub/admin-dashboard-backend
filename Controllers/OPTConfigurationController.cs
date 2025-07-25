@@ -7,7 +7,7 @@ using OPTConfigurator.Services.Interfaces;
 namespace OPTConfigurator.Controllers;
 
 [ApiController]
-[Route("configuration")]
+[Route("opt-configuration")]
 [Authorize]
 public class ConfigurationController : ControllerBase
 {
@@ -90,6 +90,12 @@ public class ConfigurationController : ControllerBase
                 Errors = ex.Errors.Select(e => new { e.PropertyName, e.ErrorMessage })
             });
         }
+    }
+    
+    [HttpGet("is-available")]
+    public ActionResult GetConfiguratorType()
+    {
+        return Ok();
     }
 }
 

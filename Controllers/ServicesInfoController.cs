@@ -30,11 +30,5 @@ namespace OPTConfigurator.Controllers
             var boardType = BoardHelper.GetBoardType();
             return Ok(boardType);
         }
-
-        [HttpGet("configurator-type")]
-        public ActionResult<string> GetConfiguratorType()
-        {
-            return Ok("OPT");
-        }
     }
 }
