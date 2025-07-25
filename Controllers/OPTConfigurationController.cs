@@ -21,7 +21,7 @@ public class ConfigurationController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetCurrentOptConfiguration()
     {
-        var result = await _optConfigurationService.GetCurrentOptConfiguration();
+        var result = await _optConfigurationService.GetOptConfigurationAsync();
         if (result == null)
             return NotFound("No configuration found.");
 
@@ -91,11 +91,13 @@ public class ConfigurationController : ControllerBase
             });
         }
     }
-    
+
     [HttpGet("is-available")]
     public ActionResult GetConfiguratorType()
     {
-        return Ok();
+        return _optConfigurationService.IsOptServiceEnabled()
+            ? Ok(new { available = true })
+            : NotFound(new { available = false });
     }
 }
 

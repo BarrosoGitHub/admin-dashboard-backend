@@ -1,0 +1,374 @@
+{
+  "registeredTerminals": [
+    {
+      "pointOfInteractionAddress": "172.16.55.151",
+      "address": "172.16.55.18",
+      "applicationSender": "IPT Petrotec",
+      "deviceProxyPort": 45000,
+      "serialNumber": "017002",
+      "workstationId": "1",
+      "terminalId": "900",
+      "allowedAcquirerIds": [
+        9200,
+        9202
+      ],
+      "type": "IPT_PETROTEC"
+    },
+    {
+      "pointOfInteractionAddress": "127.0.0.1",
+      "address": "127.0.0.1",
+      "applicationSender": "OPT Petrotec",
+      "deviceProxyPort": 20101,
+      "serialNumber": "017002",
+      "workstationId": "1",
+      "terminalId": "901",
+      "allowedAcquirerIds": [
+        9200,
+        9202
+      ],
+      "type": "OPT_PETROTEC"
+    }
+  ],
+  "instanceId": "7ad5fc5f-8bce-489e-b8ec-d8e83682502d",
+  "instanceName": "PetrotecIfsfEps",
+  "acquirers": [
+    {
+      "description": "SIBS",
+      "type": "Banking",
+      "id": 9200,
+      "applicationId": null,
+      "issuerIdentifierRangeList": [
+        {
+          "first": 454702,
+          "last": 454705,
+          "allowDiscount": false,
+          "rebateLabel": {}
+        }
+      ],
+      "merchantId": "",
+      "serviceAddress": "",
+      "servicePort": 3321,
+      "forceRequestPin": true,
+      "forceRequestOdometer": false,
+      "forceRequestRegistration": false,
+      "forceRequestDriverId": false,
+      "canPerformDiscountOperation": true,
+      "canPerformLoyaltyOperation": true,
+      "connectTimeoutSeconds": 5,
+      "readTimeoutSeconds": 30,
+      "writeTimeoutSeconds": 5,
+      "maxTransactionValue": 150,
+      "defaultTransactionValue": null,
+      "allowedCardTypes": [
+        0
+      ],
+      "messagesList": [],
+      "receiptLabels": []
+    },
+    {
+      "description": "Galp WMCard",
+      "type": "GALP",
+      "id": 9202,
+      "applicationId": null,
+      "issuerIdentifierRangeList": [
+        {
+          "first": 708257,
+          "last": 708257,
+          "allowDiscount": true,
+          "rebateLabel": {
+            "En": "DESC. galpfrota BUSINESS",
+            "Pt": "DESC. galpfrota BUSINESS",
+            "Es": "DESC. galpfrota BUSINESS"
+          }
+        },
+        {
+          "first": 700582,
+          "last": 700582,
+          "allowDiscount": true,
+          "rebateLabel": {
+            "En": "DESC. galpfrota BUSINESS",
+            "Pt": "DESC. galpfrota BUSINESS",
+            "Es": "DESC. galpfrota BUSINESS"
+          }
+        },
+        {
+          "first": 708276,
+          "last": 708276,
+          "allowDiscount": true,
+          "rebateLabel": {
+            "En": "DESC. galpfrota BUSINESS",
+            "Pt": "DESC. galpfrota BUSINESS",
+            "Es": "DESC. galpfrota BUSINESS"
+          }
+        },
+        {
+          "first": 708417,
+          "last": 708417,
+          "allowDiscount": false,
+          "rebateLabel": {
+            "En": "DESC. galpfrota BUSINESS",
+            "Pt": "DESC. galpfrota BUSINESS",
+            "Es": "DESC. galpfrota BUSINESS"
+          }
+        },
+        {
+          "first": 708422,
+          "last": 708422,
+          "allowDiscount": true,
+          "rebateLabel": {
+            "En": "DESC. galpfrota BUSINESS",
+            "Pt": "DESC. galpfrota BUSINESS",
+            "Es": "DESC. galpfrota BUSINESS"
+          }
+        }
+      ],
+      "merchantId": "92004900",
+      "serviceAddress": "127.0.0.1",
+      "servicePort": 3321,
+      "forceRequestPin": true,
+      "forceRequestOdometer": false,
+      "forceRequestRegistration": false,
+      "forceRequestDriverId": false,
+      "canPerformDiscountOperation": false,
+      "canPerformLoyaltyOperation": false,
+      "connectTimeoutSeconds": 5,
+      "readTimeoutSeconds": 30,
+      "writeTimeoutSeconds": 5,
+      "maxTransactionValue": 9999,
+      "defaultTransactionValue": null,
+      "allowedCardTypes": [
+        2
+      ],
+      "messagesList": [
+        {
+          "epsMessageIdentifier": 1,
+          "language": 0,
+          "label": "DIGITE C\u00D3DIGO SECRETO"
+        },
+        {
+          "epsMessageIdentifier": 1,
+          "language": 1,
+          "label": "INSERT PIN"
+        },
+        {
+          "epsMessageIdentifier": 1,
+          "language": 2,
+          "label": "INSERTAR PIN"
+        },
+        {
+          "epsMessageIdentifier": 5,
+          "language": 0,
+          "label": "AGUARDE POR FAVOR"
+        },
+        {
+          "epsMessageIdentifier": 5,
+          "language": 1,
+          "label": "PLEASE WAIT"
+        },
+        {
+          "epsMessageIdentifier": 5,
+          "language": 2,
+          "label": "ESPERA POR FAVOR"
+        },
+        {
+          "epsMessageIdentifier": 2,
+          "language": 0,
+          "label": "DIGITE OS QUIL\u00D3METROS"
+        },
+        {
+          "epsMessageIdentifier": 2,
+          "language": 1,
+          "label": "INSERT MILEAGE"
+        },
+        {
+          "epsMessageIdentifier": 2,
+          "language": 2,
+          "label": "INSERTAR KILOMETRAJE"
+        },
+        {
+          "epsMessageIdentifier": 3,
+          "language": 0,
+          "label": "DIGITE DENTIFICA\u00C7\u00C3O"
+        },
+        {
+          "epsMessageIdentifier": 3,
+          "language": 1,
+          "label": "INSERT ID"
+        },
+        {
+          "epsMessageIdentifier": 3,
+          "language": 2,
+          "label": "INSERTAR ID"
+        },
+        {
+          "epsMessageIdentifier": 13,
+          "language": 0,
+          "label": "APROVADO DESCONTO DE {AMOUNT} {CURRENCY}"
+        },
+        {
+          "epsMessageIdentifier": 13,
+          "language": 1,
+          "label": "APPROVED DISCOUNT {AMOUNT} {CURRENCY}"
+        },
+        {
+          "epsMessageIdentifier": 13,
+          "language": 2,
+          "label": "DESCUENTO APROBADO {AMOUNT} {CURRENCY}"
+        }
+      ],
+      "receiptLabels": [
+        {
+          "epsReceiptLabelIdentifier": 0,
+          "language": 0,
+          "label": "GALP FROTA"
+        },
+        {
+          "epsReceiptLabelIdentifier": 1,
+          "language": 0,
+          "label": "DESCONTO GALP"
+        },
+        {
+          "epsReceiptLabelIdentifier": 2,
+          "language": 0,
+          "label": "Terminal Id."
+        },
+        {
+          "epsReceiptLabelIdentifier": 3,
+          "language": 0,
+          "label": "Sess\u00E3o"
+        },
+        {
+          "epsReceiptLabelIdentifier": 4,
+          "language": 0,
+          "label": "Opera\u00E7\u00E3o"
+        },
+        {
+          "epsReceiptLabelIdentifier": 5,
+          "language": 0,
+          "label": "Cart\u00E3o Frota"
+        },
+        {
+          "epsReceiptLabelIdentifier": 6,
+          "language": 0,
+          "label": "DESC. GALP"
+        },
+        {
+          "epsReceiptLabelIdentifier": 7,
+          "language": 0,
+          "label": "Cliente"
+        },
+        {
+          "epsReceiptLabelIdentifier": 8,
+          "language": 0,
+          "label": "Utente/Matr\u00EDcula"
+        },
+        {
+          "epsReceiptLabelIdentifier": 9,
+          "language": 0,
+          "label": "Caducidade"
+        },
+        {
+          "epsReceiptLabelIdentifier": 10,
+          "language": 0,
+          "label": "Quil\u00F3metros"
+        },
+        {
+          "epsReceiptLabelIdentifier": 0,
+          "language": 2,
+          "label": "GALP FLOTA"
+        },
+        {
+          "epsReceiptLabelIdentifier": 1,
+          "language": 2,
+          "label": "DESCUENTO GALP"
+        },
+        {
+          "epsReceiptLabelIdentifier": 2,
+          "language": 2,
+          "label": "Terminal Id."
+        },
+        {
+          "epsReceiptLabelIdentifier": 3,
+          "language": 2,
+          "label": "Sesion"
+        },
+        {
+          "epsReceiptLabelIdentifier": 4,
+          "language": 2,
+          "label": "Operacion"
+        },
+        {
+          "epsReceiptLabelIdentifier": 5,
+          "language": 2,
+          "label": "Tarjeta Flota"
+        },
+        {
+          "epsReceiptLabelIdentifier": 6,
+          "language": 0,
+          "label": "DESC. GALP"
+        },
+        {
+          "epsReceiptLabelIdentifier": 7,
+          "language": 2,
+          "label": "Cliente"
+        },
+        {
+          "epsReceiptLabelIdentifier": 8,
+          "language": 2,
+          "label": "Usuario/Matricula"
+        },
+        {
+          "epsReceiptLabelIdentifier": 9,
+          "language": 2,
+          "label": "Caducidad"
+        },
+        {
+          "epsReceiptLabelIdentifier": 10,
+          "language": 2,
+          "label": "Kil\u00F3metros"
+        }
+      ]
+    }
+  ],
+  "languages": [
+    {
+      "description": "PT",
+      "id": 1
+    },
+    {
+      "description": "EN",
+      "id": 2
+    }
+  ],
+  "messages": [
+    {
+      "epsMessageIdentifier": 14,
+      "language": 0,
+      "label": "Confirmar"
+    },
+    {
+      "epsMessageIdentifier": 15,
+      "language": 0,
+      "label": "Cancelar"
+    },
+    {
+      "epsMessageIdentifier": 14,
+      "language": 2,
+      "label": "Confirme"
+    },
+    {
+      "epsMessageIdentifier": 15,
+      "language": 2,
+      "label": "Cancelar"
+    }
+  ],
+  "servicePort": 20901,
+  "countryId": "PT",
+  "currencyCode": "978",
+  "defaultAuthorizationValue": 150,
+  "defaultLanguage": 0,
+  "timeWaitCheckCardPresenceInSeconds": null,
+  "timeWaitMagneticStripeDataInSeconds": null,
+  "timeWaitGetKeyboardStringDataInSeconds": null,
+  "timeWaitDisplayCustomerMessageInSeconds": null
+}

@@ -22,7 +22,7 @@ public class OptConfigurationService : IOptConfigurationService
         _updateOptConfigurationValidator = updateOptConfigurationValidator;
     }
 
-    public async Task<OptConfiguration> GetCurrentOptConfiguration()
+    public async Task<OptConfiguration> GetOptConfigurationAsync()
     {
         string filePath = Path.Combine(AppContext.BaseDirectory, "files", "opt_configuration.json");
 
@@ -69,7 +69,7 @@ public class OptConfigurationService : IOptConfigurationService
 
         return optConfig;
     }
-    
+
     public OptConfiguration UpdateOptConfiguration(UpdateOptConfigurationDTO updateOptConfig)
     {
         var validationResult = _updateOptConfigurationValidator.Validate(updateOptConfig);
@@ -269,5 +269,10 @@ public class OptConfigurationService : IOptConfigurationService
         }
 
         return JsonSerializer.Serialize(optConfig, options);
+    }
+    
+    public bool IsOptServiceEnabled()
+    {
+        return true;
     }
 }

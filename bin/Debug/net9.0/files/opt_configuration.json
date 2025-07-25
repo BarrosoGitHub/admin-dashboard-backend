@@ -4,22 +4,22 @@
     "workstationId": 123,
     "applicationName": "OPT Petrotec",
     "version": "0.0.0.0",
-    "optType": 0,
+    "optType": "dispenserIntegrated",
     "instanceActive": true,
     "gasoleoBGradeId": 0,
-    "primaryLanguage": 3,
-    "secondaryLanguage": 3,
-    "tertiaryLanguage": 1,
-    "languageN4": 5,
-    "countryCode": 1,
-    "company": 10,
+    "primaryLanguage": "spanish",
+    "secondaryLanguage": "spanish",
+    "tertiaryLanguage": "portuguese",
+    "languageN4": "french",
+    "countryCode": "ca",
+    "company": "prio",
     "maxDatabaseSize": 50,
     "unmannedEnvironment": false
   },
   "pinpadConfiguration": {
     "hostName": "172.121.16.168",
     "hostPort": 10000,
-    "pedModel": 1
+    "pedModel": "ingenico"
   },
   "fdcConfiguration": {
     "hostName": "172.121.16.30",
@@ -28,13 +28,11 @@
     "reportPrinterErrors": false,
     "maxSimultaneousLogins": 4,
     "manageEpt": false,
-    "assignedPumps": [
-      1
-    ],
-    "controllerType": 0,
+    "assignedPumps": [],
+    "controllerType": "domsPssController",
     "maxAuthorizeVolume": 9999,
     "maxAuthorizeAmount": 9999,
-    "allowDecimalPreset": true,
+    "allowDecimalPreset": false,
     "minPresetAmount": 2,
     "maxFuellingTime": 0,
     "miIp04SpainActive": false,
@@ -100,7 +98,7 @@
   },
   "bnaConfiguration": {
     "bnaActive": false,
-    "model": 0,
+    "model": "jcM_EBA_34_EUR5",
     "serialPort": "COM1",
     "baudRate": 9600,
     "dataBits": 8,
@@ -110,8 +108,8 @@
     "maxValue": 500,
     "minValue": 5,
     "operatingPeriod": "",
-    "prepayTicketMode": 0,
-    "cashOperationMode": 1
+    "prepayTicketMode": "auto",
+    "cashOperationMode": "postPay"
   },
   "headOfficeConfiguration": {
     "active": false,
@@ -152,10 +150,10 @@
     "printAmountInReceipt": true,
     "extraReceiptData": "",
     "descriptionFr": "",
-    "printReceiptType": 0
+    "printReceiptType": "paper"
   },
   "bankingCardPaymentConfiguration": {
-    "authorizationTicketMode": 0,
+    "authorizationTicketMode": "disabled",
     "minAuthAmount": 0
   },
   "discountsConfiguration": {
@@ -164,12 +162,18 @@
     "descriptionEs": "",
     "descriptionPt": "",
     "descriptionFr": "",
-    "typeOfDiscountTaxFormula": 2
+    "typeOfDiscountTaxFormula": "type2"
   },
-  "prioConfiguration": null,
+  "prioConfiguration": {
+    "stationId": "",
+    "activateRedeMais": true,
+    "redeMaisServerUrl": "http://127.0.0.1:45000",
+    "activateEdc": true,
+    "edcServerUrl": "http://127.0.0.1:45000"
+  },
   "barcodeReaderConfiguration": {
     "enabled": false,
-    "model": 1,
+    "model": "newland",
     "serialPort": ""
   },
   "ingenicoConfiguration": {

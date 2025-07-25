@@ -2,6 +2,7 @@ using OPTConfigurator.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OPTConfigurator.Services.Interfaces;
+using FluentValidation;
 
 namespace EPSConfigurator.Controllers
 {
@@ -20,7 +21,7 @@ namespace EPSConfigurator.Controllers
         [HttpGet]
         public async Task<ActionResult<EpsConfiguration>> GetConfiguration()
         {
-            var result = await _configService.GetConfigurationAsync();
+            var result = await _configService.GetEpsConfigurationAsync();
             if (result == null)
                 return NotFound("No configuration found.");
 
@@ -32,30 +33,70 @@ namespace EPSConfigurator.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateConfiguration([FromBody] EpsConfiguration config)
-        {
-            await _configService.SetConfigurationAsync(config);
-            return Ok();
-        }
-
-        [HttpPost("new")]
-        public async Task<IActionResult> AddConfiguration()
+        public IActionResult UpdateOptConfiguration([FromBody] EpsConfiguration config)
         {
             try
             {
-                await _configService.CreateTemplateConfigurationFileAsync();
-                return Ok();
+                var updatedConfig = _configService.UpdateEpsConfiguration(config);
+                var jsonSettings = new System.Text.Json.JsonSerializerOptions
+                {
+                    DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
+                };
+                return new JsonResult(updatedConfig, jsonSettings);
             }
-            catch (Exception ex)
+            catch (ValidationException ex)
             {
-                return StatusCode(500, ex.Message);
+                return BadRequest(new
+                {
+                    Errors = ex.Errors.Select(e => new { e.PropertyName, e.ErrorMessage })
+                });
+            }
+        }
+
+        [HttpPost("new")]
+        public IActionResult AddConfiguration([FromBody] EpsConfiguration epsConfiguration)
+        {
+            try
+            {
+                var optConfiguration = _configService.SetConfigurationAsync(epsConfiguration);
+                return CreatedAtAction(nameof(GetConfiguration), epsConfiguration);
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest(new
+                {
+                    Errors = ex.Errors.Select(e => new { e.PropertyName, e.ErrorMessage })
+                });
+            }
+        }
+
+        [HttpGet("template")]
+        public IActionResult GetOptConfigurationTemplate([FromQuery] GetEpsConfigurationTemplateDTO template)
+        {
+            try
+            {
+                var optConfiguration = _configService.GetEpsConfigurationFromTemplate(template);
+                var jsonSettings = new System.Text.Json.JsonSerializerOptions
+                {
+                    DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
+                };
+                return new JsonResult(optConfiguration, jsonSettings);
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest(new
+                {
+                    Errors = ex.Errors.Select(e => new { e.PropertyName, e.ErrorMessage })
+                });
             }
         }
 
         [HttpGet("is-available")]
         public ActionResult GetConfiguratorType()
         {
-            return Ok();
+            return _configService.IsEpsServiceEnabled()
+            ? Ok(new { available = true })
+            : NotFound(new { available = false });
         }
     }
 }

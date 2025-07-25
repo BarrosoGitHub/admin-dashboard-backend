@@ -7,12 +7,30 @@ using OPTConfigurator.Services.Interfaces;
 using OPTConfigurator.Validations;
 using System.Text;
 using OPTConfigurator.Helpers;
+using EPSConfigurator.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddJsonFile("auth.json", optional: false, reloadOnChange: true);
 
-builder.Services.AddScoped<IOptConfigurationService, OptConfigurationService>();
+if (Environment.GetEnvironmentVariable("ENABLE_OPT_CONFIGURATION")?.ToLower() == "true")
+{
+    builder.Services.AddScoped<IOptConfigurationService, OptConfigurationService>();
+}
+else
+{
+    builder.Services.AddScoped<IOptConfigurationService, UnavailableService>();
+}
+
+if (Environment.GetEnvironmentVariable("ENABLE_EPS_CONFIGURATION")?.ToLower() == "true")
+{
+    builder.Services.AddScoped<IEpsConfigurationService, EpsConfigurationService>();
+}
+else
+{
+    builder.Services.AddScoped<IEpsConfigurationService, UnavailableService>();
+}
+
 builder.Services.AddScoped<IUserInterfaceConfigurationService, UserInterfaceConfigurationService>();
 builder.Services.AddScoped<IValidator<GetOptConfigurationTemplateDTO>, AddOptConfigurationValidator>();
 builder.Services.AddScoped<IValidator<UpdateOptConfigurationDTO>, UpdateOptConfigurationRequestValidator>();

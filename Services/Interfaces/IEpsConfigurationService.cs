@@ -4,8 +4,12 @@ namespace OPTConfigurator.Services.Interfaces;
 
 public interface IEpsConfigurationService
 {
-    Task<EpsConfiguration?> GetConfigurationAsync();
+    Task<EpsConfiguration?> GetEpsConfigurationAsync();
+    EpsConfiguration AddEpsConfiguration(EpsConfiguration epsConfiguration);
+    EpsConfiguration UpdateEpsConfiguration(EpsConfiguration epsConfig);
     Task SetConfigurationAsync(EpsConfiguration config);
     Task CreateTemplateConfigurationFileAsync();
+    EpsConfiguration GetEpsConfigurationFromTemplate(GetEpsConfigurationTemplateDTO epsConfigFromTemplate);
+    bool IsEpsServiceEnabled();
 }
 
