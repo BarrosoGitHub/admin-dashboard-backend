@@ -6,7 +6,7 @@
       "applicationSender": "IPT Petrotec",
       "deviceProxyPort": 45000,
       "serialNumber": "017002",
-      "workstationId": "1",
+      "workstationId": "0",
       "terminalId": "900",
       "allowedAcquirerIds": [
         9200,
@@ -73,7 +73,7 @@
       "issuerIdentifierRangeList": [
         {
           "first": 708257,
-          "last": 987987987,
+          "last": 708257,
           "allowDiscount": true,
           "rebateLabel": {
             "En": "DESC. galpfrota BUSINESS",

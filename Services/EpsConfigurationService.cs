@@ -73,7 +73,7 @@ namespace EPSConfigurator.Services
             UpdateConfigurationProperties(existingConfig, epsConfig);
 
             // Save updated configuration
-            string updatedJson = JsonSerializer.Serialize(epsConfig, new JsonSerializerOptions
+            string updatedJson = JsonSerializer.Serialize(existingConfig, new JsonSerializerOptions
             {
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 WriteIndented = true
