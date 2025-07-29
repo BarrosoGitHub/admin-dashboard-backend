@@ -49,131 +49,131 @@ namespace EPSConfigurator.Services
         }
 
         public EpsConfiguration UpdateEpsConfiguration(EpsConfiguration epsConfig)
-{
-    // var validationResult = _updateOptConfigurationValidator.Validate(epsConfig);
-    // if (!validationResult.IsValid)
-    // {
-    //     throw new ValidationException(validationResult.Errors);
-    // }
-
-    string filePath = Path.Combine(AppContext.BaseDirectory, "files", "eps_configuration.json");
-
-    EpsConfiguration existingConfig = null;
-    if (File.Exists(filePath))
-    {
-        var existingJson = File.ReadAllText(filePath);
-        existingConfig = ConvertJsonToEpsConfiguration(existingJson);
-    }
-    else
-    {
-        existingConfig = new EpsConfiguration();
-    }
-
-    // Use a safer approach for updating properties
-    UpdateConfigurationProperties(existingConfig, epsConfig);
-
-    // Save updated configuration
-    string updatedJson = JsonSerializer.Serialize(existingConfig, new JsonSerializerOptions
-    {
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        WriteIndented = true
-    });
-
-    File.WriteAllText(filePath, updatedJson);
-
-    return existingConfig;
-}
-
-private void UpdateConfigurationProperties(EpsConfiguration target, EpsConfiguration source)
-{
-    var properties = typeof(EpsConfiguration).GetProperties(BindingFlags.Public | BindingFlags.Instance);
-
-    foreach (var property in properties)
-    {
-        if (!property.CanRead || !property.CanWrite)
-            continue;
-
-        var sourceValue = property.GetValue(source);
-        if (sourceValue == null)
-            continue;
-
-        try
         {
-            if (property.PropertyType.IsValueType || property.PropertyType == typeof(string))
+            // var validationResult = _updateOptConfigurationValidator.Validate(epsConfig);
+            // if (!validationResult.IsValid)
+            // {
+            //     throw new ValidationException(validationResult.Errors);
+            // }
+
+            string filePath = Path.Combine(AppContext.BaseDirectory, "files", "eps_configuration.json");
+
+            EpsConfiguration existingConfig = null;
+            if (File.Exists(filePath))
             {
-                // Simple types (int, string, bool, etc.)
-                property.SetValue(target, sourceValue);
+                var existingJson = File.ReadAllText(filePath);
+                existingConfig = ConvertJsonToEpsConfiguration(existingJson);
             }
-            else if (property.PropertyType.IsClass)
+            else
             {
-                // Complex objects
-                var targetValue = property.GetValue(target);
-                if (targetValue == null)
-                {
-                    // Create new instance if target is null
-                    var newInstance = Activator.CreateInstance(property.PropertyType);
-                    property.SetValue(target, newInstance);
-                    targetValue = newInstance;
-                }
-
-                // Recursively update properties of complex objects
-                UpdateComplexProperty(targetValue, sourceValue, property.PropertyType);
+                existingConfig = new EpsConfiguration();
             }
-        }
-        catch (Exception ex)
-        {
-            // Log the error and continue with other properties
-            Console.WriteLine($"Error updating property {property.Name}: {ex.Message}");
-        }
-    }
-}
 
-private void UpdateComplexProperty(object target, object source, Type propertyType)
-{
-    if (target == null || source == null)
-        return;
+            // Use a safer approach for updating properties
+            UpdateConfigurationProperties(existingConfig, epsConfig);
 
-    var properties = propertyType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-
-    foreach (var property in properties)
-    {
-        if (!property.CanRead || !property.CanWrite)
-            continue;
-
-        // Skip indexed properties (properties with parameters)
-        if (property.GetIndexParameters().Length > 0)
-            continue;
-
-        try
-        {
-            var sourceValue = property.GetValue(source);
-            if (sourceValue != null)
+            // Save updated configuration
+            string updatedJson = JsonSerializer.Serialize(epsConfig, new JsonSerializerOptions
             {
-                if (property.PropertyType.IsValueType || property.PropertyType == typeof(string))
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true
+            });
+
+            File.WriteAllText(filePath, updatedJson);
+
+            return existingConfig;
+        }
+
+        private void UpdateConfigurationProperties(EpsConfiguration target, EpsConfiguration source)
+        {
+            var properties = typeof(EpsConfiguration).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            foreach (var property in properties)
+            {
+                if (!property.CanRead || !property.CanWrite)
+                    continue;
+
+                var sourceValue = property.GetValue(source);
+                if (sourceValue == null)
+                    continue;
+
+                try
                 {
-                    property.SetValue(target, sourceValue);
-                }
-                else if (property.PropertyType.IsClass)
-                {
-                    // Handle nested complex objects
-                    var targetValue = property.GetValue(target);
-                    if (targetValue == null)
+                    if (property.PropertyType.IsValueType || property.PropertyType == typeof(string))
                     {
-                        var newInstance = Activator.CreateInstance(property.PropertyType);
-                        property.SetValue(target, newInstance);
-                        targetValue = newInstance;
+                        // Simple types (int, string, bool, etc.)
+                        property.SetValue(target, sourceValue);
                     }
-                    UpdateComplexProperty(targetValue, sourceValue, property.PropertyType);
+                    else if (property.PropertyType.IsClass)
+                    {
+                        // Complex objects
+                        var targetValue = property.GetValue(target);
+                        if (targetValue == null)
+                        {
+                            // Create new instance if target is null
+                            var newInstance = Activator.CreateInstance(property.PropertyType);
+                            property.SetValue(target, newInstance);
+                            targetValue = newInstance;
+                        }
+
+                        // Recursively update properties of complex objects
+                        UpdateComplexProperty(targetValue, sourceValue, property.PropertyType);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Log the error and continue with other properties
+                    Console.WriteLine($"Error updating property {property.Name}: {ex.Message}");
                 }
             }
         }
-        catch (Exception ex)
+
+        private void UpdateComplexProperty(object target, object source, Type propertyType)
         {
-            // Log the error and continue with other properties
-            Console.WriteLine($"Error updating nested property {property.Name}: {ex.Message}");
+            if (target == null || source == null)
+                return;
+
+            var properties = propertyType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            foreach (var property in properties)
+            {
+                if (!property.CanRead || !property.CanWrite)
+                    continue;
+
+                // Skip indexed properties (properties with parameters)
+                if (property.GetIndexParameters().Length > 0)
+                    continue;
+
+                try
+                {
+                    var sourceValue = property.GetValue(source);
+                    if (sourceValue != null)
+                    {
+                        if (property.PropertyType.IsValueType || property.PropertyType == typeof(string))
+                        {
+                            property.SetValue(target, sourceValue);
+                        }
+                        else if (property.PropertyType.IsClass)
+                        {
+                            // Handle nested complex objects
+                            var targetValue = property.GetValue(target);
+                            if (targetValue == null)
+                            {
+                                var newInstance = Activator.CreateInstance(property.PropertyType);
+                                property.SetValue(target, newInstance);
+                                targetValue = newInstance;
+                            }
+                            UpdateComplexProperty(targetValue, sourceValue, property.PropertyType);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Log the error and continue with other properties
+                    Console.WriteLine($"Error updating nested property {property.Name}: {ex.Message}");
+                }
+            }
         }
-    }
-}
 
         public async Task SetConfigurationAsync(EpsConfiguration config)
         {

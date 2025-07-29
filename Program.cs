@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddJsonFile("auth.json", optional: false, reloadOnChange: true);
 
-if (Environment.GetEnvironmentVariable("ENABLE_OPT_CONFIGURATION")?.ToLower() == "true")
+if (Environment.GetEnvironmentVariable("ENABLE_OPT_CONFIGURATION")?.ToLower() == "false")
 {
     builder.Services.AddScoped<IOptConfigurationService, OptConfigurationService>();
 }

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OPTConfigurator")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9e920ac560b2cd9dcc8dbd076e1bda7e834171a2")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c425838385805a9a7dd6cbb84a93efced7b593c6")]
 [assembly: System.Reflection.AssemblyProductAttribute("OPTConfigurator")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OPTConfigurator")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

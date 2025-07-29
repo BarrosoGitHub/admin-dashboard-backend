@@ -49,9 +49,9 @@
       "serviceAddress": "",
       "servicePort": 3321,
       "forceRequestPin": true,
-      "forceRequestOdometer": false,
-      "forceRequestRegistration": false,
-      "forceRequestDriverId": false,
+      "forceRequestOdometer": true,
+      "forceRequestRegistration": true,
+      "forceRequestDriverId": true,
       "canPerformDiscountOperation": true,
       "canPerformLoyaltyOperation": true,
       "connectTimeoutSeconds": 5,
@@ -73,7 +73,7 @@
       "issuerIdentifierRangeList": [
         {
           "first": 708257,
-          "last": 708257,
+          "last": 987987987,
           "allowDiscount": true,
           "rebateLabel": {
             "En": "DESC. galpfrota BUSINESS",
@@ -106,7 +106,7 @@
           "last": 708417,
           "allowDiscount": false,
           "rebateLabel": {
-            "En": "DESC. galpfrota BUSINESS",
+            "En": "o",
             "Pt": "DESC. galpfrota BUSINESS",
             "Es": "DESC. galpfrota BUSINESS"
           }
