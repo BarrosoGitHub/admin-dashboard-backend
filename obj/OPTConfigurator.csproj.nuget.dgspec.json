@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Dev\\OPT eMOTION - Configurator\\OPTConfigurator\\OPTConfigurator.csproj": {}
+    "C:\\Dev\\OPT eMOTION - Configurator\\OPTConfigurator\\OPTConfigurator.csproj": {}
   },
   "projects": {
-    "c:\\Dev\\OPT eMOTION - Configurator\\OPTConfigurator\\OPTConfigurator.csproj": {
+    "C:\\Dev\\OPT eMOTION - Configurator\\OPTConfigurator\\OPTConfigurator.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Dev\\OPT eMOTION - Configurator\\OPTConfigurator\\OPTConfigurator.csproj",
+        "projectUniqueName": "C:\\Dev\\OPT eMOTION - Configurator\\OPTConfigurator\\OPTConfigurator.csproj",
         "projectName": "OPTConfigurator",
-        "projectPath": "c:\\Dev\\OPT eMOTION - Configurator\\OPTConfigurator\\OPTConfigurator.csproj",
+        "projectPath": "C:\\Dev\\OPT eMOTION - Configurator\\OPTConfigurator\\OPTConfigurator.csproj",
         "packagesPath": "C:\\Users\\diogo.barroso\\.nuget\\packages\\",
-        "outputPath": "c:\\Dev\\OPT eMOTION - Configurator\\OPTConfigurator\\obj\\",
+        "outputPath": "C:\\Dev\\OPT eMOTION - Configurator\\OPTConfigurator\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
