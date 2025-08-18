@@ -91,6 +91,14 @@ namespace EPSConfigurator.Controllers
             }
         }
 
+        [HttpGet("is-available")]
+        public ActionResult GetConfiguratorType()
+        {
+            return _configService.IsEpsServiceEnabled()
+                ? Ok(new { available = true })
+                : NotFound(new { available = false });
+        }
+
         [HttpGet("schema")]
         public ActionResult GetEpsConfigurationSchema()
         {
@@ -104,7 +112,7 @@ namespace EPSConfigurator.Controllers
                         new EpsPosClient
                         {
                             PointOfInteractionAddress = "string",
-                            Address = "string", 
+                            Address = "string",
                             ApplicationSender = "string",
                             DeviceProxyPort = 0,
                             SerialNumber = "string",
@@ -128,16 +136,16 @@ namespace EPSConfigurator.Controllers
                             ApplicationId = "string",
                             IssuerIdentifierRangeList = new List<IssuerRange>
                             {
-                                new IssuerRange 
-                                { 
-                                    First = 0, 
-                                    Last = 0, 
+                                new IssuerRange
+                                {
+                                    First = 0,
+                                    Last = 0,
                                     AllowDiscount = false,
                                     RebateLabel = new Dictionary<OPTConfigurator.Types.EpsMessageLanguage, string>()
                                 }
                             },
                             MerchantId = "string",
-                            ServiceAddress = "string", 
+                            ServiceAddress = "string",
                             ServicePort = 0,
                             ForceRequestPin = false,
                             ForceRequestOdometer = false,

@@ -1,41 +1,12 @@
 {
-  "registeredTerminals": [
-    {
-      "pointOfInteractionAddress": "172.16.55.151",
-      "address": "172.16.55.18",
-      "applicationSender": "IPT Petrotec",
-      "deviceProxyPort": 45000,
-      "serialNumber": "017002",
-      "workstationId": "0",
-      "terminalId": "900",
-      "allowedAcquirerIds": [
-        9200,
-        9202
-      ],
-      "type": "IPT_PETROTEC"
-    },
-    {
-      "pointOfInteractionAddress": "127.0.0.1",
-      "address": "127.0.0.1",
-      "applicationSender": "OPT Petrotec",
-      "deviceProxyPort": 20101,
-      "serialNumber": "017002",
-      "workstationId": "1",
-      "terminalId": "901",
-      "allowedAcquirerIds": [
-        9200,
-        9202
-      ],
-      "type": "OPT_PETROTEC"
-    }
-  ],
+  "registeredTerminals": [],
   "instanceId": "7ad5fc5f-8bce-489e-b8ec-d8e83682502d",
   "instanceName": "PetrotecIfsfEps",
   "acquirers": [
     {
       "description": "SIBS",
       "type": "Banking",
-      "id": 9200,
+      "id": 980,
       "applicationId": null,
       "issuerIdentifierRangeList": [
         {
@@ -366,7 +337,7 @@
   "countryId": "PT",
   "currencyCode": "978",
   "defaultAuthorizationValue": 150,
-  "defaultLanguage": 0,
+  "defaultLanguage": 7,
   "timeWaitCheckCardPresenceInSeconds": null,
   "timeWaitMagneticStripeDataInSeconds": null,
   "timeWaitGetKeyboardStringDataInSeconds": null,
