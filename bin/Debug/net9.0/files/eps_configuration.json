@@ -1,5 +1,20 @@
 {
-  "registeredTerminals": [],
+  "registeredTerminals": [
+    {
+      "pointOfInteractionAddress": "1",
+      "address": "1",
+      "applicationSender": "",
+      "deviceProxyPort": 0,
+      "serialNumber": "",
+      "workstationId": "",
+      "terminalId": "",
+      "allowedAcquirerIds": [
+        7,
+        0
+      ],
+      "type": ""
+    }
+  ],
   "instanceId": "7ad5fc5f-8bce-489e-b8ec-d8e83682502d",
   "instanceName": "PetrotecIfsfEps",
   "acquirers": [
@@ -8,20 +23,13 @@
       "type": "Banking",
       "id": 980,
       "applicationId": null,
-      "issuerIdentifierRangeList": [
-        {
-          "first": 454702,
-          "last": 454705,
-          "allowDiscount": false,
-          "rebateLabel": {}
-        }
-      ],
+      "issuerIdentifierRangeList": [],
       "merchantId": "",
       "serviceAddress": "",
       "servicePort": 3321,
       "forceRequestPin": true,
       "forceRequestOdometer": true,
-      "forceRequestRegistration": true,
+      "forceRequestRegistration": false,
       "forceRequestDriverId": true,
       "canPerformDiscountOperation": true,
       "canPerformLoyaltyOperation": true,
@@ -91,6 +99,12 @@
             "Pt": "DESC. galpfrota BUSINESS",
             "Es": "DESC. galpfrota BUSINESS"
           }
+        },
+        {
+          "first": 0,
+          "last": 0,
+          "allowDiscount": false,
+          "rebateLabel": {}
         }
       ],
       "merchantId": "92004900",
