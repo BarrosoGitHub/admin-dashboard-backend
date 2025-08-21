@@ -3,6 +3,7 @@ using OPTConfigurator.Services.Interfaces;
 using Petrotec.ZorPay.Common.Models;
 using Petrotec.ZorPay.Common.Types;
 using Petrotec.ZorPay.Models;
+using Petrotec.ZorPay.Opi.Extension.Models.Types;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -286,6 +287,7 @@ namespace EPSConfigurator.Services
                     WorkstationId = "1",
                     TerminalId = "900",
                     AllowedAcquirerIds = new List<int> { 9200, 9202 },
+                    Type = TerminalType.OutdoorTerminal
                 },
                 new EpsPosClient
                 {
@@ -297,6 +299,7 @@ namespace EPSConfigurator.Services
                     WorkstationId = "1",
                     TerminalId = "901",
                     AllowedAcquirerIds = new List<int> { 9200, 9202 },
+                    Type = TerminalType.IndoorTerminal
                 }
             },
                 InstanceId = "7ad5fc5f-8bce-489e-b8ec-d8e83682502d",

@@ -1,6 +1,7 @@
 using OPTConfigurator.Models;
 using OPTConfigurator.Services.Interfaces;
 using Petrotec.Opt.Data.Models.Configuration.Opt;
+using Petrotec.ZorPay.Models;
 
 namespace OPTConfigurator.Services;
 

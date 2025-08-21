@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "MC+tMCc6fXc=",
+  "dgSpecHash": "EAUvSRu5hCA=",
   "success": true,
-  "projectFilePath": "c:\\Dev\\OPT eMOTION - Configurator\\OPTConfigurator\\OPTConfigurator.csproj",
+  "projectFilePath": "C:\\Dev\\OPT eMOTION - Configurator\\OPTConfigurator\\OPTConfigurator.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\diogo.barroso\\.nuget\\packages\\fluentvalidation\\12.0.0\\fluentvalidation.12.0.0.nupkg.sha512",
     "C:\\Users\\diogo.barroso\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\9.0.5\\microsoft.aspnetcore.authentication.jwtbearer.9.0.5.nupkg.sha512",

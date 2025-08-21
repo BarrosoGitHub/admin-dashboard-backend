@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using OPTConfigurator.Services.Interfaces;
 using FluentValidation;
 using Petrotec.ZorPay.Models;
-using Petrotec.ZorPay.Common.Models;
-using Petrotec.ZorPay.Common.Types;
 
 namespace EPSConfigurator.Controllers
 {
@@ -107,117 +105,128 @@ namespace EPSConfigurator.Controllers
         {
             try
             {
-                // Create a sample/empty EpsConfiguration object to show the structure
-                var schemaObject = new EpsConfiguration
+                // Return a JSON schema representation instead of instantiating classes
+                var schemaObject = new
                 {
-                    RegisteredTerminals = new List<EpsPosClient>
+                    registeredTerminals = new[]
                     {
-                        new EpsPosClient
+                        new
                         {
-                            PointOfPaymentAddress = "string",
-                            Address = "string", 
-                            ApplicationSender = "string",
-                            DeviceProxyPort = 0,
-                            SerialNumber = "string",
-                            WorkstationId = "string",
-                            TerminalId = "string",
-                            AllowedAcquirerIds = new List<int> { 0 },
-                            Type = "string"
+                            pointOfPaymentAddress = "string",
+                            pointOfPaymentPort = 0,
+                            address = "string",
+                            applicationSender = "string",
+                            reportProgress = false,
+                            deviceProxyPort = 0,
+                            serialNumber = "string",
+                            workstationId = "string",
+                            terminalId = "string",
+                            cardAcceptorId = "string",
+                            allowedAcquirerIds = new[] { 0 },
+                            macKeyBankIndex = 0,
+                            pinBlockKeyBankIndex = 0,
+                            dataKeyBankIndex = 0,
+                            type = "TerminalType enum value",
+                            bypassMessageAuthentication = false,
+                            printerColumns = 32,
+                            printReceiptOnTerminal = false,
+                            printLogoOnTerminal = false,
+                            printerLogoPath = "string",
+                            printShiftCloseOnTerminal = false,
+                            currencySymbol = "EUR",
+                            allowOfflineAuthorization = false
                         }
                     },
-                    InstanceId = "string",
-                    InstanceName = "string",
-                    CountryId = "string",
-                    CurrencyCode = "978", // Default value
-                    Acquirers = new List<EpsAcquirer>
+                    instanceId = "string",
+                    instanceName = "string",
+                    countryId = "string",
+                    currencyCode = "string",
+                    acquirers = new[]
                     {
-                        new EpsAcquirer
+                        new
                         {
-                            Description = "string",
-                            Type = "string",
-                            Id = 0,
-                            ApplicationId = "string",
-                            IssuerIdentifierRangeList = new List<IssuerRange>
+                            description = "string",
+                            type = "string",
+                            id = 0,
+                            applicationId = "string",
+                            issuerIdentifierRangeList = new[]
                             {
-                                new IssuerRange 
-                                { 
-                                    First = 0, 
-                                    Last = 0, 
-                                    AllowDiscount = false,
-                                    RebateLabel = new Dictionary<EpsMessageLanguage, string>
-                                    {
-                                        { EpsMessageLanguage.Pt, "string" },
-                                        { EpsMessageLanguage.En, "string" },
-                                        { EpsMessageLanguage.Es, "string" }
-                                    }
+                                new
+                                {
+                                    first = 0,
+                                    last = 0,
+                                    allowDiscount = false,
+                                    rebateLabel = new Dictionary<string, string> { { "languageKey", "string" } }
                                 }
                             },
-                            MerchantId = "string",
-                            ServiceAddress = "string", 
-                            ServicePort = 0,
-                            ForceRequestPin = false,
-                            ForceRequestOdometer = false,
-                            ForceRequestRegistration = false,
-                            ForceRequestDriverId = false,
-                            CanPerformDiscountOperation = false,
-                            CanPerformLoyaltyOperation = false,
-                            ConnectTimeoutSeconds = 0,
-                            ReadTimeoutSeconds = 0,
-                            WriteTimeoutSeconds = 0,
-                            MaxTransactionValue = 0.0m,
-                            DefaultTransactionValue = 0.0m,
-                            AllowedCardTypes = new List<CardTypes>(),
-                            MessagesList = new List<EpsMessagesConfig>
+                            merchantId = "string",
+                            serviceAddress = "string",
+                            servicePort = 0,
+                            forceRequestPin = false,
+                            forceRequestOdometer = false,
+                            forceRequestRegistration = false,
+                            forceRequestDriverId = false,
+                            canPerformDiscountOperation = false,
+                            canPerformLoyaltyOperation = false,
+                            connectTimeoutSeconds = 0,
+                            readTimeoutSeconds = 0,
+                            writeTimeoutSeconds = 0,
+                            maxTransactionValue = 0.0,
+                            defaultTransactionValue = 0.0,
+                            allowOfflineProcessing = false,
+                            allowedCardTypes = new[] { "CardType enum value" },
+                            messagesList = new[]
                             {
-                                new EpsMessagesConfig
+                                new
                                 {
-                                    EpsMessageIdentifier = EpsMessageIdentifier.MsgWait,
-                                    Language = EpsMessageLanguage.Pt,
-                                    Label = "string"
+                                    epsMessageIdentifier = "EpsMessageIdentifier enum value",
+                                    language = "EpsMessageLanguage enum value",
+                                    label = "string"
                                 }
                             },
-                            ReceiptLabels = new List<EpsReceiptLabelsConfig>
+                            receiptLabels = new[]
                             {
-                                new EpsReceiptLabelsConfig
+                                new
                                 {
-                                    EpsReceiptLabelIdentifier = EpsReceiptLabelIdentifier.LblTerminal,
-                                    Language = EpsMessageLanguage.Pt,
-                                    Label = "string"
+                                    epsReceiptLabelIdentifier = "EpsReceiptLabelIdentifier enum value",
+                                    language = "EpsMessageLanguage enum value",
+                                    label = "string"
                                 }
                             }
                         }
                     },
-                    Languages = new List<EpsLanguage>
+                    languages = new[]
                     {
-                        new EpsLanguage
+                        new
                         {
-                            Description = "string",
-                            Id = 0
+                            description = "string",
+                            id = 0
                         }
                     },
-                    Messages = new List<EpsMessage>
+                    messages = new[]
                     {
-                        new EpsMessage
+                        new
                         {
-                            EpsMessageIdentifier = EpsMessageIdentifier.MsgWait,
-                            Language = EpsMessageLanguage.Pt,
-                            Label = "string"
+                            epsMessageIdentifier = "EpsMessageIdentifier enum value",
+                            language = "EpsMessageLanguage enum value",
+                            label = "string"
                         }
                     },
-                    ServicePort = 0,
-                    DefaultAuthorizationValue = 100, // Default value
-                    DefaultLanguage = EpsMessageLanguage.Pt,
-                    TimeWaitCheckCardPresenceInSeconds = 30,
-                    TimeWaitMagneticStripeDataInSeconds = 30,
-                    TimeWaitGetKeyboardStringDataInSeconds = 30,
-                    TimeWaitDisplayCustomerMessageInSeconds = 30
+                    servicePort = 0,
+                    defaultAuthorizationValue = 0.0,
+                    defaultLanguage = "EpsMessageLanguage enum value",
+                    timeWaitCheckCardPresenceInSeconds = 0,
+                    timeWaitMagneticStripeDataInSeconds = 0,
+                    timeWaitGetKeyboardStringDataInSeconds = 0,
+                    timeWaitDisplayCustomerMessageInSeconds = 0,
+                    timeWaitGetWaitCardReaderSelectionInSeconds = 0,
+                    timeWaitGetRfidReadInSeconds = 0
                 };
 
                 var jsonSettings = new System.Text.Json.JsonSerializerOptions
                 {
                     WriteIndented = true,
-                    DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.Never,
-                    Converters = { new System.Text.Json.Serialization.JsonStringEnumConverter() }
+                    PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase
                 };
 
                 return new JsonResult(schemaObject, jsonSettings);
@@ -231,16 +240,51 @@ namespace EPSConfigurator.Controllers
         {
             try
             {
+                // Return enum information as a generic structure
                 var enumsInfo = new
                 {
-                    EpsMessageLanguage = Enum.GetValues<OPTConfigurator.Types.EpsMessageLanguage>()
-                        .Select(e => new { Value = (int)e, Name = e.ToString() }).ToList(),
-                    EpsMessageIdentifier = Enum.GetValues<OPTConfigurator.Types.EpsMessageIdentifier>()
-                        .Select(e => new { Value = (int)e, Name = e.ToString() }).ToList(),
-                    EpsReceiptLabelIdentifier = Enum.GetValues<OPTConfigurator.Types.EpsReceiptLabelIdentifier>()
-                        .Select(e => new { Value = (int)e, Name = e.ToString() }).ToList(),
-                    CardTypes = Enum.GetValues<OPTConfigurator.Types.CardTypes>()
-                        .Select(e => new { Value = (int)e, Name = e.ToString() }).ToList()
+                    EpsMessageLanguage = new[]
+                    {
+                        new { Value = 0, Name = "Pt" },
+                        new { Value = 1, Name = "En" },
+                        new { Value = 2, Name = "Es" }
+                    },
+                    EpsMessageIdentifier = new[]
+                    {
+                        new { Value = 0, Name = "MsgWait" },
+                        new { Value = 1, Name = "MsgInsertPin" },
+                        new { Value = 2, Name = "MsgInsertKm" },
+                        new { Value = 3, Name = "MsgInsertIdCode" },
+                        new { Value = 4, Name = "MsgDiscountAmountApproved" },
+                        new { Value = 5, Name = "OkText" },
+                        new { Value = 6, Name = "CancelText" }
+                    },
+                    EpsReceiptLabelIdentifier = new[]
+                    {
+                        new { Value = 0, Name = "LblTerminal" },
+                        new { Value = 1, Name = "LblSession" },
+                        new { Value = 2, Name = "LblOperation" },
+                        new { Value = 3, Name = "LblGalpFrota" },
+                        new { Value = 4, Name = "LblGalpDiscount" },
+                        new { Value = 5, Name = "LblCardFrota" },
+                        new { Value = 6, Name = "LblCardDiscount" },
+                        new { Value = 7, Name = "LblCustomer" },
+                        new { Value = 8, Name = "LblDriverAndLicensePlate" },
+                        new { Value = 9, Name = "LblExpireDate" },
+                        new { Value = 10, Name = "LblMileage" }
+                    },
+                    CardTypes = new[]
+                    {
+                        new { Value = 0, Name = "Icc" },
+                        new { Value = 1, Name = "Contactless" },
+                        new { Value = 2, Name = "Magnetic" }
+                    },
+                    TerminalType = new[]
+                    {
+                        new { Value = 0, Name = "IPT_PETROTEC" },
+                        new { Value = 1, Name = "OPT_PETROTEC" },
+                        new { Value = 2, Name = "INGENICO" }
+                    }
                 };
 
                 return Ok(enumsInfo);
