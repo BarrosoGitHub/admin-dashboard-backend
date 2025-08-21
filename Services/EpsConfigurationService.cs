@@ -61,7 +61,7 @@ namespace EPSConfigurator.Services
 
             string filePath = Path.Combine(AppContext.BaseDirectory, "files", "eps_configuration.json");
 
-            EpsConfiguration existingConfig = null;
+            EpsConfiguration existingConfig = null!;
             if (File.Exists(filePath))
             {
                 var existingJson = File.ReadAllText(filePath);
