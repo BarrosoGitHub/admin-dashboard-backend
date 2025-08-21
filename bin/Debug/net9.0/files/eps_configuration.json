@@ -1,18 +1,60 @@
 {
   "registeredTerminals": [
     {
-      "pointOfInteractionAddress": "1",
-      "address": "1",
-      "applicationSender": "",
-      "deviceProxyPort": 0,
-      "serialNumber": "",
-      "workstationId": "",
-      "terminalId": "",
+      "pointOfPaymentAddress": "172.16.55.151",
+      "pointOfPaymentPort": 0,
+      "address": "172.16.55.18",
+      "applicationSender": "IPT Petrotec",
+      "reportProgress": false,
+      "deviceProxyPort": 45000,
+      "serialNumber": "017002",
+      "workstationId": "1",
+      "terminalId": "900",
+      "cardAcceptorId": null,
       "allowedAcquirerIds": [
-        7,
-        0
+        9200,
+        9202
       ],
-      "type": ""
+      "macKeyBankIndex": 0,
+      "pinBlockKeyBankIndex": 0,
+      "dataKeyBankIndex": 0,
+      "type": 0,
+      "bypassMessageAuthentication": false,
+      "printerColumns": 32,
+      "printReceiptOnTerminal": false,
+      "printLogoOnTerminal": false,
+      "printerLogoPath": "/opt/app_res/printer_logos/logoprinter_petrotec.png",
+      "printShiftCloseOnTerminal": false,
+      "currencySymbol": "EUR",
+      "allowOfflineAuthorization": false
+    },
+    {
+      "pointOfPaymentAddress": "127.0.0.1",
+      "pointOfPaymentPort": 0,
+      "address": "127.0.0.1",
+      "applicationSender": "OPT Petrotec",
+      "reportProgress": false,
+      "deviceProxyPort": 20101,
+      "serialNumber": "017002",
+      "workstationId": "1",
+      "terminalId": "901",
+      "cardAcceptorId": null,
+      "allowedAcquirerIds": [
+        9200,
+        9202
+      ],
+      "macKeyBankIndex": 0,
+      "pinBlockKeyBankIndex": 0,
+      "dataKeyBankIndex": 0,
+      "type": 1,
+      "bypassMessageAuthentication": false,
+      "printerColumns": 32,
+      "printReceiptOnTerminal": false,
+      "printLogoOnTerminal": false,
+      "printerLogoPath": "/opt/app_res/printer_logos/logoprinter_petrotec.png",
+      "printShiftCloseOnTerminal": false,
+      "currencySymbol": "EUR",
+      "allowOfflineAuthorization": false
     }
   ],
   "instanceId": "7ad5fc5f-8bce-489e-b8ec-d8e83682502d",
@@ -21,16 +63,23 @@
     {
       "description": "SIBS",
       "type": "Banking",
-      "id": 980,
+      "id": 9200,
       "applicationId": null,
-      "issuerIdentifierRangeList": [],
+      "issuerIdentifierRangeList": [
+        {
+          "first": 454702,
+          "last": 454705,
+          "allowDiscount": false,
+          "rebateLabel": {}
+        }
+      ],
       "merchantId": "",
       "serviceAddress": "",
       "servicePort": 3321,
       "forceRequestPin": true,
-      "forceRequestOdometer": true,
+      "forceRequestOdometer": false,
       "forceRequestRegistration": false,
-      "forceRequestDriverId": true,
+      "forceRequestDriverId": false,
       "canPerformDiscountOperation": true,
       "canPerformLoyaltyOperation": true,
       "connectTimeoutSeconds": 5,
@@ -38,6 +87,7 @@
       "writeTimeoutSeconds": 5,
       "maxTransactionValue": 150,
       "defaultTransactionValue": null,
+      "allowOfflineProcessing": false,
       "allowedCardTypes": [
         0
       ],
@@ -85,7 +135,7 @@
           "last": 708417,
           "allowDiscount": false,
           "rebateLabel": {
-            "En": "o",
+            "En": "DESC. galpfrota BUSINESS",
             "Pt": "DESC. galpfrota BUSINESS",
             "Es": "DESC. galpfrota BUSINESS"
           }
@@ -99,12 +149,6 @@
             "Pt": "DESC. galpfrota BUSINESS",
             "Es": "DESC. galpfrota BUSINESS"
           }
-        },
-        {
-          "first": 0,
-          "last": 0,
-          "allowDiscount": false,
-          "rebateLabel": {}
         }
       ],
       "merchantId": "92004900",
@@ -121,6 +165,7 @@
       "writeTimeoutSeconds": 5,
       "maxTransactionValue": 9999,
       "defaultTransactionValue": null,
+      "allowOfflineProcessing": false,
       "allowedCardTypes": [
         2
       ],
@@ -349,11 +394,12 @@
   ],
   "servicePort": 20901,
   "countryId": "PT",
-  "currencyCode": "978",
-  "defaultAuthorizationValue": 150,
-  "defaultLanguage": 7,
+  "currencyCode": "258",
+  "defaultLanguage": 0,
   "timeWaitCheckCardPresenceInSeconds": null,
   "timeWaitMagneticStripeDataInSeconds": null,
   "timeWaitGetKeyboardStringDataInSeconds": null,
-  "timeWaitDisplayCustomerMessageInSeconds": null
+  "timeWaitDisplayCustomerMessageInSeconds": null,
+  "timeWaitGetWaitCardReaderSelectionInSeconds": null,
+  "timeWaitGetRfidReadInSeconds": null
 }
