@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OPTConfigurator.Services.Interfaces;
 using FluentValidation;
+using Petrotec.ZorPay.Models;
+using Petrotec.ZorPay.Common.Models;
+using Petrotec.ZorPay.Common.Types;
 
 namespace EPSConfigurator.Controllers
 {
@@ -111,8 +114,8 @@ namespace EPSConfigurator.Controllers
                     {
                         new EpsPosClient
                         {
-                            PointOfInteractionAddress = "string",
-                            Address = "string",
+                            PointOfPaymentAddress = "string",
+                            Address = "string", 
                             ApplicationSender = "string",
                             DeviceProxyPort = 0,
                             SerialNumber = "string",
@@ -125,7 +128,7 @@ namespace EPSConfigurator.Controllers
                     InstanceId = "string",
                     InstanceName = "string",
                     CountryId = "string",
-                    CurrencyCode = "string",
+                    CurrencyCode = "978", // Default value
                     Acquirers = new List<EpsAcquirer>
                     {
                         new EpsAcquirer
@@ -136,16 +139,21 @@ namespace EPSConfigurator.Controllers
                             ApplicationId = "string",
                             IssuerIdentifierRangeList = new List<IssuerRange>
                             {
-                                new IssuerRange
-                                {
-                                    First = 0,
-                                    Last = 0,
+                                new IssuerRange 
+                                { 
+                                    First = 0, 
+                                    Last = 0, 
                                     AllowDiscount = false,
-                                    RebateLabel = new Dictionary<OPTConfigurator.Types.EpsMessageLanguage, string>()
+                                    RebateLabel = new Dictionary<EpsMessageLanguage, string>
+                                    {
+                                        { EpsMessageLanguage.Pt, "string" },
+                                        { EpsMessageLanguage.En, "string" },
+                                        { EpsMessageLanguage.Es, "string" }
+                                    }
                                 }
                             },
                             MerchantId = "string",
-                            ServiceAddress = "string",
+                            ServiceAddress = "string", 
                             ServicePort = 0,
                             ForceRequestPin = false,
                             ForceRequestOdometer = false,
@@ -156,15 +164,15 @@ namespace EPSConfigurator.Controllers
                             ConnectTimeoutSeconds = 0,
                             ReadTimeoutSeconds = 0,
                             WriteTimeoutSeconds = 0,
-                            MaxTransactionValue = 0,
-                            DefaultTransactionValue = 0,
-                            AllowedCardTypes = new List<OPTConfigurator.Types.CardTypes>(),
+                            MaxTransactionValue = 0.0m,
+                            DefaultTransactionValue = 0.0m,
+                            AllowedCardTypes = new List<CardTypes>(),
                             MessagesList = new List<EpsMessagesConfig>
                             {
                                 new EpsMessagesConfig
                                 {
-                                    EpsMessageIdentifier = OPTConfigurator.Types.EpsMessageIdentifier.MsgWait,
-                                    Language = OPTConfigurator.Types.EpsMessageLanguage.Pt,
+                                    EpsMessageIdentifier = EpsMessageIdentifier.MsgWait,
+                                    Language = EpsMessageLanguage.Pt,
                                     Label = "string"
                                 }
                             },
@@ -172,8 +180,8 @@ namespace EPSConfigurator.Controllers
                             {
                                 new EpsReceiptLabelsConfig
                                 {
-                                    EpsReceiptLabelIdentifier = OPTConfigurator.Types.EpsReceiptLabelIdentifier.LblTerminal,
-                                    Language = OPTConfigurator.Types.EpsMessageLanguage.Pt,
+                                    EpsReceiptLabelIdentifier = EpsReceiptLabelIdentifier.LblTerminal,
+                                    Language = EpsMessageLanguage.Pt,
                                     Label = "string"
                                 }
                             }
@@ -191,18 +199,18 @@ namespace EPSConfigurator.Controllers
                     {
                         new EpsMessage
                         {
-                            EpsMessageIdentifier = OPTConfigurator.Types.EpsMessageIdentifier.MsgWait,
-                            Language = OPTConfigurator.Types.EpsMessageLanguage.Pt,
+                            EpsMessageIdentifier = EpsMessageIdentifier.MsgWait,
+                            Language = EpsMessageLanguage.Pt,
                             Label = "string"
                         }
                     },
                     ServicePort = 0,
-                    DefaultAuthorizationValue = 0,
-                    DefaultLanguage = OPTConfigurator.Types.EpsMessageLanguage.Pt,
-                    TimeWaitCheckCardPresenceInSeconds = 0,
-                    TimeWaitMagneticStripeDataInSeconds = 0,
-                    TimeWaitGetKeyboardStringDataInSeconds = 0,
-                    TimeWaitDisplayCustomerMessageInSeconds = 0
+                    DefaultAuthorizationValue = 100, // Default value
+                    DefaultLanguage = EpsMessageLanguage.Pt,
+                    TimeWaitCheckCardPresenceInSeconds = 30,
+                    TimeWaitMagneticStripeDataInSeconds = 30,
+                    TimeWaitGetKeyboardStringDataInSeconds = 30,
+                    TimeWaitDisplayCustomerMessageInSeconds = 30
                 };
 
                 var jsonSettings = new System.Text.Json.JsonSerializerOptions
@@ -218,9 +226,7 @@ namespace EPSConfigurator.Controllers
             {
                 return BadRequest(new { error = ex.Message });
             }
-        }
-
-        [HttpGet("enums")]
+        }        [HttpGet("enums")]
         public ActionResult GetEpsConfigurationEnums()
         {
             try

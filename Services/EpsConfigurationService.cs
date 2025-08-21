@@ -1,6 +1,8 @@
 using OPTConfigurator.Models;
 using OPTConfigurator.Services.Interfaces;
-using OPTConfigurator.Types;
+using Petrotec.ZorPay.Common.Models;
+using Petrotec.ZorPay.Common.Types;
+using Petrotec.ZorPay.Models;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -276,7 +278,7 @@ namespace EPSConfigurator.Services
             {
                 new EpsPosClient
                 {
-                    PointOfInteractionAddress = "172.16.55.151",
+                    PointOfPaymentAddress = "172.16.55.151",
                     Address = "172.16.55.18",
                     ApplicationSender = "IPT Petrotec",
                     DeviceProxyPort = 45000,
@@ -284,11 +286,10 @@ namespace EPSConfigurator.Services
                     WorkstationId = "1",
                     TerminalId = "900",
                     AllowedAcquirerIds = new List<int> { 9200, 9202 },
-                    Type = "IPT_PETROTEC"
                 },
                 new EpsPosClient
                 {
-                    PointOfInteractionAddress = "127.0.0.1",
+                    PointOfPaymentAddress = "127.0.0.1",
                     Address = "127.0.0.1",
                     ApplicationSender = "OPT Petrotec",
                     DeviceProxyPort = 20101,
@@ -296,7 +297,6 @@ namespace EPSConfigurator.Services
                     WorkstationId = "1",
                     TerminalId = "901",
                     AllowedAcquirerIds = new List<int> { 9200, 9202 },
-                    Type = "OPT_PETROTEC"
                 }
             },
                 InstanceId = "7ad5fc5f-8bce-489e-b8ec-d8e83682502d",

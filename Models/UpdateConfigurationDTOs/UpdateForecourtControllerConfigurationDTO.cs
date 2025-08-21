@@ -6,6 +6,10 @@ public class UpdateForecourtControllerConfigurationDTO
 {
     public string? HostName { get; set; }
 
+    public string? LocalAddress { get; set; }
+    
+    public int LocalPort { get; set; }
+
     public int? EptId { get; set; }
 
     public int? CountryCode { get; set; }
