@@ -105,7 +105,6 @@ namespace EPSConfigurator.Controllers
         {
             try
             {
-                // Return a JSON schema representation instead of instantiating classes
                 var schemaObject = new
                 {
                     registeredTerminals = new[]
@@ -235,7 +234,9 @@ namespace EPSConfigurator.Controllers
             {
                 return BadRequest(new { error = ex.Message });
             }
-        }        [HttpGet("enums")]
+        }
+        
+        [HttpGet("enums")]
         public ActionResult GetEpsConfigurationEnums()
         {
             try
