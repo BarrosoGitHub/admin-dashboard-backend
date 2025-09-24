@@ -46,32 +46,6 @@ pipeline {
     DOCKER_AWS=" -t ${env.AWS_ECR_URL}/${REPONAME}:${TAGNAME} "
   }	  
   stages {
-    stage('Checkout and Build Dependencies') {
-      steps {
-        script {
-          // Ensure all required projects are available for build
-          sh '''
-            # Check if petrotec-opt-data exists, if not clone/update it
-            if [ ! -d "petrotec-opt-data" ]; then
-              echo "petrotec-opt-data directory not found, sparse checkout may be incomplete"
-            fi
-            
-            # Build the Petrotec.Opt.Data project first if it exists
-            if [ -f "petrotec-opt-data/Petrotec.Opt.Data/Petrotec.Opt.Data.csproj" ]; then
-              echo "Building Petrotec.Opt.Data dependency..."
-              dotnet build petrotec-opt-data/Petrotec.Opt.Data/Petrotec.Opt.Data.csproj --configuration Release
-            fi
-            
-            # Build the ZorPay project if it exists
-            if [ -f "petrotec-zorpay/Petrotec.ZorPay/Petrotec.ZorPay.csproj" ]; then
-              echo "Building Petrotec.ZorPay dependency..."
-              dotnet build petrotec-zorpay/Petrotec.ZorPay/Petrotec.ZorPay.csproj --configuration Release
-            fi
-          '''
-        }
-      }
-    }
-    
     stage('Push Docker Images to Nexus Registry and AWS ECR') {
       steps {
         script {
