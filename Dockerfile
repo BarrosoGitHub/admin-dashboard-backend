@@ -1,9 +1,15 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
+# Copy project files first
 COPY OPTConfigurator.csproj .
+COPY petrotec-opt-data/ ./petrotec-opt-data/
+COPY petrotec-zorpay/ ./petrotec-zorpay/
+
+# Restore dependencies
 RUN dotnet restore "OPTConfigurator.csproj"
 
+# Copy source code
 COPY . .
 
 RUN dotnet publish "OPTConfigurator.csproj" -c Release -o /app/publish /p:UseAppHost=false
