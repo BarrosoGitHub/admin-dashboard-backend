@@ -46,6 +46,14 @@ pipeline {
     DOCKER_AWS=" -t ${env.AWS_ECR_URL}/${REPONAME}:${TAGNAME} "
   }	  
   stages {
+    stage('Checkout CSProj Files') {
+      steps {
+        sh '''
+          cd petrotec-opt-data && git sparse-checkout add *.csproj
+          cd ../petrotec-zorpay && git sparse-checkout add *.csproj
+        '''
+      }
+    }
     stage('Push Docker Images to Nexus Registry and AWS ECR') {
       steps {
         script {
