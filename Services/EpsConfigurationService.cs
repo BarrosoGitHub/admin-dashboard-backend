@@ -279,7 +279,7 @@ namespace EPSConfigurator.Services
             {
                 new EpsPosClient
                 {
-                    PointOfPaymentAddress = "172.16.55.151",
+                    // PointOfPaymentAddress = "172.16.55.151",
                     Address = "172.16.55.18",
                     ApplicationSender = "IPT Petrotec",
                     DeviceProxyPort = 45000,
@@ -291,7 +291,7 @@ namespace EPSConfigurator.Services
                 },
                 new EpsPosClient
                 {
-                    PointOfPaymentAddress = "127.0.0.1",
+                    // PointOfPaymentAddress = "127.0.0.1",
                     Address = "127.0.0.1",
                     ApplicationSender = "OPT Petrotec",
                     DeviceProxyPort = 20101,
