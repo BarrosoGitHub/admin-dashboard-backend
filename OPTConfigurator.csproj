@@ -19,10 +19,12 @@
 
   <ItemGroup>
     <ProjectReference Include="petrotec-zorpay\Petrotec.ZorPay\Petrotec.ZorPay.csproj" />
+    <ProjectReference Include="petrotec-opt-data\Petrotec.Opt.Data\Petrotec.Opt.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Remove="petrotec-zorpay\**\*.cs" />
+    <Compile Remove="petrotec-opt-data\**\*.cs" />
   </ItemGroup>
 
 </Project>

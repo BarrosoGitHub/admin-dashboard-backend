@@ -7,7 +7,6 @@ COPY OPTConfigurator.csproj .
 # Restore dependencies
 RUN dotnet restore "OPTConfigurator.csproj"
 
-RUN dotnet restore "OPTConfigurator.csproj"
 # Copy source code
 COPY . .
 
