@@ -3,4 +3,4 @@
 	url = ssh://git@bitbucket.petrotec.com:7999/peeps/petrotec-zorpay.git
 [submodule "petrotec-opt-data"]
 	path = petrotec-opt-data
-	url = https://bitbucket.petrotec.com:7990/bitbucket/scm/oen/petrotec-opt-data.git
+	url = ssh://git@bitbucket.petrotec.com:7999/oen/petrotec-opt-data.git
