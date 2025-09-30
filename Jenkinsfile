@@ -30,6 +30,7 @@ pipeline {
     buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10')
   }
   
+  
   environment {
     NEXUS_PROTOCOL = 'http://'
     NEXUS_URL = '172.16.50.65'    
