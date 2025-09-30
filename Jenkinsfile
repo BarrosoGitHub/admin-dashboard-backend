@@ -30,7 +30,7 @@ pipeline {
     buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10')
   }
   
-
+  
   environment {
     NEXUS_PROTOCOL = 'http://'
     NEXUS_URL = '172.16.50.65'    
@@ -68,7 +68,7 @@ pipeline {
               } else if (TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-qa$/) {						
                 sh """
                   docker login -u $user -p $pass ${env.NEXUS_PROTOCOL}${env.NEXUS_URL}${env.NEXUS_PORT_QA}/repository/docker-private/
-                  ${env.DOCKER_BASE} --build-arg NUGET_PASSWORD=$pass ${env.DOCKER_VERSAO} ${env.DOCKER_FILE} ${env.DOCKER_NEXUS_QA}  ${env.DOCKER_AWS} .
+                  ${env.DOCKER_BASE} ${env.DOCKER_VERSAO} ${env.DOCKER_FILE} ${env.DOCKER_NEXUS_QA}  ${env.DOCKER_AWS} .
                 """						
               } else if (TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+$/) {						 
                 sh """

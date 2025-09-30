@@ -2,9 +2,12 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
 # Add private NuGet source
-ARG NUGET_PASSWORD
-RUN dotnet nuget add source http://172.16.50.65:8084/repository/nuget-private/ -n private -u admin -p $NUGET_PASSWORD --allow-insecure-connections
-
+RUN dotnet nuget add source http://172.16.50.65:8081/repository/nuget/index.json \ 
+    -n nexus \
+    -u admin \
+    -p devpasswd++  \
+    --store-password-in-clear-text \
+    --allow-insecure-connections
 # Copy project files first
 COPY OPTConfigurator.csproj .
 

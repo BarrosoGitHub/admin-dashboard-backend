@@ -101,7 +101,7 @@ public class ToradexNetworkConfigurationService : INetworkConfigurationService
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Failed to update network configuration: {ex.Message}");
+            Console.WriteLine($"Failed to update network  configuration: {ex.Message}");
             return false;
         }
     }

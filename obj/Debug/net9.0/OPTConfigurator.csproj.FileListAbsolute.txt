@@ -112,3 +112,5 @@ C:\Dev\OPT eMOTION - Configurator\OPTConfigurator\obj\Debug\net9.0\refint\OPTCon
 C:\Dev\OPT eMOTION - Configurator\OPTConfigurator\obj\Debug\net9.0\OPTConfigurator.pdb
 C:\Dev\OPT eMOTION - Configurator\OPTConfigurator\obj\Debug\net9.0\OPTConfigurator.genruntimeconfig.cache
 C:\Dev\OPT eMOTION - Configurator\OPTConfigurator\obj\Debug\net9.0\ref\OPTConfigurator.dll
+C:\Dev\OPT eMOTION - Configurator\OPTConfigurator\bin\Debug\net9.0\Petrotec.Opt.Data.dll
+C:\Dev\OPT eMOTION - Configurator\OPTConfigurator\bin\Debug\net9.0\Petrotec.Opt.Data.pdb
