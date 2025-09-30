@@ -3,7 +3,7 @@ WORKDIR /src
 
 # Add private NuGet source
 ARG NUGET_PASSWORD
-RUN dotnet nuget add source http://172.16.50.65:8084/repository/nuget-private/ -n private -u admin -p $NUGET_PASSWORD
+RUN dotnet nuget add source http://172.16.50.65:8084/repository/nuget-private/ -n private -u admin -p $NUGET_PASSWORD --allow-insecure-connections
 
 # Copy project files first
 COPY OPTConfigurator.csproj .
