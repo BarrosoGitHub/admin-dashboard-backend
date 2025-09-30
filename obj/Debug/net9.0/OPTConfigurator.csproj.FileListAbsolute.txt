@@ -44,3 +44,7 @@ C:\Dev\OPT eMOTION - Configurator\OPTConfigurator\bin\Debug\net9.0\Microsoft.Ide
 C:\Dev\OPT eMOTION - Configurator\OPTConfigurator\bin\Debug\net9.0\System.IdentityModel.Tokens.Jwt.dll
 C:\Dev\OPT eMOTION - Configurator\OPTConfigurator\bin\Debug\net9.0\auth.json
 C:\Dev\OPT eMOTION - Configurator\OPTConfigurator\bin\Debug\net9.0\files\user_interface_configuration.json
+C:\Dev\OPT eMOTION - Configurator\OPTConfigurator\bin\Debug\net9.0\petrotec-opt-data\Petrotec.Opt.Data\obj\Petrotec.Opt.Data.csproj.nuget.dgspec.json
+C:\Dev\OPT eMOTION - Configurator\OPTConfigurator\bin\Debug\net9.0\petrotec-opt-data\Petrotec.Opt.Data\obj\project.assets.json
+C:\Dev\OPT eMOTION - Configurator\OPTConfigurator\bin\Debug\net9.0\Petrotec.Opt.Data.dll
+C:\Dev\OPT eMOTION - Configurator\OPTConfigurator\bin\Debug\net9.0\Petrotec.Opt.Data.pdb
