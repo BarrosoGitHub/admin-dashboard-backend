@@ -18,10 +18,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\petrotec-opt-data\Petrotec.Opt.Data\Petrotec.Opt.Data.csproj" />
-    <ProjectReference Include="..\petrotec-zorpay\Petrotec.ZorPay.Common\Petrotec.ZorPay.Common.csproj" />
-    <ProjectReference Include="..\petrotec-zorpay\Petrotec.ZorPay\Petrotec.ZorPay.csproj" />
-    <ProjectReference Include="..\petrotec-zorpay\petrotec-zorpay-opi-extension\Petrotec.ZorPay.Opi.Extension.csproj" />
+    <ProjectReference Include="petrotec-zorpay\Petrotec.ZorPay\Petrotec.ZorPay.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="petrotec-zorpay\**\*.cs" />
   </ItemGroup>
 
 </Project>
