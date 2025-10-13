@@ -17,7 +17,7 @@ namespace EPSConfigurator.Services
 
         public EpsConfigurationService()
         {
-            _filePath = Path.Combine(AppContext.BaseDirectory, "files", "eps_configuration.json");
+            _filePath = Path.Combine(AppContext.BaseDirectory, "files", "eps_config.json");
         }
 
         public async Task<EpsConfiguration?> GetEpsConfigurationAsync()
@@ -59,7 +59,7 @@ namespace EPSConfigurator.Services
             //     throw new ValidationException(validationResult.Errors);
             // }
 
-            string filePath = Path.Combine(AppContext.BaseDirectory, "files", "eps_configuration.json");
+            string filePath = Path.Combine(AppContext.BaseDirectory, "files", "eps_config.json");
 
             EpsConfiguration existingConfig = null!;
             if (File.Exists(filePath))

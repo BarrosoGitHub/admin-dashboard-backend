@@ -24,7 +24,7 @@ public class OptConfigurationService : IOptConfigurationService
 
     public async Task<OptConfiguration> GetOptConfigurationAsync()
     {
-        string filePath = Path.Combine(AppContext.BaseDirectory, "files", "opt_configuration.json");
+        string filePath = Path.Combine(AppContext.BaseDirectory, "files", "opt-config.json");
 
         if (!File.Exists(filePath))
             return null!;
@@ -54,7 +54,7 @@ public class OptConfigurationService : IOptConfigurationService
 
     public AddOptConfigurationDTO AddOptConfiguration(AddOptConfigurationDTO optConfig)
     {
-        string filePath = Path.Combine(AppContext.BaseDirectory, "files", "opt_configuration.json");
+        string filePath = Path.Combine(AppContext.BaseDirectory, "files", "opt-config.json");
 
         var options = new JsonSerializerOptions
         {
@@ -78,7 +78,7 @@ public class OptConfigurationService : IOptConfigurationService
             throw new ValidationException(validationResult.Errors);
         }
 
-        string filePath = Path.Combine(AppContext.BaseDirectory, "files", "opt_configuration.json");
+        string filePath = Path.Combine(AppContext.BaseDirectory, "files", "opt-config.json");
 
         OptConfiguration? existingConfig = null;
         if (File.Exists(filePath))
