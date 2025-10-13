@@ -168,6 +168,7 @@ public class OptConfigurationService : IOptConfigurationService
         options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)); // Add this line
 
         var company = Enum.Parse<Company>(addOptConfigurationDTO.Company);
+        var countryCode = Enum.Parse<Country>(addOptConfigurationDTO.Country);
 
         string networkSegment;
         string pinpadHostname = string.Empty;
@@ -196,6 +197,22 @@ public class OptConfigurationService : IOptConfigurationService
             pinpadHostname = networkSegment;
         }
 
+        Language primaryLanguage, secondaryLanguage, tertiaryLanguage, languageN4;
+        
+        if (countryCode == Country.PT)
+        {
+            primaryLanguage = Language.Portuguese;    
+            secondaryLanguage = Language.Spanish;     
+            tertiaryLanguage = Language.English;      
+            languageN4 = Language.French;             
+        }
+        else
+        {
+            primaryLanguage = Language.Spanish;       
+            secondaryLanguage = Language.Catalan;     
+            tertiaryLanguage = Language.French;       
+            languageN4 = Language.English;            
+        }
 
         var optConfig = new OptConfiguration
         {
@@ -204,7 +221,11 @@ public class OptConfigurationService : IOptConfigurationService
                 StationId = addOptConfigurationDTO.StationId!,
                 WorkstationId = addOptConfigurationDTO.WorkstationId,
                 Company = company,
-                CountryCode = Enum.Parse<Country>(addOptConfigurationDTO.Country)
+                CountryCode = countryCode,
+                PrimaryLanguage = primaryLanguage,
+                SecondaryLanguage = secondaryLanguage,
+                TertiaryLanguage = tertiaryLanguage,
+                LanguageN4 = languageN4
             },
             PinpadConfiguration = new PinpadConfiguration
             {
