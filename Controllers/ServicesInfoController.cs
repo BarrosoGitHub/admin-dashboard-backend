@@ -30,5 +30,49 @@ namespace OPTConfigurator.Controllers
             var boardType = BoardHelper.GetBoardType();
             return Ok(boardType);
         }
+
+        [HttpGet("timezone")]
+        public ActionResult<string> GetTimeZone()
+        {
+            try
+            {
+                var timeZone = _servicesInfoService.GetTimeZone();
+                return Ok(timeZone);
+            }
+            catch (FileNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+        }
+
+        [HttpPost("timezone")]
+        public ActionResult<string> SetTimeZone([FromBody] SetTimeZoneRequest request)
+        {
+            try
+            {
+                var timeZone = _servicesInfoService.SetTimeZone(request.TimeZone);
+                return Ok(new { TimeZone = timeZone, Message = "Timezone updated successfully" });
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            catch (FileNotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+        }
+
+        [HttpGet("timezone/valid")]
+        public ActionResult<List<string>> GetValidTimeZones()
+        {
+            var validTimeZones = _servicesInfoService.GetValidTimeZones();
+            return Ok(validTimeZones);
+        }
+    }
+
+    public class SetTimeZoneRequest
+    {
+        public required string TimeZone { get; set; }
     }
 }

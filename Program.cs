@@ -39,7 +39,6 @@ builder.Services.AddScoped<IServicesInfoService, ServicesInfoService>();
 
 string boardType = BoardHelper.GetBoardType();
 
-
 if (boardType == "Toradex")
 {
     builder.Services.AddScoped<INetworkConfigurationService, ToradexNetworkConfigurationService>();

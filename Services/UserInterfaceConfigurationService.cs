@@ -16,7 +16,7 @@ public class UserInterfaceConfigurationService : IUserInterfaceConfigurationServ
 
     public async Task<UserInterfaceConfigurationDTO> GetCurrentUserInterfaceConfiguration()
     {
-        var filePath = Path.Combine(AppContext.BaseDirectory, "files", "user_interface_configuration.json");
+        var filePath = Path.Combine(AppContext.BaseDirectory, "files", "ui_config.json");
         if (!File.Exists(filePath))
         {
             // Create and save default configuration
@@ -51,7 +51,7 @@ public class UserInterfaceConfigurationService : IUserInterfaceConfigurationServ
             throw new ValidationException(validationResult.Errors);
         }
 
-        string filePath = Path.Combine(AppContext.BaseDirectory, "files", "user_interface_configuration.json");
+        string filePath = Path.Combine(AppContext.BaseDirectory, "files", "ui_config.json");
         var options = new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase
@@ -71,7 +71,7 @@ public class UserInterfaceConfigurationService : IUserInterfaceConfigurationServ
             throw new ValidationException(validationResult.Errors);
         }
 
-        string filePath = Path.Combine(AppContext.BaseDirectory, "files", "user_interface_configuration.json");
+        string filePath = Path.Combine(AppContext.BaseDirectory, "files", "ui_config.json");
         var options = new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase

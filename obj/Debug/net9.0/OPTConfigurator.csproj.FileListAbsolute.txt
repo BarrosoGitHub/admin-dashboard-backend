@@ -114,3 +114,4 @@ C:\Dev\OPT eMOTION - Configurator\OPTConfigurator\obj\Debug\net9.0\OPTConfigurat
 C:\Dev\OPT eMOTION - Configurator\OPTConfigurator\obj\Debug\net9.0\ref\OPTConfigurator.dll
 C:\Dev\OPT eMOTION - Configurator\OPTConfigurator\bin\Debug\net9.0\Petrotec.Opt.Data.dll
 C:\Dev\OPT eMOTION - Configurator\OPTConfigurator\bin\Debug\net9.0\Petrotec.Opt.Data.pdb
+c:\Dev\OPT eMOTION - Configurator\OPTConfigurator\bin\Debug\net9.0\files\services_information.json

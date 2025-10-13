@@ -12,6 +12,7 @@
           "Microsoft.AspNetCore.Authentication.JwtBearer": "9.0.5",
           "Microsoft.AspNetCore.OpenApi": "9.0.0",
           "Newtonsoft.Json": "13.0.3",
+          "Petrotec.Opt.Data": "1.0.0",
           "Petrotec.ZorPay": "1.0.0",
           "System.IdentityModel.Tokens.Jwt": "8.11.0"
         },
@@ -399,6 +400,14 @@
           }
         }
       },
+      "Petrotec.Opt.Data/1.0.0": {
+        "runtime": {
+          "Petrotec.Opt.Data.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
       "Petrotec.ZorPay/1.0.0": {
         "dependencies": {
           "BerTlv.NET": "2.0.3",
@@ -410,7 +419,7 @@
         "runtime": {
           "Petrotec.ZorPay.dll": {
             "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.1.0"
+            "fileVersion": "1.0.2.0"
           }
         }
       },
@@ -748,6 +757,11 @@
       "hashPath": "system.threading.tasks.4.3.0.nupkg.sha512"
     },
     "Petrotec.Lib.Iso8583/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Petrotec.Opt.Data/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -48,5 +48,69 @@ namespace OPTConfigurator.Services
                 }
             };
         }
+
+        public string GetTimeZone()
+        {
+            string filePath = Path.Combine(AppContext.BaseDirectory, "files", "services_information.json");
+
+            if (!File.Exists(filePath))
+            {
+                throw new FileNotFoundException("The services information file was not found.", filePath);
+            }
+
+            var jsonContent = File.ReadAllText(filePath);
+            var servicesInfo = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, string>>(jsonContent);
+
+            if (servicesInfo != null && servicesInfo.TryGetValue("TimeZone", out var timeZone))
+            {
+                return timeZone;
+            }
+            return null!;
+        }
+
+        public string SetTimeZone(string timeZone)
+        {
+            if (!IsValidTimeZone(timeZone))
+            {
+                var validTimeZones = GetValidTimeZones();
+                throw new ArgumentException($"Invalid timezone '{timeZone}'. Valid timezones are: {string.Join(", ", validTimeZones)}", nameof(timeZone));
+            }
+
+            string filePath = Path.Combine(AppContext.BaseDirectory, "files", "services_information.json");
+
+            if (!File.Exists(filePath))
+            {
+                throw new FileNotFoundException("The services information file was not found.", filePath);
+            }
+
+            var jsonContent = File.ReadAllText(filePath);
+            var servicesInfo = System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, string>>(jsonContent) ?? new Dictionary<string, string>();
+
+            servicesInfo["TimeZone"] = timeZone;
+
+            var updatedJsonContent = System.Text.Json.JsonSerializer.Serialize(servicesInfo, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(filePath, updatedJsonContent);
+
+            return timeZone;
+        }
+
+        private bool IsValidTimeZone(string timeZone)
+        {
+            if (string.IsNullOrWhiteSpace(timeZone))
+                return false;
+
+            var validTimeZones = Enum.GetValues<TimeZoneEnum>()
+                .Select(tz => tz.ToTimeZoneId())
+                .ToList();
+
+            return validTimeZones.Contains(timeZone, StringComparer.OrdinalIgnoreCase);
+        }
+
+        public List<string> GetValidTimeZones()
+        {
+            return Enum.GetValues<TimeZoneEnum>()
+                .Select(tz => tz.ToTimeZoneId())
+                .ToList();
+        }
     }
 }
