@@ -23,13 +23,19 @@ public class ConfigurationController : ControllerBase
     {
         var result = await _optConfigurationService.GetOptConfigurationAsync();
         if (result == null)
+        {
+            Console.WriteLine("No configuration found.");
             return NotFound("No configuration found.");
+        }
 
         var jsonSettings = new System.Text.Json.JsonSerializerOptions
         {
             DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull
         };
-        return new JsonResult(result, jsonSettings);
+        var resultJson = new JsonResult(result, jsonSettings);
+        
+        Console.WriteLine("Returning configuration: " + System.Text.Json.JsonSerializer.Serialize(result, jsonSettings));
+        return resultJson;
     }
 
     [HttpGet("template")]
