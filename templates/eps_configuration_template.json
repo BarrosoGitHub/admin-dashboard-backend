@@ -1,0 +1,1211 @@
+{
+	"registeredTerminals": [
+		{
+			"pointOfPayments": [
+				{
+					"popId": "3",
+					"address": "172.16.55.178",
+					"port": 45000,
+					"cardAcceptorId": "M0003004",
+					"type": "IndoorTerminal",
+					"bypassMessageAuthentication": true,
+					"printReceiptOnTerminal": true,
+					"printLogoOnTerminal": true,
+					"printerLogoPath": "/opt/app_res/printer_logos/logoprinter_galp.png",
+					"printerColumns": 32,
+					"printShiftCloseOnTerminal": true
+				},
+				{
+					"popId": "4",
+					"address": "172.16.55.176",
+					"port": 45000,
+					"cardAcceptorId": "M0003003",
+					"type": "IndoorTerminal",
+					"bypassMessageAuthentication": true,
+					"printReceiptOnTerminal": true,
+					"printLogoOnTerminal": true,
+					"printerLogoPath": "/opt/app_res/printer_logos/logoprinter_galp.png",
+					"printerColumns": 32,
+					"printShiftCloseOnTerminal": true
+				}
+			],
+			"address": "127.0.0.1",
+			"applicationSender": "GenesysXXI",
+			"reportProgress": true,
+			"deviceProxyPort": 20902,
+			"serialNumber": "017002",
+			"workstationId": "POS001",
+			"terminalId": "1",
+			"allowedAcquirerIds": [
+				9200,
+				9202
+			],
+			"currencySymbol": "MT",
+			"allowOfflineAuthorization": true
+		},
+		{
+			"pointOfPayments": [
+				{
+					"popId": "3",
+					"address": "172.16.55.178",
+					"port": 45000,
+					"cardAcceptorId": "M0003004",
+					"type": "IndoorTerminal",
+					"bypassMessageAuthentication": true,
+					"printReceiptOnTerminal": true,
+					"printLogoOnTerminal": true,
+					"printerLogoPath": "/opt/app_res/printer_logos/logoprinter_galp.png",
+					"printerColumns": 32,
+					"printShiftCloseOnTerminal": true
+				},
+				{
+					"popId": "4",
+					"address": "172.16.55.176",
+					"port": 45000,
+					"cardAcceptorId": "M0003003",
+					"type": "IndoorTerminal",
+					"bypassMessageAuthentication": true,
+					"printReceiptOnTerminal": true,
+					"printLogoOnTerminal": true,
+					"printerLogoPath": "/opt/app_res/printer_logos/logoprinter_galp.png",
+					"printerColumns": 32,
+					"printShiftCloseOnTerminal": true
+				}
+			],
+			"address": "127.0.0.2",
+			"applicationSender": "GenesysXXII",
+			"reportProgress": true,
+			"deviceProxyPort": 20902,
+			"serialNumber": "017002",
+			"workstationId": "POS002",
+			"terminalId": "2",
+			"allowedAcquirerIds": [
+				9200,
+				9202
+			],
+			"currencySymbol": "MT",
+			"allowOfflineAuthorization": true
+		},
+		{
+			"pointOfPayments": [
+				{
+					"popId": "1",
+					"address": "127.0.0.1",
+					"port": 20102,
+					"cardAcceptorId": "1",
+					"type": "OutdoorTerminal",
+					"bypassMessageAuthentication": true,
+					"printReceiptOnTerminal": true,
+					"printLogoOnTerminal": true,
+					"printerLogoPath": "/opt/app_res/printer_logos/logoprinter_petrotec.png",
+					"printerColumns": 32,
+					"printShiftCloseOnTerminal": true
+				}
+			],
+			"address": "127.0.0.1",
+			"applicationSender": "OPT Petrotec",
+			"reportProgress": false,
+			"deviceProxyPort": 20102,
+			"serialNumber": "017002",
+			"workstationId": "66",
+			"terminalId": "901",
+			"allowedAcquirerIds": [
+				9200,
+				9202
+			]
+		}
+	],
+	"instanceId": "7ad5fc5f-8bce-489e-b8ec-d8e83682502d",
+	"instanceName": "PetrotecIfsfEps",
+	"countryId": "PT",
+	"acquirers": [
+		{
+			"description": "SIBS",
+			"type": "Banking",
+			"merchantId": "",
+			"id": 9200,
+			"IssuerIdentifierRangeList": [
+				{
+					"First": 454702,
+					"Last": 454705
+				}
+			],
+			"serviceAddress": "127.0.0.1",
+			"servicePort": 3321,
+			"forceRequestPin": true,
+			"forceRequestOdometer": false,
+			"forceRequestRegistration": false,
+			"forceRequestDriverId": false,
+			"canPerformDiscountOperation": true,
+			"canPerformLoyaltyOperation": true,
+			"ConnectTimeoutSeconds": 5,
+			"ReadTimeoutSeconds": 30,
+			"writeTimeoutSeconds": 5,
+			"maxTransactionValue": 150,
+			"default": true,
+			"allowedCardTypes": [
+				0
+			]
+		},
+		{
+			"description": "GalpFrota",
+			"type": "GALP",
+			"merchantId": "92004900",
+			"id": 9202,
+			"IssuerIdentifierRangeList": [
+				{
+					"First": 777686,
+					"Last": 777686,
+					"AllowDiscount": false,
+					"RebateLabel": {
+						"en": "GALP FROTA MZ",
+						"pt": "GALP FROTA MZ",
+						"es": "GALP FROTA MZ"
+					}
+				},
+				{
+					"First": 708257,
+					"Last": 708257,
+					"AllowDiscount": true,
+					"RebateLabel": {
+						"en": "DESC. galpfrota BUSINESS",
+						"pt": "DESC. galpfrota BUSINESS",
+						"es": "DESC. galpfrota BUSINESS"
+					}
+				},
+				{
+					"First": 700582,
+					"Last": 700582,
+					"AllowDiscount": true,
+					"RebateLabel": {
+						"en": "DESC. galpfrota BUSINESS",
+						"pt": "DESC. galpfrota BUSINESS",
+						"es": "DESC. galpfrota BUSINESS"
+					}
+				},
+				{
+					"First": 708276,
+					"Last": 708276,
+					"AllowDiscount": true,
+					"RebateLabel": {
+						"en": "DESC. galpfrota BUSINESS",
+						"pt": "DESC. galpfrota BUSINESS",
+						"es": "DESC. galpfrota BUSINESS"
+					}
+				},
+				{
+					"First": 708417,
+					"Last": 708417,
+					"AllowDiscount": false,
+					"RebateLabel": {
+						"en": "DESC. galpfrota BUSINESS",
+						"pt": "DESC. galpfrota BUSINESS",
+						"es": "DESC. galpfrota BUSINESS"
+					}
+				},
+				{
+					"First": 708422,
+					"Last": 708422,
+					"AllowDiscount": true,
+					"RebateLabel": {
+						"en": "DESC. galpfrota BUSINESS",
+						"pt": "DESC. galpfrota BUSINESS",
+						"es": "DESC. galpfrota BUSINESS"
+					}
+				}
+			],
+			"serviceAddress": "127.0.0.1",
+			"servicePort": 3321,
+			"forceRequestPin": true,
+			"forceRequestOdometer": false,
+			"forceRequestRegistration": false,
+			"forceRequestDriverId": false,
+			"canPerformDiscountOperation": false,
+			"canPerformLoyaltyOperation": false,
+			"ConnectTimeoutSeconds": 5,
+			"ReadTimeoutSeconds": 30,
+			"writeTimeoutSeconds": 5,
+			"maxTransactionValue": 9999,
+			"default": false,
+			"allowedCardTypes": [
+				1
+			],
+			"messagesList": [
+				{
+					"epsMessageIdentifier": "MsgInsertPin",
+					"language": "pt",
+					"label": "DIGITE CÓDIGO SECRETO"
+				},
+				{
+					"epsMessageIdentifier": "MsgInsertPin",
+					"language": "en",
+					"label": "INSERT PIN"
+				},
+				{
+					"epsMessageIdentifier": "MsgInsertPin",
+					"language": "es",
+					"label": "INSERTAR PIN"
+				},
+				{
+					"epsMessageIdentifier": "MsgWait",
+					"language": "pt",
+					"label": "AGUARDE POR FAVOR"
+				},
+				{
+					"epsMessageIdentifier": "MsgWait",
+					"language": "en",
+					"label": "PLEASE WAIT"
+				},
+				{
+					"epsMessageIdentifier": "MsgWait",
+					"language": "es",
+					"label": "ESPERA POR FAVOR"
+				},
+				{
+					"epsMessageIdentifier": "MsgInsertKm",
+					"language": "pt",
+					"label": "DIGITE OS QUILÓMETROS"
+				},
+				{
+					"epsMessageIdentifier": "MsgInsertKm",
+					"language": "en",
+					"label": "INSERT MILEAGE"
+				},
+				{
+					"epsMessageIdentifier": "MsgInsertKm",
+					"language": "es",
+					"label": "INSERTAR KILOMETRAJE"
+				},
+				{
+					"epsMessageIdentifier": "MsgInsertIdCode",
+					"language": "pt",
+					"label": "DIGITE A IDENTIFICAÇÃO"
+				},
+				{
+					"epsMessageIdentifier": "MsgInsertIdCode",
+					"language": "en",
+					"label": "INSERT ID"
+				},
+				{
+					"epsMessageIdentifier": "MsgInsertIdCode",
+					"language": "es",
+					"label": "INSERTAR ID"
+				},
+				{
+					"epsMessageIdentifier": "MsgDiscountAmountApproved",
+					"language": "pt",
+					"label": "APROVADO DESCONTO DE {AMOUNT} {CURRENCY}"
+				},
+				{
+					"epsMessageIdentifier": "MsgDiscountAmountApproved",
+					"language": "en",
+					"label": "APPROVED DISCOUNT {AMOUNT} {CURRENCY}"
+				},
+				{
+					"epsMessageIdentifier": "MsgDiscountAmountApproved",
+					"language": "es",
+					"label": "DESCUENTO APROBADO {AMOUNT} {CURRENCY}"
+				}
+			],
+			"receiptLabels": [
+				{
+					"epsReceiptLabelIdentifier": "LblGalpFrota",
+					"language": "pt",
+					"label": "GALP FROTA"
+				},
+				{
+					"epsReceiptLabelIdentifier": "LblGalpDiscount",
+					"language": "pt",
+					"label": "DESCONTO GALP"
+				},
+				{
+					"epsReceiptLabelIdentifier": "LblTerminal",
+					"language": "pt",
+					"label": "Terminal Id."
+				},
+				{
+					"epsReceiptLabelIdentifier": "LblSession",
+					"language": "pt",
+					"label": "Sessão"
+				},
+				{
+					"epsReceiptLabelIdentifier": "LblOperation",
+					"language": "pt",
+					"label": "Operação"
+				},
+				{
+					"epsReceiptLabelIdentifier": "LblCardFrota",
+					"language": "pt",
+					"label": "Cartão Frota"
+				},
+				{
+					"epsReceiptLabelIdentifier": "LblCardDiscount",
+					"language": "pt",
+					"label": "DESC. GALP"
+				},
+				{
+					"epsReceiptLabelIdentifier": "LblCustomer",
+					"language": "pt",
+					"label": "Cliente"
+				},
+				{
+					"epsReceiptLabelIdentifier": "LblDriverAndLicensePlate",
+					"language": "pt",
+					"label": "Utente/Matrícula"
+				},
+				{
+					"epsReceiptLabelIdentifier": "LblExpireDate",
+					"language": "pt",
+					"label": "Caducidade"
+				},
+				{
+					"epsReceiptLabelIdentifier": "LblMileage",
+					"language": "pt",
+					"label": "Quilómetros"
+				},
+				{
+					"epsReceiptLabelIdentifier": "LblGalpFrota",
+					"language": "es",
+					"label": "GALP FLOTA"
+				},
+				{
+					"epsReceiptLabelIdentifier": "LblGalpDiscount",
+					"language": "es",
+					"label": "DESCUENTO GALP"
+				},
+				{
+					"epsReceiptLabelIdentifier": "LblTerminal",
+					"language": "es",
+					"label": "Terminal Id."
+				},
+				{
+					"epsReceiptLabelIdentifier": "LblSession",
+					"language": "es",
+					"label": "Sesion"
+				},
+				{
+					"epsReceiptLabelIdentifier": "LblOperation",
+					"language": "es",
+					"label": "Operacion"
+				},
+				{
+					"epsReceiptLabelIdentifier": "LblCardFrota",
+					"language": "es",
+					"label": "Tarjeta Flota"
+				},
+				{
+					"epsReceiptLabelIdentifier": "LblCardDiscount",
+					"language": "pt",
+					"label": "DESC. GALP"
+				},
+				{
+					"epsReceiptLabelIdentifier": "LblCustomer",
+					"language": "es",
+					"label": "Cliente"
+				},
+				{
+					"epsReceiptLabelIdentifier": "LblDriverAndLicensePlate",
+					"language": "es",
+					"label": "Usuario/Matricula"
+				},
+				{
+					"epsReceiptLabelIdentifier": "LblExpireDate",
+					"language": "es",
+					"label": "Caducidad"
+				},
+				{
+					"epsReceiptLabelIdentifier": "LblMileage",
+					"language": "es",
+					"label": "Kilómetros"
+				}
+			]
+		}
+	],
+	"languages": [
+		{
+			"description": "PT",
+			"id": 1
+		},
+		{
+			"description": "EN",
+			"id": 2
+		}
+	],
+	"messages": [
+		{
+			"epsMessageIdentifier": "MsgSelectCardType",
+			"language": "pt",
+			"label": "SELECIONE TIPO DE CARTÃO"
+		},
+		{
+			"epsMessageIdentifier": "MsgSelectCardType",
+			"language": "en",
+			"label": "SELECT CARD TYPE"
+		},
+		{
+			"epsMessageIdentifier": "MsgSelectCardType",
+			"language": "es",
+			"label": "SELECIONAR TIPO DE TARJETA"
+		},
+		{
+			"epsMessageIdentifier": "MsgCardTypeMagneticStripe",
+			"language": "pt",
+			"label": "CARTÃO MAGNÉTICO"
+		},
+		{
+			"epsMessageIdentifier": "MsgCardTypeMagneticStripe",
+			"language": "en",
+			"label": "MAGNETIC STRIPE CARD"
+		},
+		{
+			"epsMessageIdentifier": "MsgCardTypeMagneticStripe",
+			"language": "es",
+			"label": "TARJETA DE PISTA MAGNÉTICA"
+		},
+		{
+			"epsMessageIdentifier": "MsgCardTypeQrCode",
+			"language": "pt",
+			"label": "QRCODE"
+		},
+		{
+			"epsMessageIdentifier": "MsgCardTypeQrCode",
+			"language": "en",
+			"label": "QRCODE"
+		},
+		{
+			"epsMessageIdentifier": "MsgCardTypeQrCode",
+			"language": "es",
+			"label": "CÓDIGO QR"
+		},
+		{
+			"epsMessageIdentifier": "MsgReadQrCode",
+			"language": "pt",
+			"label": "Apresentar QRCODE"
+		},
+		{
+			"epsMessageIdentifier": "MsgReadQrCode",
+			"language": "en",
+			"label": "Present QRCODE"
+		},
+		{
+			"epsMessageIdentifier": "MsgReadQrCode",
+			"language": "es",
+			"label": "Presentar CÓDIGO QR"
+		},
+		{
+			"epsMessageIdentifier": "MsgSwipeCard",
+			"language": "pt",
+			"label": "Passe cartão no leitor"
+		},
+		{
+			"epsMessageIdentifier": "MsgSwipeCard",
+			"language": "en",
+			"label": "Swipe card on reader"
+		},
+		{
+			"epsMessageIdentifier": "MsgSwipeCard",
+			"language": "es",
+			"label": "Deslizar tarjeta en el lector"
+		},
+		{
+			"epsMessageIdentifier": "MsgReadVehicleTag",
+			"language": "pt",
+			"label": "Aproxime Tag da Viatura"
+		},
+		{
+			"epsMessageIdentifier": "MsgReadVehicleTag",
+			"language": "en",
+			"label": "Present Vehicle Tag"
+		},
+		{
+			"epsMessageIdentifier": "MsgReadVehicleTag",
+			"language": "es",
+			"label": "Presentar Etiqueta de Vehículo"
+		},
+		{
+			"epsMessageIdentifier": "OkText",
+			"language": "pt",
+			"label": "Confirmar"
+		},
+		{
+			"epsMessageIdentifier": "CancelText",
+			"language": "pt",
+			"label": "Cancelar"
+		},
+		{
+			"epsMessageIdentifier": "OkText",
+			"language": "es",
+			"label": "Confirme"
+		},
+		{
+			"epsMessageIdentifier": "CancelText",
+			"language": "es",
+			"label": "Cancelar"
+		},
+		{
+			"epsMessageIdentifier": "MsgApproved",
+			"language": "pt",
+			"label": "Aprovado"
+		},
+		{
+			"epsMessageIdentifier": "MsgApproved",
+			"language": "en",
+			"label": "Approved"
+		},
+		{
+			"epsMessageIdentifier": "MsgApproved",
+			"language": "es",
+			"label": "Aprobado"
+		},
+		{
+			"epsMessageIdentifier": "MsgWaitReceipt",
+			"language": "pt",
+			"label": "Aguarde o recibo"
+		},
+		{
+			"epsMessageIdentifier": "MsgWaitReceipt",
+			"language": "en",
+			"label": "Wait for receipt"
+		},
+		{
+			"epsMessageIdentifier": "MsgWaitReceipt",
+			"language": "es",
+			"label": "Espere el recibo"
+		},
+		{
+			"epsMessageIdentifier": "MsgDriverIdValidationFailed",
+			"language": "pt",
+			"label": "Falhou a validação de identificação do condutor. Tente novamente."
+		},
+		{
+			"epsMessageIdentifier": "MsgDriverIdValidationFailed",
+			"language": "en",
+			"label": "Driver ID validation failed. Please try again."
+		},
+		{
+			"epsMessageIdentifier": "MsgDriverIdValidationFailed",
+			"language": "es",
+			"label": "Fallo la validación de identificación del conductor. Inténtelo de nuevo."
+		},
+		{
+			"epsMessageIdentifier": "MsgUserConfirmValue",
+			"language": "pt",
+			"label": "Confirmação de valor"
+		},
+		{
+			"epsMessageIdentifier": "MsgUserConfirmValue",
+			"language": "en",
+			"label": "Value confirmation"
+		},
+		{
+			"epsMessageIdentifier": "MsgUserConfirmValue",
+			"language": "es",
+			"label": "Confirmación de valor"
+		},
+		{
+			"epsMessageIdentifier": "MsgUserConfirmValueQuestion",
+			"language": "pt",
+			"label": "Confirma?"
+		},
+		{
+			"epsMessageIdentifier": "MsgUserConfirmValueQuestion",
+			"language": "en",
+			"label": "Confirm?"
+		},
+		{
+			"epsMessageIdentifier": "MsgUserConfirmValueQuestion",
+			"language": "es",
+			"label": "Confirma?"
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorClientCreationFailed",
+			"language": "pt",
+			"label": "Erro na criação de cliente. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorClientCreationFailed",
+			"language": "en",
+			"label": "Client creation error. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorClientCreationFailed",
+			"language": "es",
+			"label": "Error en la creación del cliente. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorGeneralProcessFailure",
+			"language": "pt",
+			"label": "Falha geral no processo. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorGeneralProcessFailure",
+			"language": "en",
+			"label": "General process failure. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorGeneralProcessFailure",
+			"language": "es",
+			"label": "Fallo general del proceso. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorDeviceAndClientCreationFailed",
+			"language": "pt",
+			"label": "Falha ao criar dispositivo e cliente. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorDeviceAndClientCreationFailed",
+			"language": "en",
+			"label": "Failed to create device and client. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorDeviceAndClientCreationFailed",
+			"language": "es",
+			"label": "Fallo al crear dispositivo y cliente. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorTrack2ValuesReadFailed",
+			"language": "pt",
+			"label": "Falha ao obter os valores da pista 2 do cartão. Operação cancelada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorTrack2ValuesReadFailed",
+			"language": "en",
+			"label": "Failed to obtain track 2 values from card. Operation canceled."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorTrack2ValuesReadFailed",
+			"language": "es",
+			"label": "Fallo al obtener los valores de la pista 2 de la tarjeta. Operación cancelada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorAcquirerRetrievalFailed",
+			"language": "pt",
+			"label": "Falha ao obter o adquirente."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorAcquirerRetrievalFailed",
+			"language": "en",
+			"label": "Failed to retrieve acquirer."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorAcquirerRetrievalFailed",
+			"language": "es",
+			"label": "Fallo al obtener el adquirente."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorTransactionContextByOriginalRetrievalFailed",
+			"language": "pt",
+			"label": "Falha ao obter o contexto de transação pela transação original. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorTransactionContextByOriginalRetrievalFailed",
+			"language": "en",
+			"label": "Failed to retrieve transaction context by original transaction. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorTransactionContextByOriginalRetrievalFailed",
+			"language": "es",
+			"label": "Fallo al obtener el contexto de la transacción por la transacción original. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorCardReaderSelectionFailed",
+			"language": "pt",
+			"label": "A seleção do leitor de cartões falhou. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorCardReaderSelectionFailed",
+			"language": "en",
+			"label": "Card reader selection failed. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorCardReaderSelectionFailed",
+			"language": "es",
+			"label": "La selección del lector de tarjetas falló. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorNoSuitableAcquirerProcessor",
+			"language": "pt",
+			"label": "Não é possível obter um processador adquirente adequado para proceder à autorização. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorNoSuitableAcquirerProcessor",
+			"language": "en",
+			"label": "Unable to obtain a suitable acquirer processor to proceed with authorization. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorNoSuitableAcquirerProcessor",
+			"language": "es",
+			"label": "No es posible obtener un procesador adquirente adecuado para proceder con la autorización. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorTrack2ReadFailed",
+			"language": "pt",
+			"label": "Falha na leitura dos dados da pista 2 do cartão. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorTrack2ReadFailed",
+			"language": "en",
+			"label": "Failed to read card track 2 data. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorTrack2ReadFailed",
+			"language": "es",
+			"label": "Fallo en la lectura de los datos de la pista 2 de la tarjeta. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorAcquirerDoesNotSupportDiscount",
+			"language": "pt",
+			"label": "O adquirente não suporta a operação de desconto. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorAcquirerDoesNotSupportDiscount",
+			"language": "en",
+			"label": "Acquirer does not support discount operation. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorAcquirerDoesNotSupportDiscount",
+			"language": "es",
+			"label": "El adquirente no soporta la operación de descuento. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorTransactionAuthorizationFailed",
+			"language": "pt",
+			"label": "Falha na autorização da transação. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorTransactionAuthorizationFailed",
+			"language": "en",
+			"label": "Transaction authorization failed. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorTransactionAuthorizationFailed",
+			"language": "es",
+			"label": "Falló la autorización de la transacción. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorBankPaymentFailed",
+			"language": "pt",
+			"label": "Falha ao efetuar o pagamento bancário. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorBankPaymentFailed",
+			"language": "en",
+			"label": "Bank payment failed. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorBankPaymentFailed",
+			"language": "es",
+			"label": "Falló el pago bancario. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorSecurityInfoValidationFailed",
+			"language": "pt",
+			"label": "Erro ao validar a informação de segurança. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorSecurityInfoValidationFailed",
+			"language": "en",
+			"label": "Error validating security information. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorSecurityInfoValidationFailed",
+			"language": "es",
+			"label": "Error al validar la información de seguridad. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorNoProcessorCriticalError",
+			"language": "pt",
+			"label": "Ocorreu um erro grave (NENHUM PROCESSADOR). Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorNoProcessorCriticalError",
+			"language": "en",
+			"label": "A critical error occurred (NO PROCESSOR). Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorNoProcessorCriticalError",
+			"language": "es",
+			"label": "Ocurrió un error crítico (SIN PROCESADOR). Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorAuthorizationMessageGenerationFailed",
+			"language": "pt",
+			"label": "Erro ao gerar a mensagem de autorização. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorAuthorizationMessageGenerationFailed",
+			"language": "en",
+			"label": "Error generating authorization message. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorAuthorizationMessageGenerationFailed",
+			"language": "es",
+			"label": "Error al generar el mensaje de autorización. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorMacGenerationFailed",
+			"language": "pt",
+			"label": "Erro ao gerar o MAC. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorMacGenerationFailed",
+			"language": "en",
+			"label": "Error generating MAC. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorMacGenerationFailed",
+			"language": "es",
+			"label": "Error al generar el MAC. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorWMCardOperationFailed",
+			"language": "pt",
+			"label": "A operação falhou no WMCard. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorWMCardOperationFailed",
+			"language": "en",
+			"label": "Operation failed in WMCard. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorWMCardOperationFailed",
+			"language": "es",
+			"label": "La operación falló en WMCard. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorUserAbortedOperation",
+			"language": "pt",
+			"label": "O utilizador decidiu não prosseguir com a operação. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorUserAbortedOperation",
+			"language": "en",
+			"label": "User chose not to proceed with the operation. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorUserAbortedOperation",
+			"language": "es",
+			"label": "El usuario decidió no continuar con la operación. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorQrCodeValidationFailed",
+			"language": "pt",
+			"label": "Erro ao validar o QR Code. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorQrCodeValidationFailed",
+			"language": "en",
+			"label": "Error validating QR Code. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorQrCodeValidationFailed",
+			"language": "es",
+			"label": "Error al validar el código QR. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorMagstripeDataValidationFailed",
+			"language": "pt",
+			"label": "Erro na validação dos dados da banda magnética. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorMagstripeDataValidationFailed",
+			"language": "en",
+			"label": "Error validating magnetic stripe data. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorMagstripeDataValidationFailed",
+			"language": "es",
+			"label": "Error al validar los datos de la banda magnética. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorKsnRegenInfoValidationFailed",
+			"language": "pt",
+			"label": "Erro na validação da informação do KSN REGEN. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorKsnRegenInfoValidationFailed",
+			"language": "en",
+			"label": "Error validating KSN REGEN information. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorKsnRegenInfoValidationFailed",
+			"language": "es",
+			"label": "Error al validar la información KSN REGEN. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorCardRulesProcessingFailed",
+			"language": "pt",
+			"label": "Erro ao processar as regras do cartão. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorCardRulesProcessingFailed",
+			"language": "en",
+			"label": "Error processing card rules. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorCardRulesProcessingFailed",
+			"language": "es",
+			"label": "Error al procesar las reglas de la tarjeta. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorTransactionProcessorConfigurationFailed",
+			"language": "pt",
+			"label": "Não foi possível configurar o processador de transações. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorTransactionProcessorConfigurationFailed",
+			"language": "en",
+			"label": "Could not configure transaction processor. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorTransactionProcessorConfigurationFailed",
+			"language": "es",
+			"label": "No fue posible configurar el procesador de transacciones. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorDiscountFinancialAdviceNotPossible",
+			"language": "pt",
+			"label": "Não é possível avançar com a consultoria financeira com desconto. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorDiscountFinancialAdviceNotPossible",
+			"language": "en",
+			"label": "Cannot proceed with discounted financial advice. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorDiscountFinancialAdviceNotPossible",
+			"language": "es",
+			"label": "No es posible continuar con el asesoramiento financiero con descuento. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorFinancialAdviceMessageGenerationFailed",
+			"language": "pt",
+			"label": "Erro ao gerar a mensagem de aconselhamento financeiro. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorFinancialAdviceMessageGenerationFailed",
+			"language": "en",
+			"label": "Error generating financial advice message. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorFinancialAdviceMessageGenerationFailed",
+			"language": "es",
+			"label": "Error al generar el mensaje de asesoramiento financiero. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorDiscountFinancialAdviceWMCardFailed",
+			"language": "pt",
+			"label": "A consultoria financeira com desconto falhou no WMCard. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorDiscountFinancialAdviceWMCardFailed",
+			"language": "en",
+			"label": "Discounted financial advice failed in WMCard. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorDiscountFinancialAdviceWMCardFailed",
+			"language": "es",
+			"label": "El asesoramiento financiero con descuento falló en WMCard. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorFinancialInformationMessageGenerationFailed",
+			"language": "pt",
+			"label": "Erro ao gerar a mensagem de informação financeira. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorFinancialInformationMessageGenerationFailed",
+			"language": "en",
+			"label": "Error generating financial information message. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorFinancialInformationMessageGenerationFailed",
+			"language": "es",
+			"label": "Error al generar el mensaje de información financiera. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorCardExpiredOrInactive",
+			"language": "pt",
+			"label": "Cartão expirado ou não efetivo. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorCardExpiredOrInactive",
+			"language": "en",
+			"label": "Card expired or not active. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorCardExpiredOrInactive",
+			"language": "es",
+			"label": "Tarjeta expirada o no efectiva. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorFleetCardRulesProcessingFailed",
+			"language": "pt",
+			"label": "Erro ao processar as regras do cartão de frota. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorFleetCardRulesProcessingFailed",
+			"language": "en",
+			"label": "Error processing fleet card rules. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorFleetCardRulesProcessingFailed",
+			"language": "es",
+			"label": "Error al procesar las reglas de la tarjeta de flota. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorLoyaltyAuthorizationMessageGenerationFailed",
+			"language": "pt",
+			"label": "Erro na geração da mensagem de autorização de fidelização. Operação abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorLoyaltyAuthorizationMessageGenerationFailed",
+			"language": "en",
+			"label": "Error generating loyalty authorization message. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorLoyaltyAuthorizationMessageGenerationFailed",
+			"language": "es",
+			"label": "Error al generar el mensaje de autorización de fidelización. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorTransactionAuthorizationFailedProductsNotValid",
+			"language": "pt",
+			"label": "Erro na autorização. Cartão não permite adquirir produtos. Operação abortada"
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorTransactionAuthorizationFailedProductsNotValid",
+			"language": "en",
+			"label": "Authorization error. Card does not allow purchase of products. Operation aborted."
+		},
+		{
+			"epsMessageIdentifier": "MsgErrorTransactionAuthorizationFailedProductsNotValid",
+			"language": "es",
+			"label": "Error de autorización. La tarjeta no permite la compra de productos. Operación abortada."
+		},
+		{
+			"epsMessageIdentifier": "MsgMagneticStripeSelected",
+			"language": "pt",
+			"label": "Cartão magnético selecionado."
+		},
+		{
+			"epsMessageIdentifier": "MsgMagneticStripeSelected",
+			"language": "en",
+			"label": "Magnetic stripe selected."
+		},
+		{
+			"epsMessageIdentifier": "MsgMagneticStripeSelected",
+			"language": "es",
+			"label": "Banda magnética seleccionada."
+		},
+		{
+			"epsMessageIdentifier": "MsgQrCodeSelected",
+			"language": "pt",
+			"label": "QR Code selecionado."
+		},
+		{
+			"epsMessageIdentifier": "MsgQrCodeSelected",
+			"language": "en",
+			"label": "QR Code selected."
+		},
+		{
+			"epsMessageIdentifier": "MsgQrCodeSelected",
+			"language": "es",
+			"label": "Código QR seleccionado."
+		},
+		{
+			"epsMessageIdentifier": "MsgUserConfirming",
+			"language": "pt",
+			"label": "Utilizador a confirmar."
+		},
+		{
+			"epsMessageIdentifier": "MsgUserConfirming",
+			"language": "en",
+			"label": "User confirming."
+		},
+		{
+			"epsMessageIdentifier": "MsgUserConfirming",
+			"language": "es",
+			"label": "Usuario confirmando."
+		},
+		{
+			"epsMessageIdentifier": "MsgCollectSecurityData",
+			"language": "pt",
+			"label": "A recolher dados de segurança."
+		},
+		{
+			"epsMessageIdentifier": "MsgCollectSecurityData",
+			"language": "en",
+			"label": "Collecting security data."
+		},
+		{
+			"epsMessageIdentifier": "MsgCollectSecurityData",
+			"language": "es",
+			"label": "Recopilando datos de seguridad."
+		},
+		{
+			"epsMessageIdentifier": "MsgInsertSecurityData",
+			"language": "pt",
+			"label": "Inserir dados de segurança."
+		},
+		{
+			"epsMessageIdentifier": "MsgInsertSecurityData",
+			"language": "en",
+			"label": "Insert security data."
+		},
+		{
+			"epsMessageIdentifier": "MsgInsertSecurityData",
+			"language": "es",
+			"label": "Introduzca datos de seguridad."
+		},
+		{
+			"epsMessageIdentifier": "MsgPinIncorrect",
+			"language": "pt",
+			"label": "PIN incorreto."
+		},
+		{
+			"epsMessageIdentifier": "MsgPinIncorrect",
+			"language": "en",
+			"label": "Incorrect PIN."
+		},
+		{
+			"epsMessageIdentifier": "MsgPinIncorrect",
+			"language": "es",
+			"label": "PIN incorrecto."
+		},
+		{
+			"epsMessageIdentifier": "MsgIdentificationCorrect",
+			"language": "pt",
+			"label": "Identificação correta."
+		},
+		{
+			"epsMessageIdentifier": "MsgIdentificationCorrect",
+			"language": "en",
+			"label": "Identification correct."
+		},
+		{
+			"epsMessageIdentifier": "MsgIdentificationCorrect",
+			"language": "es",
+			"label": "Identificación correcta."
+		},
+		{
+			"epsMessageIdentifier": "MsgOperationCompleted",
+			"language": "pt",
+			"label": "Operação concluída! Aguarda Recibo"
+		},
+		{
+			"epsMessageIdentifier": "MsgOperationCompleted",
+			"language": "en",
+			"label": "Operation completed. Wait for Receipt"
+		},
+		{
+			"epsMessageIdentifier": "MsgOperationCompleted",
+			"language": "es",
+			"label": "Operación completada."
+		}
+	],
+	"servicePort": 20901,
+	"defaultTransactionValue": 150,
+	"defaultLanguage": "Pt",
+	"currencyCode": "258",
+	"OfflineTransactionsBatchLimit": 5
+}

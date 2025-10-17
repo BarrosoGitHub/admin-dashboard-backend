@@ -72,7 +72,7 @@ namespace EPSConfigurator.Controllers
         }
 
         [HttpGet("template")]
-        public IActionResult GetOptConfigurationTemplate([FromQuery] GetEpsConfigurationTemplateDTO template)
+        public IActionResult GetConfigurationTemplate([FromQuery] GetEpsConfigurationTemplateDTO template)
         {
             try
             {
@@ -107,119 +107,119 @@ namespace EPSConfigurator.Controllers
             {
                 var schemaObject = new
                 {
-                    registeredTerminals = new[]
+                    schema = new
                     {
-                        new
+                        registeredTerminals = new[]
                         {
-                            pointOfPaymentAddress = "string",
-                            pointOfPaymentPort = 0,
-                            address = "string",
-                            applicationSender = "string",
-                            reportProgress = false,
-                            deviceProxyPort = 0,
-                            serialNumber = "string",
-                            workstationId = "string",
-                            terminalId = "string",
-                            cardAcceptorId = "string",
-                            allowedAcquirerIds = new[] { 0 },
-                            macKeyBankIndex = 0,
-                            pinBlockKeyBankIndex = 0,
-                            dataKeyBankIndex = 0,
-                            type = "TerminalType enum value",
-                            bypassMessageAuthentication = false,
-                            printerColumns = 32,
-                            printReceiptOnTerminal = false,
-                            printLogoOnTerminal = false,
-                            printerLogoPath = "string",
-                            printShiftCloseOnTerminal = false,
-                            currencySymbol = "EUR",
-                            allowOfflineAuthorization = false
-                        }
-                    },
-                    instanceId = "string",
-                    instanceName = "string",
-                    countryId = "string",
-                    currencyCode = "string",
-                    acquirers = new[]
-                    {
-                        new
+                            new
+                            {
+                                pointOfPayments = new[]
+                                {
+                                    new
+                                    {
+                                        popId = "string",
+                                        address = "string",
+                                        port = 0,
+                                        cardAcceptorId = "string",
+                                        type = "string (IndoorTerminal/OutdoorTerminal)",
+                                        bypassMessageAuthentication = false,
+                                        printReceiptOnTerminal = false,
+                                        printLogoOnTerminal = false,
+                                        printerLogoPath = "string",
+                                        printerColumns = 0,
+                                        printShiftCloseOnTerminal = false
+                                    }
+                                },
+                                address = "string",
+                                applicationSender = "string",
+                                reportProgress = false,
+                                deviceProxyPort = 0,
+                                serialNumber = "string",
+                                workstationId = "string",
+                                terminalId = "string",
+                                allowedAcquirerIds = new[] { 0 },
+                                currencySymbol = "string",
+                                allowOfflineAuthorization = false
+                            }
+                        },
+                        instanceId = "string",
+                        instanceName = "string",
+                        countryId = "string",
+                        currencyCode = "string",
+                        acquirers = new[]
                         {
-                            description = "string",
-                            type = "string",
-                            id = 0,
-                            applicationId = "string",
-                            issuerIdentifierRangeList = new[]
+                            new
                             {
-                                new
+                                description = "string",
+                                type = "string",
+                                id = 0,
+                                merchantId = "string",
+                                issuerIdentifierRangeList = new[]
                                 {
-                                    first = 0,
-                                    last = 0,
-                                    allowDiscount = false,
-                                    rebateLabel = new Dictionary<string, string> { { "languageKey", "string" } }
-                                }
-                            },
-                            merchantId = "string",
-                            serviceAddress = "string",
-                            servicePort = 0,
-                            forceRequestPin = false,
-                            forceRequestOdometer = false,
-                            forceRequestRegistration = false,
-                            forceRequestDriverId = false,
-                            canPerformDiscountOperation = false,
-                            canPerformLoyaltyOperation = false,
-                            connectTimeoutSeconds = 0,
-                            readTimeoutSeconds = 0,
-                            writeTimeoutSeconds = 0,
-                            maxTransactionValue = 0.0,
-                            defaultTransactionValue = 0.0,
-                            allowOfflineProcessing = false,
-                            allowedCardTypes = new[] { "CardType enum value" },
-                            messagesList = new[]
-                            {
-                                new
+                                    new
+                                    {
+                                        first = 0,
+                                        last = 0,
+                                        allowDiscount = false,
+                                        rebateLabel = new Dictionary<string, string> { { "languageKey", "string" } }
+                                    }
+                                },
+                                serviceAddress = "string",
+                                servicePort = 0,
+                                forceRequestPin = false,
+                                forceRequestOdometer = false,
+                                forceRequestRegistration = false,
+                                forceRequestDriverId = false,
+                                canPerformDiscountOperation = false,
+                                canPerformLoyaltyOperation = false,
+                                connectTimeoutSeconds = 0,
+                                readTimeoutSeconds = 0,
+                                writeTimeoutSeconds = 0,
+                                maxTransactionValue = 0.0,
+                                @default = false,
+                                allowedCardTypes = new[] { 0 },
+                                messagesList = new[]
                                 {
-                                    epsMessageIdentifier = "EpsMessageIdentifier enum value",
-                                    language = "EpsMessageLanguage enum value",
-                                    label = "string"
-                                }
-                            },
-                            receiptLabels = new[]
-                            {
-                                new
+                                    new
+                                    {
+                                        epsMessageIdentifier = "string (enum)",
+                                        language = "string (enum: pt, en, es)",
+                                        label = "string"
+                                    }
+                                },
+                                receiptLabels = new[]
                                 {
-                                    epsReceiptLabelIdentifier = "EpsReceiptLabelIdentifier enum value",
-                                    language = "EpsMessageLanguage enum value",
-                                    label = "string"
+                                    new
+                                    {
+                                        epsReceiptLabelIdentifier = "string (enum)",
+                                        language = "string (enum: pt, en, es)",
+                                        label = "string"
+                                    }
                                 }
                             }
-                        }
-                    },
-                    languages = new[]
-                    {
-                        new
+                        },
+                        languages = new[]
                         {
-                            description = "string",
-                            id = 0
-                        }
-                    },
-                    messages = new[]
-                    {
-                        new
+                            new
+                            {
+                                description = "string",
+                                id = 0
+                            }
+                        },
+                        messages = new[]
                         {
-                            epsMessageIdentifier = "EpsMessageIdentifier enum value",
-                            language = "EpsMessageLanguage enum value",
-                            label = "string"
-                        }
-                    },
-                    servicePort = 0,
-                    defaultAuthorizationValue = 0.0,
-                    defaultLanguage = "EpsMessageLanguage enum value",
-                    timeWaitCheckCardPresenceInSeconds = 0,
-                    timeWaitMagneticStripeDataInSeconds = 0,
-                    timeWaitGetKeyboardStringDataInSeconds = 0,
-                    timeWaitDisplayCustomerMessageInSeconds = 0,
-                    timeWaitGetWaitCardReaderSelectionInSeconds = 0,
-                    timeWaitGetRfidReadInSeconds = 0
+                            new
+                            {
+                                epsMessageIdentifier = "string (enum)",
+                                language = "string (enum: pt, en, es)",
+                                label = "string"
+                            }
+                        },
+                        servicePort = 0,
+                        defaultTransactionValue = 0.0,
+                        defaultLanguage = "string (enum: Pt, En, Es)",
+                        offlineTransactionsBatchLimit = 0
+                    }
                 };
 
                 var jsonSettings = new System.Text.Json.JsonSerializerOptions
