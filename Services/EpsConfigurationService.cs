@@ -286,8 +286,7 @@ namespace EPSConfigurator.Services
                     SerialNumber = "017002",
                     WorkstationId = "1",
                     TerminalId = "900",
-                    AllowedAcquirerIds = new List<int> { 9200, 9202 },
-                    Type = TerminalType.OutdoorTerminal
+                    AllowedAcquirerIds = new List<int> { 9200, 9202 }
                 },
                 new EpsPosClient
                 {
@@ -298,8 +297,7 @@ namespace EPSConfigurator.Services
                     SerialNumber = "017002",
                     WorkstationId = "1",
                     TerminalId = "901",
-                    AllowedAcquirerIds = new List<int> { 9200, 9202 },
-                    Type = TerminalType.IndoorTerminal
+                    AllowedAcquirerIds = new List<int> { 9200, 9202 }
                 }
             },
                 InstanceId = "7ad5fc5f-8bce-489e-b8ec-d8e83682502d",
