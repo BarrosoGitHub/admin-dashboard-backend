@@ -34,7 +34,6 @@ public class ConfigurationController : ControllerBase
         };
         var resultJson = new JsonResult(result, jsonSettings);
         
-        Console.WriteLine("Returning configuration: " + System.Text.Json.JsonSerializer.Serialize(result, jsonSettings));
         return resultJson;
     }
 
