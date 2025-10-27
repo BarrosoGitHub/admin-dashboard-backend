@@ -208,7 +208,6 @@ namespace EPSConfigurator.Services
                 CountryId = string.Empty,
                 Acquirers = new List<EpsAcquirer>(),
                 Languages = new List<EpsLanguage>(),
-                Messages = new List<EpsMessage>(),
                 ServicePort = 0,
                 DefaultAuthorizationValue = 100,
                 DefaultLanguage = EpsMessageLanguage.Pt,

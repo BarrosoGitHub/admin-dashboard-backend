@@ -121,6 +121,7 @@ namespace EPSConfigurator.Controllers
                                         address = "string",
                                         port = 0,
                                         cardAcceptorId = "string",
+                                        cardAcceptorTerminalId = "string",
                                         type = "string (IndoorTerminal/OutdoorTerminal)",
                                         bypassMessageAuthentication = false,
                                         printReceiptOnTerminal = false,
@@ -136,8 +137,11 @@ namespace EPSConfigurator.Controllers
                                 deviceProxyPort = 0,
                                 serialNumber = "string",
                                 workstationId = "string",
-                                terminalId = "string",
+                                epsClientId = "string",
                                 allowedAcquirerIds = new[] { 0 },
+                                macKeyBankIndex = 0,
+                                pinBlockKeyBankIndex = 0,
+                                dataKeyBankIndex = 0,
                                 currencySymbol = "string",
                                 allowOfflineAuthorization = false
                             }
@@ -153,6 +157,7 @@ namespace EPSConfigurator.Controllers
                                 description = "string",
                                 type = "string",
                                 id = 0,
+                                applicationId = "string",
                                 merchantId = "string",
                                 issuerIdentifierRangeList = new[]
                                 {
@@ -176,26 +181,11 @@ namespace EPSConfigurator.Controllers
                                 readTimeoutSeconds = 0,
                                 writeTimeoutSeconds = 0,
                                 maxTransactionValue = 0.0,
-                                @default = false,
+                                defaultTransactionValue = 0.0,
+                                allowOfflineProcessing = false,
+                                maxOfflineTransactionValue = 0.0,
                                 allowedCardTypes = new[] { 0 },
-                                messagesList = new[]
-                                {
-                                    new
-                                    {
-                                        epsMessageIdentifier = "string (enum)",
-                                        language = "string (enum: pt, en, es)",
-                                        label = "string"
-                                    }
-                                },
-                                receiptLabels = new[]
-                                {
-                                    new
-                                    {
-                                        epsReceiptLabelIdentifier = "string (enum)",
-                                        language = "string (enum: pt, en, es)",
-                                        label = "string"
-                                    }
-                                }
+                                registeredProducts = new Dictionary<string, string> { { "productCode", "FuelType (enum)" } }
                             }
                         },
                         languages = new[]
@@ -206,18 +196,16 @@ namespace EPSConfigurator.Controllers
                                 id = 0
                             }
                         },
-                        messages = new[]
-                        {
-                            new
-                            {
-                                epsMessageIdentifier = "string (enum)",
-                                language = "string (enum: pt, en, es)",
-                                label = "string"
-                            }
-                        },
                         servicePort = 0,
-                        defaultTransactionValue = 0.0,
+                        defaultAuthorizationValue = 0.0,
                         defaultLanguage = "string (enum: Pt, En, Es)",
+                        timeWaitCheckCardPresenceInSeconds = 0,
+                        timeWaitMagneticStripeDataInSeconds = 0,
+                        timeWaitGetKeyboardStringDataInSeconds = 0,
+                        timeWaitDisplayCustomerMessageInSeconds = 0,
+                        timeWaitGetWaitCardReaderSelectionInSeconds = 0,
+                        timeWaitGoToIdleInSeconds = 0,
+                        timeWaitGetRfidReadInSeconds = 0,
                         offlineTransactionsBatchLimit = 0
                     }
                 };
@@ -250,41 +238,26 @@ namespace EPSConfigurator.Controllers
                         new { Value = 1, Name = "En" },
                         new { Value = 2, Name = "Es" }
                     },
-                    EpsMessageIdentifier = new[]
-                    {
-                        new { Value = 0, Name = "MsgWait" },
-                        new { Value = 1, Name = "MsgInsertPin" },
-                        new { Value = 2, Name = "MsgInsertKm" },
-                        new { Value = 3, Name = "MsgInsertIdCode" },
-                        new { Value = 4, Name = "MsgDiscountAmountApproved" },
-                        new { Value = 5, Name = "OkText" },
-                        new { Value = 6, Name = "CancelText" }
-                    },
-                    EpsReceiptLabelIdentifier = new[]
-                    {
-                        new { Value = 0, Name = "LblTerminal" },
-                        new { Value = 1, Name = "LblSession" },
-                        new { Value = 2, Name = "LblOperation" },
-                        new { Value = 3, Name = "LblGalpFrota" },
-                        new { Value = 4, Name = "LblGalpDiscount" },
-                        new { Value = 5, Name = "LblCardFrota" },
-                        new { Value = 6, Name = "LblCardDiscount" },
-                        new { Value = 7, Name = "LblCustomer" },
-                        new { Value = 8, Name = "LblDriverAndLicensePlate" },
-                        new { Value = 9, Name = "LblExpireDate" },
-                        new { Value = 10, Name = "LblMileage" }
-                    },
                     CardTypes = new[]
                     {
                         new { Value = 0, Name = "Icc" },
-                        new { Value = 1, Name = "Contactless" },
-                        new { Value = 2, Name = "Magnetic" }
+                        new { Value = 1, Name = "MagneticStripe" },
+                        new { Value = 2, Name = "Contactless" },
+                        new { Value = 3, Name = "ContactlessEmv" },
+                        new { Value = 4, Name = "Mifare" },
+                        new { Value = 5, Name = "QrCode" }
                     },
                     TerminalType = new[]
                     {
-                        new { Value = 0, Name = "IPT_PETROTEC" },
-                        new { Value = 1, Name = "OPT_PETROTEC" },
-                        new { Value = 2, Name = "INGENICO" }
+                        new { Value = 0, Name = "OutdoorTerminal" },
+                        new { Value = 1, Name = "IndoorTerminal" }
+                    },
+                    FuelTypes = new[]
+                    {
+                        new { Value = 0, Name = "None" },
+                        new { Value = 1, Name = "Petrol" },
+                        new { Value = 2, Name = "Diesel" },
+                        new { Value = 3, Name = "LPG" }
                     }
                 };
 
