@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:9.0-bookworm-x86 AS build
 WORKDIR /src
 
 # Add private NuGet source
@@ -19,7 +19,7 @@ COPY . .
 
 RUN dotnet publish "OPTConfigurator.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
-FROM --platform=linux/386 mcr.microsoft.com/dotnet/aspnet:9.0-bookworm-slim AS final
+FROM mcr.microsoft.com/dotnet/aspnet:9.0-bookworm-slim-amd64 AS final
 RUN apt-get update && \
     apt-get install -y libnm0 libreadline-dev dnsmasq bash network-manager && \
     rm -rf /var/lib/apt/lists/*
