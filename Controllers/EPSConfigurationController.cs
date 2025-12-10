@@ -122,7 +122,7 @@ namespace EPSConfigurator.Controllers
                                         port = 0,
                                         cardAcceptorId = "string",
                                         cardAcceptorTerminalId = "string",
-                                        type = "string (IndoorTerminal/OutdoorTerminal)",
+                                        type = "enum (IndoorTerminal/OutdoorTerminal)",
                                         bypassMessageAuthentication = false,
                                         printReceiptOnTerminal = false,
                                         printLogoOnTerminal = false,
@@ -185,7 +185,7 @@ namespace EPSConfigurator.Controllers
                                 allowOfflineProcessing = false,
                                 maxOfflineTransactionValue = 0.0,
                                 allowedCardTypes = new[] { 0 },
-                                registeredProducts = new Dictionary<string, string> { { "productCode", "FuelType (enum)" } }
+                                registeredProducts = new Dictionary<string, string> { { "string", "enum (None, Petrol, Diesel, LPG)" } }
                             }
                         },
                         languages = new[]
@@ -198,7 +198,8 @@ namespace EPSConfigurator.Controllers
                         },
                         servicePort = 0,
                         defaultAuthorizationValue = 0.0,
-                        defaultLanguage = "string (enum: Pt, En, Es)",
+                        defaultLanguage = "enum (Pt, En, Es)",
+                        maxClients = 0,
                         timeWaitCheckCardPresenceInSeconds = 0,
                         timeWaitMagneticStripeDataInSeconds = 0,
                         timeWaitGetKeyboardStringDataInSeconds = 0,
@@ -229,16 +230,15 @@ namespace EPSConfigurator.Controllers
         {
             try
             {
-                // Return enum information as a generic structure
                 var enumsInfo = new
                 {
-                    EpsMessageLanguage = new[]
+                    DefaultLanguage = new[]
                     {
                         new { Value = 0, Name = "Pt" },
                         new { Value = 1, Name = "En" },
                         new { Value = 2, Name = "Es" }
                     },
-                    CardTypes = new[]
+                    AllowedCardTypes = new[]
                     {
                         new { Value = 0, Name = "Icc" },
                         new { Value = 1, Name = "MagneticStripe" },
@@ -247,12 +247,12 @@ namespace EPSConfigurator.Controllers
                         new { Value = 4, Name = "Mifare" },
                         new { Value = 5, Name = "QrCode" }
                     },
-                    TerminalType = new[]
+                    PointOfPaymentsType = new[]
                     {
                         new { Value = 0, Name = "OutdoorTerminal" },
                         new { Value = 1, Name = "IndoorTerminal" }
                     },
-                    FuelTypes = new[]
+                    RegisteredProductsFuelTypes = new[]
                     {
                         new { Value = 0, Name = "None" },
                         new { Value = 1, Name = "Petrol" },

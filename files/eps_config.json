@@ -1,0 +1,219 @@
+{
+  "registeredTerminals": [
+    {
+      "pointOfPayments": [
+        {
+          "popId": "3",
+          "address": "127.0.0.1",
+          "port": 1880,
+          "cardAcceptorId": "M0003004",
+          "cardAcceptorTerminalId": "1",
+          "type": "IndoorTerminal",
+          "bypassMessageAuthentication": true,
+          "printReceiptOnTerminal": true,
+          "printLogoOnTerminal": true,
+          "printerLogoPath": "/opt/app_res/printer_logos/logoprinter_galp.png",
+          "printerColumns": 32,
+          "printShiftCloseOnTerminal": true
+        },
+        {
+          "popId": "4",
+          "address": "127.0.0.1",
+          "port": 1880,
+          "cardAcceptorId": "M0002003",
+          "cardAcceptorTerminalId": "1",
+          "type": "IndoorTerminal",
+          "bypassMessageAuthentication": true,
+          "printReceiptOnTerminal": true,
+          "printLogoOnTerminal": true,
+          "printerLogoPath": "/opt/app_res/printer_logos/logoprinter_galp.png",
+          "printerColumns": 32,
+          "printShiftCloseOnTerminal": true
+        }
+      ],
+      "address": "127.0.0.1",
+      "applicationSender": "GenesysXXI",
+      "reportProgress": true,
+      "deviceProxyPort": 20902,
+      "serialNumber": "017002",
+      "workstationId": "POS001",
+      "epsClientId": "1",
+      "allowedAcquirerIds": [
+        9200,
+        9202
+      ],
+      "currencySymbol": "MT",
+      "allowOfflineAuthorization": true
+    },
+    {
+      "pointOfPayments": [
+        {
+          "popId": "1",
+          "address": "127.0.0.1",
+          "port": 20102,
+          "cardAcceptorId": "9002094",
+          "cardAcceptorTerminalId": "1",
+          "type": "OutdoorTerminal",
+          "bypassMessageAuthentication": true,
+          "printReceiptOnTerminal": true,
+          "printLogoOnTerminal": true,
+          "printerLogoPath": "/opt/app_res/printer_logos/logoprinter_petrotec.png",
+          "printerColumns": 32,
+          "printShiftCloseOnTerminal": true
+        }
+      ],
+      "address": "127.0.0.1",
+      "applicationSender": "OPT Petrotec",
+      "reportProgress": false,
+      "deviceProxyPort": 20102,
+      "serialNumber": "017002",
+      "workstationId": "66",
+      "epsClientId": "901",
+      "allowedAcquirerIds": [
+        9200,
+        9202
+      ]
+    }
+  ],
+  "instanceId": "7ad5fc5f-8bce-489e-b8ec-d8e83682502d",
+  "instanceName": "PetrotecIfsfEps",
+  "countryId": "PT",
+  "acquirers": [
+    {
+      "description": "SIBS",
+      "type": "Banking",
+      "merchantId": "",
+      "id": 9200,
+      "issuerIdentifierRangeList": [
+        {
+          "first": 454702,
+          "last": 454705
+        }
+      ],
+      "serviceAddress": "127.0.0.1",
+      "servicePort": 3321,
+      "forceRequestPin": true,
+      "forceRequestOdometer": false,
+      "forceRequestRegistration": false,
+      "forceRequestDriverId": false,
+      "canPerformDiscountOperation": true,
+      "canPerformLoyaltyOperation": true,
+      "connectTimeoutSeconds": 5,
+      "readTimeoutSeconds": 30,
+      "writeTimeoutSeconds": 5,
+      "maxTransactionValue": 150,
+      "default": true,
+      "allowedCardTypes": [
+        0,
+        5
+      ]
+    },
+    {
+      "description": "GalpFrota",
+      "type": "GALP",
+      "merchantId": "92004900",
+      "id": 9202,
+      "issuerIdentifierRangeList": [
+        {
+          "first": 777686,
+          "last": 777686,
+          "allowDiscount": false,
+          "rebateLabel": {
+            "en": "GALP FROTA MZ",
+            "pt": "GALP FROTA MZ",
+            "es": "GALP FROTA MZ"
+          }
+        },
+        {
+          "first": 708257,
+          "last": 708257,
+          "allowDiscount": true,
+          "rebateLabel": {
+            "en": "DESC. galpfrota BUSINESS",
+            "pt": "DESC. galpfrota BUSINESS",
+            "es": "DESC. galpfrota BUSINESS"
+          }
+        },
+        {
+          "first": 700582,
+          "last": 700582,
+          "allowDiscount": true,
+          "rebateLabel": {
+            "en": "DESC. galpfrota BUSINESS",
+            "pt": "DESC. galpfrota BUSINESS",
+            "es": "DESC. galpfrota BUSINESS"
+          }
+        },
+        {
+          "first": 708276,
+          "last": 708276,
+          "allowDiscount": true,
+          "rebateLabel": {
+            "en": "DESC. galpfrota BUSINESS",
+            "pt": "DESC. galpfrota BUSINESS",
+            "es": "DESC. galpfrota BUSINESS"
+          }
+        },
+        {
+          "first": 708417,
+          "last": 708417,
+          "allowDiscount": false,
+          "rebateLabel": {
+            "en": "DESC. galpfrota BUSINESS",
+            "pt": "DESC. galpfrota BUSINESS",
+            "es": "DESC. galpfrota BUSINESS"
+          }
+        },
+        {
+          "First": 708422,
+          "Last": 708422,
+          "AllowDiscount": true,
+          "RebateLabel": {
+            "en": "DESC. galpfrota BUSINESS",
+            "pt": "DESC. galpfrota BUSINESS",
+            "es": "DESC. galpfrota BUSINESS"
+          }
+        }
+      ],
+      "serviceAddress": "127.0.0.1",
+      "servicePort": 3321,
+      "forceRequestPin": true,
+      "forceRequestOdometer": false,
+      "forceRequestRegistration": false,
+      "forceRequestDriverId": false,
+      "canPerformDiscountOperation": false,
+      "canPerformLoyaltyOperation": false,
+      "ConnectTimeoutSeconds": 5,
+      "ReadTimeoutSeconds": 30,
+      "writeTimeoutSeconds": 5,
+      "maxTransactionValue": 9999,
+      "default": false,
+      "allowedCardTypes": [
+        1,
+        5
+      ],
+      "registeredProducts": {
+        "101": 2,
+        "102": 2,
+        "103": 2,
+        "120": 2,
+        "130": 2,
+        "201": 1,
+        "202": 1,
+        "203": 1,
+        "204": 1,
+        "205": 1,
+        "206": 1,
+        "210": 1,
+        "211": 1,
+        "220": 1,
+        "221": 1
+      }
+    }
+  ],
+  "servicePort": 20901,
+  "defaultTransactionValue": 150,
+  "defaultLanguage": "pt",
+  "currencyCode": "258",
+  "offlineTransactionsBatchLimit": 5
+}

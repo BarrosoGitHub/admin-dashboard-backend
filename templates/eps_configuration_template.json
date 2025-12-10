@@ -272,6 +272,7 @@
 	"defaultAuthorizationValue": 100,
 	"defaultLanguage": "Pt",
 	"currencyCode": "258",
+	"maxClients": 20,
 	"timeWaitCheckCardPresenceInSeconds": 30,
 	"timeWaitMagneticStripeDataInSeconds": 30,
 	"timeWaitGetKeyboardStringDataInSeconds": 60,
@@ -279,5 +280,5 @@
 	"timeWaitGetWaitCardReaderSelectionInSeconds": 30,
 	"timeWaitGoToIdleInSeconds": 5,
 	"timeWaitGetRfidReadInSeconds": 30,
-	"OfflineTransactionsBatchLimit": 5
+	"offlineTransactionsBatchLimit": 5
 }
