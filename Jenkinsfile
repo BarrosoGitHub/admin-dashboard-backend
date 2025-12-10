@@ -4,17 +4,16 @@ pipeline {
     triggers {
     GenericTrigger(
        genericVariables: [
-            [key: 'ADDTYPE', value: 'changes[0].type'],
-            [key: 'TAGTYPE', value: 'changes[0].ref.type'],
-            [key: 'TAGNAME', value: 'changes[0].ref.displayId'],
-            [key: 'AUTOR', value: 'actor.name'],
-            [key: 'AUTOREMAIL', value: 'actor.emailAddress'],
-            [key: 'DATE', value: 'date'],
-            [key: 'PROJECTNAME', value: 'repository.project.name'],
-            [key: 'REPO', value: 'repository.name'],
-            [key: 'REFID', value: 'changes[0].ref.id'],
-            [key: 'REPONAME', value: 'repository.slug'],
-            [key: 'PROJKEY', value: 'repository.project.key']
+            [key: 'ADDTYPE', value: 'push.changes[0].new.target.type'],
+                [key: 'TAGTYPE', value: 'push.changes[0].new.type'],
+                [key: 'TAGNAME', value: 'push.changes[0].new.name'],
+                [key: 'AUTOR', value: 'push.changes[0].new.target.author.raw'],                 
+                [key: 'DATE', value: 'push.changes[0].new.target.date'],
+                [key: 'PROJECTNAME', value: 'repository.project.name'],
+                [key: 'REPO', value: 'repository.full_name'],
+                [key: 'REFID', value: 'push.changes[0].new.links.html.href'],   
+                [key: 'REPONAME', value: 'repository.name'],
+                [key: 'PROJKEY', value: 'repository.project.key']
        ],
        causeString: 'Generic Cause',
        token: 'opt-emotion-configurator-api',
