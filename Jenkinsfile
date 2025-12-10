@@ -23,7 +23,7 @@ pipeline {
        printPostContent: true,
        silentResponse: true,
        regexpFilterText: '$TAGTYPE#$ADDTYPE',
-       regexpFilterExpression: 'TAG#ADD'
+       regexpFilterExpression: 'tag#commit'
     )
   }  	
     options {
