@@ -11,7 +11,7 @@ pipeline {
                 [key: 'DATE', value: 'push.changes[0].new.target.date'],
                 [key: 'PROJECTNAME', value: 'repository.project.name'],
                 [key: 'REPO', value: 'repository.full_name'],
-                [key: 'REFID', value: 'push.changes[0].new.links.html.href'],   
+                [key: 'REFID', value: 'push.changes[0].new.name'], 
                 [key: 'REPONAME', value: 'repository.name'],
                 [key: 'PROJKEY', value: 'repository.project.key']
        ],
