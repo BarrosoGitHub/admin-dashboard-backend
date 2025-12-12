@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:9.0-bookworm-x86 AS build
+FROM mcr.microsoft.com/dotnet/sdk:9.0-bookworm-amd64 AS build
 WORKDIR /src
 
 # Add private NuGet source
