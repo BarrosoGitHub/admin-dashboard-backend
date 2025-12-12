@@ -3,23 +3,28 @@ pipeline {
   
     triggers {
     GenericTrigger(
-        genericVariables: [
-            [key: 'ADDTYPE',     value: 'push.changes[0].new.target.type'],
-            [key: 'TAGTYPE',     value: 'push.changes[0].new.type'],
-            [key: 'TAGNAME',     value: 'push.changes[0].new.name'],
-            [key: 'AUTOR',       value: 'push.changes[0].new.target.author.raw'],
-            [key: 'DATE',        value: 'push.changes[0].new.target.date'],
-            [key: 'PROJECTNAME', value: 'repository.project.name'],
-            [key: 'REPO',        value: 'repository.full_name'],
-            [key: 'REPONAME',    value: 'repository.name'],
-            [key: 'PROJKEY',     value: 'repository.project.key'],
-            [key: 'COMMITHASH',  value: 'push.changes[0].new.target.hash']
-        ],
-        regexpFilterText: '$TAGTYPE#$ADDTYPE',
-        regexpFilterExpression: 'tag#commit'
+       genericVariables: [
+            [key: 'ADDTYPE', value: 'push.changes[0].new.target.type'],
+                [key: 'TAGTYPE', value: 'push.changes[0].new.type'],
+                [key: 'TAGNAME', value: 'push.changes[0].new.name'],
+                [key: 'AUTOR', value: 'push.changes[0].new.target.author.raw'],                 
+                [key: 'DATE', value: 'push.changes[0].new.target.date'],
+                [key: 'PROJECTNAME', value: 'repository.project.name'],
+                [key: 'REPO', value: 'repository.full_name'],
+                [key: 'REFID', value: 'push.changes[0].new.links.html.href'],   
+                [key: 'REPONAME', value: 'repository.name'],
+                [key: 'PROJKEY', value: 'repository.project.key']
+       ],
+       causeString: 'Generic Cause',
+       token: 'opt-emotion-configurator-api',
+       tokenCredentialId: '',
+       printContributedVariables: true,
+       printPostContent: true,
+       silentResponse: true,
+       regexpFilterText: '$TAGTYPE#$ADDTYPE',
+       regexpFilterExpression: 'tag#commit'
     )
-}
- 	
+  }  	
     options {
     buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10')
   }
