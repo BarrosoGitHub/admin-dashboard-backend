@@ -1,6 +1,6 @@
 [submodule "petrotec-zorpay"]
 	path = petrotec-zorpay
-	url = ssh://git@bitbucket.org:petrotecgroup/petrotec-zorpay.git
+	url = git@bitbucket.org:petrotecgroup/petrotec-zorpay.git
 [submodule "petrotec-opt-data"]
 	path = petrotec-opt-data
-	url = ssh://git@bitbucket.org:petrotecgroup/petrotec-opt-data.git
+	url = git@bitbucket.org:petrotecgroup/petrotec-opt-data.git
