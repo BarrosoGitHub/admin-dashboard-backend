@@ -3,19 +3,19 @@ pipeline {
   
     triggers {
     GenericTrigger(
-       genericVariables: [
-            [key: 'ADDTYPE', value: 'push.changes[0].new.target.type'],
-                [key: 'TAGTYPE', value: 'push.changes[0].new.type'],
-                [key: 'TAGNAME', value: 'push.changes[0].new.name'],
-                [key: 'AUTOR', value: 'push.changes[0].new.target.author.raw'],                 
-                [key: 'DATE', value: 'push.changes[0].new.target.date'],
-                [key: 'PROJECTNAME', value: 'repository.project.name'],
-                [key: 'REPO', value: 'repository.full_name'],
-                [key: 'REFID', value: 'push.changes[0].new.links.html.href'],   
-                [key: 'REPONAME', value: 'repository.name'],
-                [key: 'PROJKEY', value: 'repository.project.key']
-       ],
-       causeString: 'Generic Cause',
+        genericVariables: [
+            [key: 'ADDTYPE',     value: 'push.changes[0].new.target.type'],
+            [key: 'TAGTYPE',     value: 'push.changes[0].new.type'],
+            [key: 'TAGNAME',     value: 'push.changes[0].new.name'],
+            [key: 'AUTOR',       value: 'push.changes[0].new.target.author.raw'],
+            [key: 'DATE',        value: 'push.changes[0].new.target.date'],
+            [key: 'PROJECTNAME', value: 'repository.project.name'],
+            [key: 'REPO',        value: 'repository.full_name'],
+            [key: 'REPONAME',    value: 'repository.name'],
+            [key: 'PROJKEY',     value: 'repository.project.key'],
+            [key: 'COMMITHASH',  value: 'push.changes[0].new.target.hash']
+        ],
+        causeString: 'Generic Cause',
        token: 'opt-emotion-configurator-api',
        tokenCredentialId: '',
        printContributedVariables: true,
@@ -24,7 +24,8 @@ pipeline {
        regexpFilterText: '$TAGTYPE#$ADDTYPE',
        regexpFilterExpression: 'tag#commit'
     )
-  }  	
+}
+ 	
     options {
     buildDiscarder logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10')
   }
@@ -50,11 +51,14 @@ pipeline {
     stage('Push Docker Images to Nexus Registry and AWS ECR') {
       steps {
         script {
-          // Executa o comando git e captura o resultado
-          def gitOutput = sh(script: "git branch --contains '${REFID}'", returnStdout: true).trim()
-          // Usar regex para capturar o commit hash
-          def commitHash = (gitOutput =~ /detached at ([a-f0-9]{7,40})/)[0][1]
-          def branchName = sh(script: "git branch -r --contains ${commitHash} | grep -oE '[^/]+\$'", returnStdout: true).trim() 
+          def commitHash = env.COMMITHASH
+
+          // Try to detect branch; fall back to "unknown"
+          def branchName = sh(
+              script: "git branch -r --contains ${commitHash} | grep -oE '[^/]+$' || echo 'unknown'",
+              returnStdout: true
+          ).trim()
+
           
           env.DOCKER_VERSAO=" --build-arg 'versao=${branchName}-${TAGNAME}'"
           
