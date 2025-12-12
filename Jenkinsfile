@@ -14,6 +14,8 @@ pipeline {
                 [key: 'REFID', value: 'push.changes[0].new.name'], 
                 [key: 'REPONAME', value: 'repository.name'],
                 [key: 'PROJKEY', value: 'repository.project.key']
+                [key: 'COMMITHASH', value: 'push.changes[0].new.target.hash'],
+
        ],
        causeString: 'Generic Cause',
        token: 'opt-emotion-configurator-api',
@@ -53,7 +55,8 @@ pipeline {
           // Executa o comando git e captura o resultado
           def gitOutput = sh(script: "git branch --contains '${REFID}'", returnStdout: true).trim()
           // Usar regex para capturar o commit hash
-          def commitHash = (gitOutput =~ /detached at ([a-f0-9]{7,40})/)[0][1]
+          def commitHash = env.COMMITHASH
+
           def branchName = sh(script: "git branch -r --contains ${commitHash} | grep -oE '[^/]+\$'", returnStdout: true).trim() 
           
           env.DOCKER_VERSAO=" --build-arg 'versao=${branchName}-${TAGNAME}'"
