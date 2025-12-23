@@ -1,0 +1,56 @@
+# Build stage with .NET SDK
+FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine AS build
+WORKDIR /src
+
+# Install native dependencies required for AOT compilation
+RUN apk add --no-cache clang build-base zlib-dev
+
+# Add private NuGet source
+RUN dotnet nuget add source http://172.16.50.65:8081/repository/nuget/index.json \
+    -n nexus \
+    -u admin \
+    -p devpasswd++ \
+    --store-password-in-clear-text \
+    --allow-insecure-connections
+
+# Copy project files
+COPY OPTConfigurator.csproj .
+
+# Restore dependencies
+RUN dotnet restore "OPTConfigurator.csproj" -r linux-musl-x64
+
+# Copy source code
+COPY . .
+
+# Publish with AOT compilation
+RUN dotnet publish "OPTConfigurator.csproj" \
+    -c Release \
+    -r linux-musl-x64 \
+    -o /app/publish \
+    --self-contained \
+    /p:PublishAot=true \
+    /p:StripSymbols=true
+
+# Runtime stage with minimal Alpine
+FROM mcr.microsoft.com/dotnet/runtime-deps:9.0-alpine AS final
+
+# Install runtime dependencies
+RUN apk add --no-cache \
+    icu-libs \
+    icu-data-full \
+    libgcc \
+    libstdc++ \
+    bash
+
+WORKDIR /app
+
+# Copy the AOT compiled binary
+COPY --from=build /app/publish .
+
+EXPOSE 8080
+
+# Set environment variables
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
+    ASPNETCORE_URLS=http://+:8080
+
+ENTRYPOINT ["./OPTConfigurator"]

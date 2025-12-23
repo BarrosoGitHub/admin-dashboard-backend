@@ -41,6 +41,7 @@ pipeline {
     DOCKER_BASE='docker buildx build --sbom=false --provenance=false --push '
     DOCKER_FILE_ARM=' -f Dockerfile '
     DOCKER_FILE_AMD64=' -f Dockerfile.amd64 '
+    DOCKER_FILE_AOT=' -f Dockerfile.aot '
   }	  
   stages {
     stage('Push Docker Images to Nexus Registry and AWS ECR') {
@@ -63,27 +64,27 @@ pipeline {
                 nexusPort = env.NEXUS_PORT_DEV
               } else if (TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-qa$/) {
                 nexusPort = env.NEXUS_PORT_QA
-                awsTag = " -t ${env.AWS_ECR_URL}/${REPONAME}:${TAGNAME}-arm64 -t ${env.AWS_ECR_URL}/${REPONAME}:${TAGNAME}-amd64"
+                awsTag = " -t ${env.AWS_ECR_URL}/${REPONAME}:${TAGNAME}-arm64-aot -t ${env.AWS_ECR_URL}/${REPONAME}:${TAGNAME}-amd64-aot"
               } else if (TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+$/ || TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-[a-zA-Z]+$/) {
                 nexusPort = env.NEXUS_PORT_PROD
-                awsTag = " -t ${env.AWS_ECR_URL}/${REPONAME}:${TAGNAME}-arm64 -t ${env.AWS_ECR_URL}/${REPONAME}:${TAGNAME}-amd64"
+                awsTag = " -t ${env.AWS_ECR_URL}/${REPONAME}:${TAGNAME}-arm64-aot -t ${env.AWS_ECR_URL}/${REPONAME}:${TAGNAME}-amd64-aot"
               } else {
                 error "${env.ERROR_MSG}"
               }
 
-              // Build ARM64 image
+              // Build ARM64 image with AOT
               sh """
                 docker login -u $user -p $pass ${env.NEXUS_PROTOCOL}${env.NEXUS_URL}${nexusPort}/repository/docker-private/
-                ${env.DOCKER_BASE} ${env.DOCKER_VERSAO} ${env.DOCKER_FILE_ARM} \
-                  -t ${env.NEXUS_URL}${nexusPort}/${REPONAME}:${TAGNAME}-arm64 \
-                  ${awsTag ? '-t ' + env.AWS_ECR_URL + '/' + REPONAME + ':' + TAGNAME + '-arm64' : ''} .
+                ${env.DOCKER_BASE} ${env.DOCKER_VERSAO} ${env.DOCKER_FILE_AOT} \
+                  -t ${env.NEXUS_URL}${nexusPort}/${REPONAME}:${TAGNAME}-arm64-aot \
+                  ${awsTag ? '-t ' + env.AWS_ECR_URL + '/' + REPONAME + ':' + TAGNAME + '-arm64-aot' : ''} .
               """
               
-              // Build amd64 image
+              // Build amd64 image with AOT
               sh """
-                ${env.DOCKER_BASE} ${env.DOCKER_VERSAO} ${env.DOCKER_FILE_AMD64} \
-                  -t ${env.NEXUS_URL}${nexusPort}/${REPONAME}:${TAGNAME}-amd64 \
-                  ${awsTag ? '-t ' + env.AWS_ECR_URL + '/' + REPONAME + ':' + TAGNAME + '-amd64' : ''} .
+                ${env.DOCKER_BASE} ${env.DOCKER_VERSAO} ${env.DOCKER_FILE_AOT} \
+                  -t ${env.NEXUS_URL}${nexusPort}/${REPONAME}:${TAGNAME}-amd64-aot \
+                  ${awsTag ? '-t ' + env.AWS_ECR_URL + '/' + REPONAME + ':' + TAGNAME + '-amd64-aot' : ''} .
               """
           }
         }
