@@ -22,14 +22,17 @@ RUN dotnet restore "OPTConfigurator.csproj" -r linux-musl-x64
 # Copy source code
 COPY . .
 
-# Publish with AOT compilation
+# Publish with trimming and optimization (AOT-compatible dependencies required for full AOT)
 RUN dotnet publish "OPTConfigurator.csproj" \
     -c Release \
     -r linux-musl-x64 \
     -o /app/publish \
     --self-contained \
-    /p:PublishAot=true \
-    /p:StripSymbols=true
+    /p:PublishTrimmed=true \
+    /p:PublishSingleFile=true \
+    /p:EnableCompressionInSingleFile=true \
+    /p:DebugType=None \
+    /p:DebugSymbols=false
 
 # Runtime stage with minimal Alpine
 FROM mcr.microsoft.com/dotnet/runtime-deps:9.0-alpine AS final
