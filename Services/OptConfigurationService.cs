@@ -296,4 +296,31 @@ public class OptConfigurationService : IOptConfigurationService
     {
         return true;
     }
+
+    public bool ToggleTechMode()
+    {
+        if (IsTechModeEnabled())
+        {
+            try
+            {
+                File.Delete(Path.Combine(AppContext.BaseDirectory, "config", "tech-mode.flag"));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
+        else
+        {
+            File.Create(Path.Combine(AppContext.BaseDirectory, "config", "tech-mode.flag"));
+        }
+        return true;
+    }
+
+    public bool IsTechModeEnabled()
+    {
+        string filePath = Path.Combine(AppContext.BaseDirectory, "config", "tech-mode.flag");
+        return File.Exists(filePath);
+    }
 }

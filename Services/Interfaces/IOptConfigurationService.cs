@@ -10,5 +10,7 @@ namespace OPTConfigurator.Services.Interfaces
         OptConfiguration GetOptConfigurationFromTemplate(GetOptConfigurationTemplateDTO optConfigFromTemplate);
         OptConfiguration UpdateOptConfiguration(UpdateOptConfigurationDTO updateOptConfig);
         bool IsOptServiceEnabled();
+        bool ToggleTechMode();
+        bool IsTechModeEnabled();
     }
 }

@@ -104,5 +104,18 @@ public class ConfigurationController : ControllerBase
             ? Ok(new { available = true })
             : NotFound(new { available = false });
     }
+
+    [HttpPost("toggle-tech-mode")]
+    public ActionResult ToggleTechMode()
+    {
+        bool isEnabled = _optConfigurationService.ToggleTechMode();
+        return Ok(isEnabled);
+    }
+
+    [HttpGet("is-tech-mode-enabled")]
+    public ActionResult IsTechModeEnabled()
+    {
+        return Ok(_optConfigurationService.IsTechModeEnabled());
+    }
 }
 
