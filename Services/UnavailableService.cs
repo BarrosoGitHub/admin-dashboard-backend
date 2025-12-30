@@ -66,4 +66,14 @@ public class UnavailableService : IOptConfigurationService, IEpsConfigurationSer
     {
         return null!;
     }
+
+    public bool ToggleTechMode()
+    {
+        throw new NotImplementedException();
+    }
+
+    public bool IsTechModeEnabled()
+    {
+        throw new NotImplementedException();
+    }
 }

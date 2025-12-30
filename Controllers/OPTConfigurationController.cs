@@ -108,8 +108,8 @@ public class ConfigurationController : ControllerBase
     [HttpPost("toggle-tech-mode")]
     public ActionResult ToggleTechMode()
     {
-        bool isEnabled = _optConfigurationService.ToggleTechMode();
-        return Ok(isEnabled);
+        bool success = _optConfigurationService.ToggleTechMode();
+        return Ok(success);
     }
 
     [HttpGet("is-tech-mode-enabled")]

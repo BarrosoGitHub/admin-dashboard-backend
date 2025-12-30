@@ -313,7 +313,19 @@ public class OptConfigurationService : IOptConfigurationService
         }
         else
         {
-            File.Create(Path.Combine(AppContext.BaseDirectory, "config", "tech-mode.flag"));
+            try
+            {
+                string configDirectory = Path.Combine(AppContext.BaseDirectory, "config");
+                Directory.CreateDirectory(configDirectory);
+
+                string flagPath = Path.Combine(configDirectory, "tech-mode.flag");
+                using var _ = new FileStream(flagPath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
         }
         return true;
     }
