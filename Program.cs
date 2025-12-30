@@ -1,17 +1,29 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.IdentityModel.Tokens;
 using OPTConfigurator.Models;
 using OPTConfigurator.Services;
 using OPTConfigurator.Services.Interfaces;
 using OPTConfigurator.Validations;
-using System.Text;
 using OPTConfigurator.Helpers;
 using EPSConfigurator.Services;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Configuration.AddJsonFile("auth.json", optional: false, reloadOnChange: true);
+
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders =
+        ForwardedHeaders.XForwardedFor |
+        ForwardedHeaders.XForwardedProto |
+        ForwardedHeaders.XForwardedHost;
+
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+});
 
 if (Environment.GetEnvironmentVariable("ENABLE_OPT_CONFIGURATION")?.ToLower() == "true")
 {
@@ -32,35 +44,28 @@ else
 }
 
 builder.Services.AddScoped<IUserInterfaceConfigurationService, UserInterfaceConfigurationService>();
+builder.Services.AddScoped<IServicesInfoService, ServicesInfoService>();
+
 builder.Services.AddScoped<IValidator<GetOptConfigurationTemplateDTO>, AddOptConfigurationValidator>();
 builder.Services.AddScoped<IValidator<UpdateOptConfigurationDTO>, UpdateOptConfigurationRequestValidator>();
 builder.Services.AddScoped<IValidator<UserInterfaceConfigurationDTO>, AddUserInterfaceConfigurationValidator>();
-builder.Services.AddScoped<IServicesInfoService, ServicesInfoService>();
 
 string boardType = BoardHelper.GetBoardType();
 
 if (boardType == "Toradex")
 {
     builder.Services.AddScoped<INetworkConfigurationService, ToradexNetworkConfigurationService>();
-    Console.WriteLine("Using Toradex network configuration service.");
-}
-else if (boardType == "TS7970")
-{
-    builder.Services.AddScoped<INetworkConfigurationService, TSNetworkConfigurationService>();
-    Console.WriteLine("Using TS7970 network configuration service.");
 }
 else
 {
-    // Console.WriteLine("Unknown board type. Exiting application.");
-    // Environment.Exit(1);
     builder.Services.AddScoped<INetworkConfigurationService, TSNetworkConfigurationService>();
-
 }
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
-        options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+        options.JsonSerializerOptions.Converters.Add(
+            new System.Text.Json.Serialization.JsonStringEnumConverter());
         options.JsonSerializerOptions.PropertyNamingPolicy = null;
     });
 
@@ -95,14 +100,6 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
-
-    // options.AddDefaultPolicy(policy =>
-    // {
-    //     policy.WithOrigins("http://172.16.55.152:8081")
-    //           .AllowAnyHeader()
-    //           .AllowAnyMethod()
-    //           .AllowCredentials();
-    // });
 });
 
 var app = builder.Build();
@@ -112,6 +109,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
+app.UseForwardedHeaders();
 app.UseWebSockets();
 app.UseMiddleware<ModelBindingErrorHandlingMiddleware>();
 app.UseHttpsRedirection();
