@@ -303,7 +303,7 @@ public class OptConfigurationService : IOptConfigurationService
         {
             try
             {
-                File.Delete(Path.Combine(AppContext.BaseDirectory, "config", "tech-mode.flag"));
+                File.Delete(Path.Combine(AppContext.BaseDirectory, "files", "tech-mode.flag"));
             }
             catch (Exception ex)
             {
@@ -315,7 +315,7 @@ public class OptConfigurationService : IOptConfigurationService
         {
             try
             {
-                string configDirectory = Path.Combine(AppContext.BaseDirectory, "config");
+                string configDirectory = Path.Combine(AppContext.BaseDirectory, "files");
                 Directory.CreateDirectory(configDirectory);
 
                 string flagPath = Path.Combine(configDirectory, "tech-mode.flag");
@@ -332,7 +332,7 @@ public class OptConfigurationService : IOptConfigurationService
 
     public bool IsTechModeEnabled()
     {
-        string filePath = Path.Combine(AppContext.BaseDirectory, "config", "tech-mode.flag");
+        string filePath = Path.Combine(AppContext.BaseDirectory, "files", "tech-mode.flag");
         return File.Exists(filePath);
     }
 }
