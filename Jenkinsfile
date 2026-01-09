@@ -58,35 +58,31 @@ pipeline {
           withCredentials([usernamePassword(credentialsId: 'nexus_3_docker', passwordVariable: 'pass', usernameVariable: 'user')]) { 
               // Validação e determinação do ambiente com base no TAGNAME
               def nexusPort = ''
-              def buildArm = false
-              def buildAmd = false
+              def dockerfile = ''
               def awsTag = ''
               
-              // Determine environment and which architectures to build
-              if (TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-dev(-arm64)?$/) {
+              // Determine environment and dockerfile based on tag
+              if (TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-dev-arm64$/) {
                 nexusPort = env.NEXUS_PORT_DEV
-                buildArm = TAGNAME.endsWith('-arm64')
-                buildAmd = !buildArm
-              } else if (TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-dev-amd64$/) {
+                dockerfile = env.DOCKER_FILE_ARM
+              } else if (TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-dev(-amd64)?$/) {
                 nexusPort = env.NEXUS_PORT_DEV
-                buildAmd = true
-              } else if (TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-qa(-arm64)?$/) {
+                dockerfile = env.DOCKER_FILE_AMD64
+              } else if (TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-qa-arm64$/) {
                 nexusPort = env.NEXUS_PORT_QA
-                buildArm = TAGNAME.endsWith('-arm64')
-                buildAmd = !buildArm
+                dockerfile = env.DOCKER_FILE_ARM
                 awsTag = "-t ${env.AWS_ECR_URL}/${REPONAME}:${TAGNAME}"
-              } else if (TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-qa-amd64$/) {
+              } else if (TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-qa(-amd64)?$/) {
                 nexusPort = env.NEXUS_PORT_QA
-                buildAmd = true
+                dockerfile = env.DOCKER_FILE_AMD64
                 awsTag = "-t ${env.AWS_ECR_URL}/${REPONAME}:${TAGNAME}"
-              } else if (TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+(-arm64)?$/ || TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-[a-zA-Z]+(-arm64)?$/) {
+              } else if (TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-arm64$/ || TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-[a-zA-Z]+-arm64$/) {
                 nexusPort = env.NEXUS_PORT_PROD
-                buildArm = TAGNAME.endsWith('-arm64')
-                buildAmd = !buildArm
+                dockerfile = env.DOCKER_FILE_ARM
                 awsTag = "-t ${env.AWS_ECR_URL}/${REPONAME}:${TAGNAME}"
-              } else if (TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-amd64$/ || TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-[a-zA-Z]+-amd64$/) {
+              } else if (TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+(-amd64)?$/ || TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-[a-zA-Z]+(-amd64)?$/) {
                 nexusPort = env.NEXUS_PORT_PROD
-                buildAmd = true
+                dockerfile = env.DOCKER_FILE_AMD64
                 awsTag = "-t ${env.AWS_ECR_URL}/${REPONAME}:${TAGNAME}"
               } else {
                 error "${env.ERROR_MSG}"
@@ -94,23 +90,11 @@ pipeline {
 
               sh "docker login -u $user -p $pass ${env.NEXUS_PROTOCOL}${env.NEXUS_URL}${nexusPort}/repository/docker-private/"
 
-              // Build ARM64 image if needed
-              if (buildArm) {
-                sh """
-                  ${env.DOCKER_BASE} ${env.DOCKER_VERSAO} ${env.DOCKER_FILE_AOT} \
-                    -t ${env.NEXUS_URL}${nexusPort}/${REPONAME}:${TAGNAME} \
-                    ${awsTag} .
-                """
-              }
-              
-              // Build AMD64 image if needed
-              if (buildAmd) {
-                sh """
-                  ${env.DOCKER_BASE} ${env.DOCKER_VERSAO} ${env.DOCKER_FILE_AOT} \
-                    -t ${env.NEXUS_URL}${nexusPort}/${REPONAME}:${TAGNAME} \
-                    ${awsTag} .
-                """
-              }
+              sh """
+                ${env.DOCKER_BASE} ${env.DOCKER_VERSAO} ${dockerfile} \
+                  -t ${env.NEXUS_URL}${nexusPort}/${REPONAME}:${TAGNAME} \
+                  ${awsTag} .
+              """
           }
         }
       }
