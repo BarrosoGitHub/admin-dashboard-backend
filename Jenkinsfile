@@ -58,34 +58,68 @@ pipeline {
           withCredentials([usernamePassword(credentialsId: 'nexus_3_docker', passwordVariable: 'pass', usernameVariable: 'user')]) { 
               // Validação e determinação do ambiente com base no TAGNAME
               def nexusPort = ''
-              def awsTag = ''
+              def buildArm = false
+              def buildAmd = false
+              def awsTagArm = ''
+              def awsTagAmd = ''
               
-              if (TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-dev$/) {
+              // Determine environment and which architectures to build
+              if (TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-dev(-arm64)?$/) {
                 nexusPort = env.NEXUS_PORT_DEV
-              } else if (TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-qa$/) {
+                buildArm = TAGNAME.endsWith('-arm64')
+                buildAmd = !buildArm
+              } else if (TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-dev-amd64$/) {
+                nexusPort = env.NEXUS_PORT_DEV
+                buildAmd = true
+              } else if (TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-qa(-arm64)?$/) {
                 nexusPort = env.NEXUS_PORT_QA
-                awsTag = " -t ${env.AWS_ECR_URL}/${REPONAME}:${TAGNAME}-arm64-aot -t ${env.AWS_ECR_URL}/${REPONAME}:${TAGNAME}-amd64-aot"
-              } else if (TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+$/ || TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-[a-zA-Z]+$/) {
+                buildArm = TAGNAME.endsWith('-arm64')
+                buildAmd = !buildArm
+                if (buildArm) {
+                  awsTagArm = "-t ${env.AWS_ECR_URL}/${REPONAME}:${TAGNAME}-aot"
+                } else {
+                  awsTagAmd = "-t ${env.AWS_ECR_URL}/${REPONAME}:${TAGNAME}-aot"
+                }
+              } else if (TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-qa-amd64$/) {
+                nexusPort = env.NEXUS_PORT_QA
+                buildAmd = true
+                awsTagAmd = "-t ${env.AWS_ECR_URL}/${REPONAME}:${TAGNAME}-aot"
+              } else if (TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+(-arm64)?$/ || TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-[a-zA-Z]+(-arm64)?$/) {
                 nexusPort = env.NEXUS_PORT_PROD
-                awsTag = " -t ${env.AWS_ECR_URL}/${REPONAME}:${TAGNAME}-arm64-aot -t ${env.AWS_ECR_URL}/${REPONAME}:${TAGNAME}-amd64-aot"
+                buildArm = TAGNAME.endsWith('-arm64')
+                buildAmd = !buildArm
+                if (buildArm) {
+                  awsTagArm = "-t ${env.AWS_ECR_URL}/${REPONAME}:${TAGNAME}-aot"
+                } else {
+                  awsTagAmd = "-t ${env.AWS_ECR_URL}/${REPONAME}:${TAGNAME}-aot"
+                }
+              } else if (TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-amd64$/ || TAGNAME ==~ /^\d+\.\d+\.\d+\.\d+-[a-zA-Z]+-amd64$/) {
+                nexusPort = env.NEXUS_PORT_PROD
+                buildAmd = true
+                awsTagAmd = "-t ${env.AWS_ECR_URL}/${REPONAME}:${TAGNAME}-aot"
               } else {
                 error "${env.ERROR_MSG}"
               }
 
-              // Build ARM64 image with AOT
-              sh """
-                docker login -u $user -p $pass ${env.NEXUS_PROTOCOL}${env.NEXUS_URL}${nexusPort}/repository/docker-private/
-                ${env.DOCKER_BASE} ${env.DOCKER_VERSAO} ${env.DOCKER_FILE_AOT} \
-                  -t ${env.NEXUS_URL}${nexusPort}/${REPONAME}:${TAGNAME}-arm64-aot \
-                  ${awsTag ? '-t ' + env.AWS_ECR_URL + '/' + REPONAME + ':' + TAGNAME + '-arm64-aot' : ''} .
-              """
+              sh "docker login -u $user -p $pass ${env.NEXUS_PROTOCOL}${env.NEXUS_URL}${nexusPort}/repository/docker-private/"
+
+              // Build ARM64 image with AOT if needed
+              if (buildArm) {
+                sh """
+                  ${env.DOCKER_BASE} ${env.DOCKER_VERSAO} ${env.DOCKER_FILE_AOT} \
+                    -t ${env.NEXUS_URL}${nexusPort}/${REPONAME}:${TAGNAME}-aot \
+                    ${awsTagArm} .
+                """
+              }
               
-              // Build amd64 image with AOT
-              sh """
-                ${env.DOCKER_BASE} ${env.DOCKER_VERSAO} ${env.DOCKER_FILE_AOT} \
-                  -t ${env.NEXUS_URL}${nexusPort}/${REPONAME}:${TAGNAME}-amd64-aot \
-                  ${awsTag ? '-t ' + env.AWS_ECR_URL + '/' + REPONAME + ':' + TAGNAME + '-amd64-aot' : ''} .
-              """
+              // Build AMD64 image with AOT if needed
+              if (buildAmd) {
+                sh """
+                  ${env.DOCKER_BASE} ${env.DOCKER_VERSAO} ${env.DOCKER_FILE_AOT} \
+                    -t ${env.NEXUS_URL}${nexusPort}/${REPONAME}:${TAGNAME}-aot \
+                    ${awsTagAmd} .
+                """
+              }
           }
         }
       }
