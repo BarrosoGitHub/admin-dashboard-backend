@@ -17,7 +17,6 @@ public static class SystemUtils
     }
     public static void Reboot()
     {
-        ApplicationState.SetRebooting();
         Console.WriteLine("Rebooting system...");
 
         if (IsLinux)
@@ -60,7 +59,7 @@ public static class SystemUtils
         }
         else
         {
-            ExecuteCommandSync("shutdown -r -f -t 00");
+            // ExecuteCommandSync("shutdown -r -f -t 00");
         }
     }
 

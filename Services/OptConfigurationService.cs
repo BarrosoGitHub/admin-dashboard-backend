@@ -304,6 +304,7 @@ public class OptConfigurationService : IOptConfigurationService
             try
             {
                 File.Delete(Path.Combine(AppContext.BaseDirectory, "files", "tech-mode.flag"));
+                ApplicationState.SetRebooting();
                 Task.Run(async () =>
                 {
                     await Task.Delay(5000);
@@ -338,6 +339,13 @@ public class OptConfigurationService : IOptConfigurationService
                         UnixFileMode.GroupRead | UnixFileMode.GroupWrite |
                         UnixFileMode.OtherRead | UnixFileMode.OtherWrite);
                 }
+
+                ApplicationState.SetRebooting();
+                Task.Run(async () =>
+                {
+                    await Task.Delay(5000);
+                    SystemUtils.Reboot();
+                });
             }
             catch (Exception ex)
             {
