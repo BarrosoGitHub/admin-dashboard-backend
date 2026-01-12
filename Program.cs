@@ -7,6 +7,7 @@ using OPTConfigurator.Services;
 using OPTConfigurator.Services.Interfaces;
 using OPTConfigurator.Validations;
 using OPTConfigurator.Helpers;
+using OPTConfigurator.Middleware;
 using EPSConfigurator.Services;
 using System.Text;
 
@@ -111,6 +112,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseForwardedHeaders();
 app.UseWebSockets();
+app.UseMiddleware<RebootingStateMiddleware>();
 app.UseMiddleware<ModelBindingErrorHandlingMiddleware>();
 app.UseHttpsRedirection();
 app.UseCors();

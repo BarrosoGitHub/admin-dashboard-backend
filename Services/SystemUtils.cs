@@ -17,6 +17,7 @@ public static class SystemUtils
     }
     public static void Reboot()
     {
+        ApplicationState.SetRebooting();
         Console.WriteLine("Rebooting system...");
 
         if (IsLinux)

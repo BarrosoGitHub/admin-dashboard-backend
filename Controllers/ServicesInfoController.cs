@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OPTConfigurator.Helpers;
+using OPTConfigurator.Services;
 using OPTConfigurator.Services.Interfaces;
 
 namespace OPTConfigurator.Controllers
@@ -68,6 +69,17 @@ namespace OPTConfigurator.Controllers
         {
             var validTimeZones = _servicesInfoService.GetValidTimeZones();
             return Ok(validTimeZones);
+        }
+
+        [HttpGet("isalive")]
+        [AllowAnonymous]
+        public ActionResult IsAlive()
+        {
+            if (ApplicationState.IsRebooting)
+            {
+                return StatusCode(503, new { status = "rebooting", message = "System is rebooting" });
+            }
+            return Ok(new { status = "alive", timestamp = DateTime.UtcNow });
         }
     }
 

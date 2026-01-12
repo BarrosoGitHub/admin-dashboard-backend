@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
+using OPTConfigurator.Services;
 
 namespace OPTConfigurator.Helpers;
 public class Utils
@@ -71,6 +72,7 @@ public class Utils
 
     public static async Task<bool> ScheduleNetworkRebootAsync()
     {
+        ApplicationState.SetRebooting();
         await Task.Delay(TimeSpan.FromSeconds(5));
         return await ReloadNetworkInterfaceConfigAsync("network0");
     }
