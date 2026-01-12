@@ -91,9 +91,11 @@ pipeline {
               sh "docker login -u $user -p $pass ${env.NEXUS_PROTOCOL}${env.NEXUS_URL}${nexusPort}/repository/docker-private/"
 
               sh """
+                docker buildx create --use --name insecure-builder --driver-opt network=host --buildkitd-flags '--allow-insecure-entitlement network.host' || docker buildx use insecure-builder
                 ${env.DOCKER_BASE} ${env.DOCKER_VERSAO} ${dockerfile} \
                   -t ${env.NEXUS_URL}${nexusPort}/${REPONAME}:${TAGNAME} \
-                  ${awsTag} .
+                  ${awsTag} \
+                  --output type=registry,registry.insecure=true .
               """
           }
         }
