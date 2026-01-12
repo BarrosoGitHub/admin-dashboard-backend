@@ -198,20 +198,20 @@ public class OptConfigurationService : IOptConfigurationService
         }
 
         Language primaryLanguage, secondaryLanguage, tertiaryLanguage, languageN4;
-        
+
         if (countryCode == Country.PT)
         {
-            primaryLanguage = Language.Portuguese;    
-            secondaryLanguage = Language.Spanish;     
-            tertiaryLanguage = Language.English;      
-            languageN4 = Language.French;             
+            primaryLanguage = Language.Portuguese;
+            secondaryLanguage = Language.Spanish;
+            tertiaryLanguage = Language.English;
+            languageN4 = Language.French;
         }
         else
         {
-            primaryLanguage = Language.Spanish;       
-            secondaryLanguage = Language.Catalan;     
-            tertiaryLanguage = Language.French;       
-            languageN4 = Language.English;            
+            primaryLanguage = Language.Spanish;
+            secondaryLanguage = Language.Catalan;
+            tertiaryLanguage = Language.French;
+            languageN4 = Language.English;
         }
 
         var optConfig = new OptConfiguration
@@ -291,7 +291,7 @@ public class OptConfigurationService : IOptConfigurationService
 
         return JsonSerializer.Serialize(optConfig, options);
     }
-    
+
     public bool IsOptServiceEnabled()
     {
         return true;
@@ -319,7 +319,20 @@ public class OptConfigurationService : IOptConfigurationService
                 Directory.CreateDirectory(configDirectory);
 
                 string flagPath = Path.Combine(configDirectory, "tech-mode.flag");
-                using var _ = new FileStream(flagPath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite);
+
+                // Create the file
+                using (var fs = new FileStream(flagPath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
+                {
+                }
+
+                // Set Unix file permissions (chmod 666) - works on .NET 6+ on Linux/Unix
+                if (OperatingSystem.IsLinux() || OperatingSystem.IsMacOS() || OperatingSystem.IsFreeBSD())
+                {
+                    File.SetUnixFileMode(flagPath,
+                        UnixFileMode.UserRead | UnixFileMode.UserWrite |
+                        UnixFileMode.GroupRead | UnixFileMode.GroupWrite |
+                        UnixFileMode.OtherRead | UnixFileMode.OtherWrite);
+                }
             }
             catch (Exception ex)
             {
