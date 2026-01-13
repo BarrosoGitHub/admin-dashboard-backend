@@ -321,12 +321,14 @@ public class OptConfigurationService : IOptConfigurationService
         {
             try
             {
-                string configDirectory = Path.Combine(AppContext.BaseDirectory, "files");
-                Directory.CreateDirectory(configDirectory);
+                string filesFolder = Path.Combine(AppContext.BaseDirectory, "files");
+                if (!Directory.Exists(filesFolder))
+                {
+                    Directory.CreateDirectory(filesFolder);
+                }
 
-                string flagPath = Path.Combine(configDirectory, "tech-mode.flag");
+                string flagPath = Path.Combine(AppContext.BaseDirectory, "files", "tech-mode.flag");
 
-                // Create the file
                 using (var fs = new FileStream(flagPath, FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
                 {
                 }
