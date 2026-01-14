@@ -91,7 +91,6 @@ pipeline {
               sh "docker login -u $user -p $pass ${env.NEXUS_PROTOCOL}${env.NEXUS_URL}${nexusPort}/repository/docker-private/"
 
               sh """
-                docker buildx build
                 ${env.DOCKER_BASE} ${env.DOCKER_VERSAO} ${dockerfile} \
                   -t ${env.NEXUS_URL}${nexusPort}/${REPONAME}:${TAGNAME} \
                   ${awsTag} \
