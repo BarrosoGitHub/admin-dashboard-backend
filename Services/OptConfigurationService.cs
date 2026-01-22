@@ -32,11 +32,25 @@ public class OptConfigurationService : IOptConfigurationService
         var options = new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+            DefaultIgnoreCondition = JsonIgnoreCondition.Never,
+            AllowTrailingCommas = true,
+            ReadCommentHandling = JsonCommentHandling.Skip,
+            Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase, allowIntegerValues: true) }
         };
 
         string configJson = await File.ReadAllTextAsync(filePath);
-        return JsonSerializer.Deserialize<OptConfiguration>(configJson, options)!;
+        
+        try
+        {
+            return JsonSerializer.Deserialize<OptConfiguration>(configJson, options)!;
+        }
+        catch (JsonException)
+        {
+            // If deserialization fails, try to parse as loosely as possible using JsonDocument
+            using var doc = JsonDocument.Parse(configJson);
+            var partialJson = JsonSerializer.Serialize(doc.RootElement);
+            return JsonSerializer.Deserialize<OptConfiguration>(partialJson, options) ?? new OptConfiguration();
+        }
     }
 
     public OptConfiguration GetOptConfigurationFromTemplate(GetOptConfigurationTemplateDTO optConfigTemplate)
@@ -307,8 +321,10 @@ public class OptConfigurationService : IOptConfigurationService
                 ApplicationState.SetRebooting();
                 Task.Run(async () =>
                 {
-                    await Task.Delay(5000);
-                    SystemUtils.Reboot();
+                    await Task.Delay(3000);
+                    // SystemUtils.Reboot();
+                    ApplicationState.ResetState();
+
                 });
             }
             catch (Exception ex)
@@ -345,8 +361,9 @@ public class OptConfigurationService : IOptConfigurationService
                 ApplicationState.SetRebooting();
                 Task.Run(async () =>
                 {
-                    await Task.Delay(5000);
-                    SystemUtils.Reboot();
+                    await Task.Delay(3000);
+                    ApplicationState.ResetState();
+                    // SystemUtils.Reboot();
                 });
             }
             catch (Exception ex)
