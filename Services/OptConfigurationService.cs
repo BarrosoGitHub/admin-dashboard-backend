@@ -24,11 +24,17 @@ public class OptConfigurationService : IOptConfigurationService
 
     public async Task<OptConfiguration> GetOptConfigurationAsync()
     {
+        Console.WriteLine("[GetOptConfigurationAsync] Starting configuration retrieval");
         string filePath = Path.Combine(AppContext.BaseDirectory, "files", "opt-config.json");
+        Console.WriteLine($"[GetOptConfigurationAsync] Configuration file path: {filePath}");
 
         if (!File.Exists(filePath))
+        {
+            Console.WriteLine("[GetOptConfigurationAsync] Configuration file does not exist");
             return null!;
+        }
 
+        Console.WriteLine("[GetOptConfigurationAsync] Configuration file found, setting up JSON options");
         var options = new JsonSerializerOptions
         {
             PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -38,18 +44,30 @@ public class OptConfigurationService : IOptConfigurationService
             Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase, allowIntegerValues: true) }
         };
 
+        Console.WriteLine("[GetOptConfigurationAsync] Reading configuration file");
         string configJson = await File.ReadAllTextAsync(filePath);
+        Console.WriteLine($"[GetOptConfigurationAsync] Configuration JSON length: {configJson.Length} characters");
         
         try
         {
-            return JsonSerializer.Deserialize<OptConfiguration>(configJson, options)!;
+            Console.WriteLine("[GetOptConfigurationAsync] Attempting to deserialize configuration");
+            var result = JsonSerializer.Deserialize<OptConfiguration>(configJson, options)!;
+            Console.WriteLine("[GetOptConfigurationAsync] Configuration deserialized successfully");
+            return result;
         }
-        catch (JsonException)
+        catch (JsonException ex)
         {
+            Console.WriteLine($"[GetOptConfigurationAsync] Deserialization failed: {ex.Message}");
+            Console.WriteLine("[GetOptConfigurationAsync] Attempting fallback parsing using JsonDocument");
+            
             // If deserialization fails, try to parse as loosely as possible using JsonDocument
             using var doc = JsonDocument.Parse(configJson);
             var partialJson = JsonSerializer.Serialize(doc.RootElement);
-            return JsonSerializer.Deserialize<OptConfiguration>(partialJson, options) ?? new OptConfiguration();
+            Console.WriteLine("[GetOptConfigurationAsync] JsonDocument parsed, attempting second deserialization");
+            
+            var fallbackResult = JsonSerializer.Deserialize<OptConfiguration>(partialJson, options) ?? new OptConfiguration();
+            Console.WriteLine("[GetOptConfigurationAsync] Fallback deserialization completed");
+            return fallbackResult;
         }
     }
 
