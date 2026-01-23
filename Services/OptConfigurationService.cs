@@ -1,5 +1,5 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using FluentValidation;
 using OPTConfigurator.Models;
 using OPTConfigurator.Services.Interfaces;
@@ -35,40 +35,22 @@ public class OptConfigurationService : IOptConfigurationService
         }
 
         Console.WriteLine("[GetOptConfigurationAsync] Configuration file found, setting up JSON options");
-        var options = new JsonSerializerOptions
+        var settings = new JsonSerializerSettings
         {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            DefaultIgnoreCondition = JsonIgnoreCondition.Never,
-            AllowTrailingCommas = true,
-            ReadCommentHandling = JsonCommentHandling.Skip,
-            Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase, allowIntegerValues: true) }
+            ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
+            MissingMemberHandling = MissingMemberHandling.Ignore,
+            NullValueHandling = NullValueHandling.Ignore,
+            Converters = { new StringEnumConverter() }
         };
 
         Console.WriteLine("[GetOptConfigurationAsync] Reading configuration file");
         string configJson = await File.ReadAllTextAsync(filePath);
         Console.WriteLine($"[GetOptConfigurationAsync] Configuration JSON length: {configJson.Length} characters");
         
-        try
-        {
-            Console.WriteLine("[GetOptConfigurationAsync] Attempting to deserialize configuration");
-            var result = JsonSerializer.Deserialize<OptConfiguration>(configJson, options)!;
-            Console.WriteLine("[GetOptConfigurationAsync] Configuration deserialized successfully");
-            return result;
-        }
-        catch (JsonException ex)
-        {
-            Console.WriteLine($"[GetOptConfigurationAsync] Deserialization failed: {ex.Message}");
-            Console.WriteLine("[GetOptConfigurationAsync] Attempting fallback parsing using JsonDocument");
-            
-            // If deserialization fails, try to parse as loosely as possible using JsonDocument
-            using var doc = JsonDocument.Parse(configJson);
-            var partialJson = JsonSerializer.Serialize(doc.RootElement);
-            Console.WriteLine("[GetOptConfigurationAsync] JsonDocument parsed, attempting second deserialization");
-            
-            var fallbackResult = JsonSerializer.Deserialize<OptConfiguration>(partialJson, options) ?? new OptConfiguration();
-            Console.WriteLine("[GetOptConfigurationAsync] Fallback deserialization completed");
-            return fallbackResult;
-        }
+        Console.WriteLine("[GetOptConfigurationAsync] Attempting to deserialize configuration");
+        var result = JsonConvert.DeserializeObject<OptConfiguration>(configJson, settings)!;
+        Console.WriteLine("[GetOptConfigurationAsync] Configuration deserialized successfully");
+        return result;
     }
 
     public OptConfiguration GetOptConfigurationFromTemplate(GetOptConfigurationTemplateDTO optConfigTemplate)
@@ -88,14 +70,14 @@ public class OptConfigurationService : IOptConfigurationService
     {
         string filePath = Path.Combine(AppContext.BaseDirectory, "files", "opt-config.json");
 
-        var options = new JsonSerializerOptions
+        var settings = new JsonSerializerSettings
         {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            WriteIndented = true
+            ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
+            Formatting = Formatting.Indented,
+            Converters = { new StringEnumConverter() }
         };
-        options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase));
 
-        string optConfigJson = JsonSerializer.Serialize(optConfig, options);
+        string optConfigJson = JsonConvert.SerializeObject(optConfig, settings);
 
         File.WriteAllText(filePath, optConfigJson);
 
@@ -167,10 +149,11 @@ public class OptConfigurationService : IOptConfigurationService
         }
 
         // Save updated configuration
-        string updatedJson = JsonSerializer.Serialize(existingConfig, new JsonSerializerOptions
+        string updatedJson = JsonConvert.SerializeObject(existingConfig, new JsonSerializerSettings
         {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            WriteIndented = true
+            ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
+            Formatting = Formatting.Indented,
+            Converters = { new StringEnumConverter() }
         });
 
         File.WriteAllText(filePath, updatedJson);
@@ -180,24 +163,25 @@ public class OptConfigurationService : IOptConfigurationService
 
     private OptConfiguration ConvertJsonToOptConfiguration(string json)
     {
-        var options = new JsonSerializerOptions
+        var settings = new JsonSerializerSettings
         {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase) }
+            ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
+            MissingMemberHandling = MissingMemberHandling.Ignore,
+            Converters = { new StringEnumConverter() }
         };
 
-        return JsonSerializer.Deserialize<OptConfiguration>(json, options)
+        return JsonConvert.DeserializeObject<OptConfiguration>(json, settings)
                ?? throw new InvalidOperationException("Failed to deserialize configuration.");
     }
 
     private string CreateOptConfigurationTemplate(GetOptConfigurationTemplateDTO addOptConfigurationDTO)
     {
-        var options = new JsonSerializerOptions
+        var settings = new JsonSerializerSettings
         {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            WriteIndented = true
+            ContractResolver = new Newtonsoft.Json.Serialization.CamelCasePropertyNamesContractResolver(),
+            Formatting = Formatting.Indented,
+            Converters = { new StringEnumConverter() }
         };
-        options.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase)); // Add this line
 
         var company = Enum.Parse<Company>(addOptConfigurationDTO.Company);
         var countryCode = Enum.Parse<Country>(addOptConfigurationDTO.Country);
@@ -321,7 +305,7 @@ public class OptConfigurationService : IOptConfigurationService
                 break;
         }
 
-        return JsonSerializer.Serialize(optConfig, options);
+        return JsonConvert.SerializeObject(optConfig, settings);
     }
 
     public bool IsOptServiceEnabled()
