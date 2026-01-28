@@ -323,8 +323,8 @@ public class OptConfigurationService : IOptConfigurationService
                 ApplicationState.SetRebooting();
                 Task.Run(async () =>
                 {
+                    await Task.Delay(4000);
                     SystemUtils.Reboot();
-                    ApplicationState.ResetState();
 
                 });
             }
@@ -362,7 +362,7 @@ public class OptConfigurationService : IOptConfigurationService
                 ApplicationState.SetRebooting();
                 Task.Run(async () =>
                 {
-                    ApplicationState.ResetState();
+                    await Task.Delay(4000);
                     SystemUtils.Reboot();
                 });
             }
