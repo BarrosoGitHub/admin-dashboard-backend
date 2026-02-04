@@ -1,6 +1,0 @@
-[submodule "petrotec-zorpay"]
-	path = petrotec-zorpay
-	url = git@bitbucket.org:petrotecgroup/petrotec-zorpay.git
-[submodule "petrotec-opt-data"]
-	path = petrotec-opt-data
-	url = git@bitbucket.org:petrotecgroup/petrotec-opt-data.git
