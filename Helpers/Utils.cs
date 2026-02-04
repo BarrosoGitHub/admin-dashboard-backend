@@ -50,7 +50,8 @@ public class Utils
 
             int prefixLength = ip.AddressFamily == AddressFamily.InterNetworkV6 ? 128 : 32;
 
-            ulong maskLong = BitConverter.ToUInt64(BitConverter.GetBytes(netMask.Address), 0);
+            byte[] maskBytes = netMask.GetAddressBytes();
+            ulong maskLong = BitConverter.ToUInt64(maskBytes.Concat(new byte[8]).Take(8).ToArray(), 0);
 
             int numberOfLeadingZeros = (int)(Math.Log(maskLong, 2) + 1);
 
