@@ -1,7 +1,5 @@
 using FluentValidation;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.IdentityModel.Tokens;
 using OPTConfigurator.Models;
 using OPTConfigurator.Services;
 using OPTConfigurator.Services.Interfaces;
@@ -9,11 +7,8 @@ using OPTConfigurator.Validations;
 using OPTConfigurator.Helpers;
 using OPTConfigurator.Middleware;
 using EPSConfigurator.Services;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-
-builder.Configuration.AddJsonFile("auth.json", optional: false, reloadOnChange: true);
 
 builder.Services.Configure<ForwardedHeadersOptions>(options =>
 {
@@ -72,27 +67,6 @@ builder.Services.AddControllers()
 
 builder.Services.AddOpenApi();
 
-var jwtKey = builder.Configuration["Jwt:Key"];
-if (!string.IsNullOrEmpty(jwtKey))
-{
-    builder.Services.AddAuthentication(options =>
-    {
-        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    })
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = new TokenValidationParameters
-        {
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtKey)),
-            ValidateIssuer = false,
-            ValidateAudience = false,
-            ClockSkew = TimeSpan.FromSeconds(30),
-        };
-    });
-}
-
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
@@ -116,7 +90,5 @@ app.UseMiddleware<RebootingStateMiddleware>();
 app.UseMiddleware<ModelBindingErrorHandlingMiddleware>();
 app.UseHttpsRedirection();
 app.UseCors();
-app.UseAuthentication();
-app.UseAuthorization();
 app.MapControllers();
 app.Run();

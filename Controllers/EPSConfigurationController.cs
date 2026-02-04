@@ -1,5 +1,4 @@
 using OPTConfigurator.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OPTConfigurator.Services.Interfaces;
 using FluentValidation;
@@ -9,7 +8,6 @@ namespace EPSConfigurator.Controllers
 {
     [ApiController]
     [Route("eps-configuration")]
-    [Authorize]
     public class ConfigurationController : ControllerBase
     {
         private readonly IEpsConfigurationService _configService;

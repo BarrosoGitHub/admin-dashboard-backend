@@ -1,5 +1,4 @@
 using FluentValidation;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OPTConfigurator.Models;
 using OPTConfigurator.Services.Interfaces;
@@ -8,7 +7,6 @@ namespace OPTConfigurator.Controllers;
 
 [ApiController]
 [Route("opt-configuration")]
-[Authorize]
 public class ConfigurationController : ControllerBase
 {
     private IOptConfigurationService _optConfigurationService;
